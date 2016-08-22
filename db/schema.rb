@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160821184037) do
+ActiveRecord::Schema.define(version: 20160822024835) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,8 +18,8 @@ ActiveRecord::Schema.define(version: 20160821184037) do
 
   create_table "promos", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
     t.string   "name",        null: false
-    t.text     "description"
-    t.text     "terms"
+    t.text     "description", null: false
+    t.text     "terms",       null: false
     t.integer  "stock"
     t.decimal  "price"
     t.datetime "start_date"

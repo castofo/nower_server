@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Api::V1::PromosController, type: :controller do
 
   let(:valid_attributes) {
-    attributes_for(:promo)
+    attributes_for(:promo_with_dates)
   }
 
   let(:invalid_attributes) {
@@ -54,7 +54,7 @@ RSpec.describe Api::V1::PromosController, type: :controller do
   describe "PUT #update" do
     context "with valid params" do
       let(:new_attributes) {
-        attributes_for(:promo, description: "My new description")
+        attributes_for(:promo_with_dates, description: "My new description")
       }
 
       it "updates the requested promo" do
