@@ -16,6 +16,6 @@ class Promo < ApplicationRecord
   def should_validate_dates?
     return false unless self.start_date_changed? || self.end_date_changed?
     any_nil = self.start_date.nil? || self.end_date.nil?
-    return !any_nil
+    !any_nil
   end
 end
