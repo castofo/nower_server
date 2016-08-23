@@ -50,18 +50,159 @@ RSpec.describe 'Promos', type: :request do
 
   describe 'POST /api/v1/promos' do
     let(:body) { attributes_for :promo }
-    context 'when name is not empty' do
+    context 'when all attributes are valid' do
       it 'creates the promo' do
         post api_v1_promos_path, { params: { promo: body } }
         expect(response).to have_http_status(201)
         created_promo = JSON.parse(response.body)
         expect(created_promo['name']).to eq body[:name]
+        expect(created_promo['description']).to eq body[:description]
+        expect(created_promo['terms']).to eq body[:terms]
       end
     end
 
     context 'when name is not present' do
       it 'returns a 422' do
         body[:name] = nil
+        post api_v1_promos_path, { params: { promo: body } }
+        expect(response).to have_http_status(422)
+      end
+    end
+
+    context 'when name is empty' do
+      it 'returns a 422' do
+        body[:name] = ''
+        post api_v1_promos_path, { params: { promo: body } }
+        expect(response).to have_http_status(422)
+      end
+    end
+
+    context 'when name has more then 140 characters' do
+      it 'returns a 422' do
+        body[:name] = Faker::Lorem.characters(141)
+        post api_v1_promos_path, { params: { promo: body } }
+        expect(response).to have_http_status(422)
+      end
+    end
+
+    context 'when description is not present' do
+      it 'returns a 422' do
+        body[:description] = nil
+        post api_v1_promos_path, { params: { promo: body } }
+        expect(response).to have_http_status(422)
+      end
+    end
+
+    context 'when description is empty' do
+      it 'returns a 422' do
+        body[:description] = ''
+        post api_v1_promos_path, { params: { promo: body } }
+        expect(response).to have_http_status(422)
+      end
+    end
+
+    context 'when terms is not present' do
+      it 'returns a 422' do
+        body[:terms] = nil
+        post api_v1_promos_path, { params: { promo: body } }
+        expect(response).to have_http_status(422)
+      end
+    end
+
+    context 'when terms is empty' do
+      it 'returns a 422' do
+        body[:terms] = ''
+        post api_v1_promos_path, { params: { promo: body } }
+        expect(response).to have_http_status(422)
+      end
+    end
+
+    context 'when stock is zero' do
+      it 'returns a 422' do
+        body[:stock] = 0
+        post api_v1_promos_path, { params: { promo: body } }
+        expect(response).to have_http_status(422)
+      end
+    end
+
+    context 'when price is negative' do
+      it 'returns a 422' do
+        body[:price] = Faker::Number.negative
+        post api_v1_promos_path, { params: { promo: body } }
+        expect(response).to have_http_status(422)
+      end
+    end
+
+    context 'when start_date is before current date' do
+      it 'returns a 422' do
+        body[:start_date] = Faker::Number.between(2, 15).days.ago
+        post api_v1_promos_path, { params: { promo: body } }
+        expect(response).to have_http_status(422)
+      end
+    end
+
+    context 'when start_date is equal to current date' do
+      it 'returns a 201' do
+        body[:start_date] = DateTime.now + 5.minutes
+        post api_v1_promos_path, { params: { promo: body } }
+        expect(response).to have_http_status(201)
+      end
+    end
+
+    context 'when start_date is after current date' do
+      it 'returns a 201' do
+        body[:start_date] = Faker::Number.between(2, 15).days.from_now
+        post api_v1_promos_path, { params: { promo: body } }
+        expect(response).to have_http_status(201)
+      end
+    end
+
+    context 'when end_date is before current date' do
+      it 'returns a 422' do
+        body[:end_date] = Faker::Number.between(2, 15).days.ago
+        post api_v1_promos_path, { params: { promo: body } }
+        expect(response).to have_http_status(422)
+      end
+    end
+
+    context 'when end_date is equal to current date' do
+      it 'returns a 201' do
+        body[:end_date] = DateTime.now + 5.minutes
+        post api_v1_promos_path, { params: { promo: body } }
+        expect(response).to have_http_status(201)
+      end
+    end
+
+    context 'when end_date is after current date' do
+      it 'returns a 201' do
+        body[:end_date] = Faker::Number.between(2, 15).days.from_now
+        post api_v1_promos_path, { params: { promo: body } }
+        expect(response).to have_http_status(201)
+      end
+    end
+
+    context 'when start_date is before end_date' do
+      it 'returns a 201' do
+        body[:start_date] = Faker::Number.between(2, 15).days.from_now
+        body[:end_date] = Faker::Number.between(17, 30).days.from_now
+        post api_v1_promos_path, { params: { promo: body } }
+        expect(response).to have_http_status(201)
+      end
+    end
+
+    context 'when start_date is equal to before end_date' do
+      it 'returns a 201' do
+        body[:start_date] = Faker::Number.between(2, 15).days.from_now
+        body[:end_date] = body[:start_date]
+        post api_v1_promos_path, { params: { promo: body } }
+        expect(response).to have_http_status(201)
+      end
+    end
+
+    context 'when start_date is after end_date' do
+      it 'returns a 422' do
+        body[:start_date] = Faker::Number.between(17, 30).days.from_now
+        body[:end_date] = Faker::Number.between(2, 15).days.from_now
         post api_v1_promos_path, { params: { promo: body } }
         expect(response).to have_http_status(422)
       end
@@ -84,9 +225,161 @@ RSpec.describe 'Promos', type: :request do
         end
       end
 
-      context 'when name is not present' do
+      context 'when name is nil' do
         it 'returns a 422' do
           body[:name] = nil
+          put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
+          expect(response).to have_http_status(422)
+        end
+      end
+
+      context 'when name is empty' do
+        it 'returns a 422' do
+          body[:name] = ''
+          put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
+          expect(response).to have_http_status(422)
+        end
+      end
+
+      context 'when name has more then 140 characters' do
+        it 'returns a 422' do
+          body[:name] = Faker::Lorem.characters(141)
+          put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
+          expect(response).to have_http_status(422)
+        end
+      end
+
+      context 'when description is nil' do
+        it 'returns a 422' do
+          body[:description] = nil
+          put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
+          expect(response).to have_http_status(422)
+        end
+      end
+
+      context 'when description is empty' do
+        it 'returns a 422' do
+          body[:description] = ''
+          put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
+          expect(response).to have_http_status(422)
+        end
+      end
+
+      context 'when terms is nil' do
+        it 'returns a 422' do
+          body[:terms] = nil
+          put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
+          expect(response).to have_http_status(422)
+        end
+      end
+
+      context 'when terms is empty' do
+        it 'returns a 422' do
+          body[:terms] = ''
+          put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
+          expect(response).to have_http_status(422)
+        end
+      end
+
+      context 'when stock was nil' do
+        let!(:nil_stock_promo) { create(:promo, stock: nil) }
+        context 'and stock is zero' do
+          it 'returns a 422' do
+            body[:stock] = 0
+            put api_v1_promo_path(nil_stock_promo.id), { params: { promo: body } }
+            expect(response).to have_http_status(422)
+          end
+        end
+      end
+
+      context 'when stock was not nil' do
+        context 'and stock is zero' do
+          it 'returns a 200' do
+            body[:stock] = 0
+            put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
+            expect(response).to have_http_status(200)
+          end
+        end
+      end
+
+      context 'when price is negative' do
+        it 'returns a 422' do
+          body[:price] = Faker::Number.negative
+          put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
+          expect(response).to have_http_status(422)
+        end
+      end
+
+      context 'when start_date is before current date' do
+        it 'returns a 422' do
+          body[:start_date] = Faker::Number.between(2, 15).days.ago
+          put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
+          expect(response).to have_http_status(422)
+        end
+      end
+
+      context 'when start_date is equal to current date' do
+        it 'returns a 200' do
+          body[:start_date] = DateTime.now + 5.minutes
+          put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
+          expect(response).to have_http_status(200)
+        end
+      end
+
+      context 'when start_date is after current date' do
+        it 'returns a 200' do
+          body[:start_date] = Faker::Number.between(2, 15).days.from_now
+          put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
+          expect(response).to have_http_status(200)
+        end
+      end
+
+      context 'when end_date is before current date' do
+        it 'returns a 422' do
+          body[:end_date] = Faker::Number.between(2, 15).days.ago
+          put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
+          expect(response).to have_http_status(422)
+        end
+      end
+
+      context 'when end_date is equal to current date' do
+        it 'returns a 200' do
+          body[:end_date] = DateTime.now + 5.minutes
+          put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
+          expect(response).to have_http_status(200)
+        end
+      end
+
+      context 'when end_date is after current date' do
+        it 'returns a 200' do
+          body[:end_date] = Faker::Number.between(2, 15).days.from_now
+          put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
+          expect(response).to have_http_status(200)
+        end
+      end
+
+      context 'when start_date is before end_date' do
+        it 'returns a 200' do
+          body[:start_date] = Faker::Number.between(2, 15).days.from_now
+          body[:end_date] = Faker::Number.between(17, 30).days.from_now
+          put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
+          expect(response).to have_http_status(200)
+        end
+      end
+
+      context 'when start_date is equal to before end_date' do
+        it 'returns a 200' do
+          body[:start_date] = Faker::Number.between(2, 15).days.from_now
+          body[:end_date] = body[:start_date]
+          put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
+          expect(response).to have_http_status(200)
+        end
+      end
+
+      context 'when start_date is after end_date' do
+        it 'returns a 422' do
+          body[:start_date] = Faker::Number.between(17, 30).days.from_now
+          body[:end_date] = Faker::Number.between(2, 15).days.from_now
           put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
           expect(response).to have_http_status(422)
         end
