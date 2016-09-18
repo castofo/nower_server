@@ -11,3 +11,23 @@ RSpec.configure do |config|
 
   config.shared_context_metadata_behavior = :apply_to_host_groups
 end
+
+# Performs a GET request with an 'api' subdomain
+def sub_get(path, *args)
+  get "http://api.example.com/#{path}", *args
+end
+
+# Performs a POST request with an 'api' subdomain
+def sub_post(path, *args)
+  post "http://api.example.com/#{path}", *args
+end
+
+# Performs a PUT request with an 'api' subdomain
+def sub_put(path, *args)
+  put "http://api.example.com/#{path}", *args
+end
+
+# Performs a DELETE request with an 'api' subdomain
+def sub_delete(path, *args)
+  delete "http://api.example.com/#{path}", *args
+end

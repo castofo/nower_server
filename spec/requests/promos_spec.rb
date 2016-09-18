@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe 'Promos', type: :request do
-  describe 'GET /api/v1/promos' do
+  describe 'GET /v1/promos' do
     context 'when there is no promos' do
       it 'returns an empty array' do
-        get api_v1_promos_path
+        sub_get api_v1_promos_path
         expect(response).to have_http_status(200)
         promos = JSON.parse(response.body)
         expect(promos).to be_a_kind_of Array
@@ -15,7 +15,7 @@ RSpec.describe 'Promos', type: :request do
     context 'when there is a promo' do
       let!(:existing_promo) { create :promo }
       it 'returns an array with the job' do
-        get api_v1_promos_path
+        sub_get api_v1_promos_path
         expect(response).to have_http_status(200)
         promos = JSON.parse(response.body)
         expect(promos.length).to eq 1
@@ -26,11 +26,11 @@ RSpec.describe 'Promos', type: :request do
     end
   end
 
-  describe 'GET /api/v1/promos/:id' do
+  describe 'GET /v1/promos/:id' do
     let(:existing_promo) { create :promo }
     context 'when id is valid' do
       it 'returns the promo' do
-        get api_v1_promo_path(existing_promo.id)
+        sub_get api_v1_promo_path(existing_promo.id)
         expect(response).to have_http_status(200)
         found_promo = JSON.parse(response.body)
         expect(found_promo['id']).to eq existing_promo.id
@@ -42,17 +42,17 @@ RSpec.describe 'Promos', type: :request do
     context 'when id is invalid' do
       it 'raises a RecordNotFound' do # No way to get the 404.
         expect do
-          get api_v1_promo_path('non-existing-id')
+          sub_get api_v1_promo_path('non-existing-id')
         end.to raise_error ActiveRecord::RecordNotFound
       end
     end
   end
 
-  describe 'POST /api/v1/promos' do
+  describe 'POST /v1/promos' do
     let(:body) { attributes_for :promo }
     context 'when all attributes are valid' do
       it 'creates the promo' do
-        post api_v1_promos_path, { params: { promo: body } }
+        sub_post api_v1_promos_path, { params: { promo: body } }
         expect(response).to have_http_status(201)
         created_promo = JSON.parse(response.body)
         expect(created_promo['name']).to eq body[:name]
@@ -64,7 +64,7 @@ RSpec.describe 'Promos', type: :request do
     context 'when name is not present' do
       it 'returns a 422' do
         body[:name] = nil
-        post api_v1_promos_path, { params: { promo: body } }
+        sub_post api_v1_promos_path, { params: { promo: body } }
         expect(response).to have_http_status(422)
       end
     end
@@ -72,7 +72,7 @@ RSpec.describe 'Promos', type: :request do
     context 'when name is empty' do
       it 'returns a 422' do
         body[:name] = ''
-        post api_v1_promos_path, { params: { promo: body } }
+        sub_post api_v1_promos_path, { params: { promo: body } }
         expect(response).to have_http_status(422)
       end
     end
@@ -80,7 +80,7 @@ RSpec.describe 'Promos', type: :request do
     context 'when name has more then 140 characters' do
       it 'returns a 422' do
         body[:name] = Faker::Lorem.characters(141)
-        post api_v1_promos_path, { params: { promo: body } }
+        sub_post api_v1_promos_path, { params: { promo: body } }
         expect(response).to have_http_status(422)
       end
     end
@@ -88,7 +88,7 @@ RSpec.describe 'Promos', type: :request do
     context 'when description is not present' do
       it 'returns a 422' do
         body[:description] = nil
-        post api_v1_promos_path, { params: { promo: body } }
+        sub_post api_v1_promos_path, { params: { promo: body } }
         expect(response).to have_http_status(422)
       end
     end
@@ -96,7 +96,7 @@ RSpec.describe 'Promos', type: :request do
     context 'when description is empty' do
       it 'returns a 422' do
         body[:description] = ''
-        post api_v1_promos_path, { params: { promo: body } }
+        sub_post api_v1_promos_path, { params: { promo: body } }
         expect(response).to have_http_status(422)
       end
     end
@@ -104,7 +104,7 @@ RSpec.describe 'Promos', type: :request do
     context 'when terms is not present' do
       it 'returns a 422' do
         body[:terms] = nil
-        post api_v1_promos_path, { params: { promo: body } }
+        sub_post api_v1_promos_path, { params: { promo: body } }
         expect(response).to have_http_status(422)
       end
     end
@@ -112,7 +112,7 @@ RSpec.describe 'Promos', type: :request do
     context 'when terms is empty' do
       it 'returns a 422' do
         body[:terms] = ''
-        post api_v1_promos_path, { params: { promo: body } }
+        sub_post api_v1_promos_path, { params: { promo: body } }
         expect(response).to have_http_status(422)
       end
     end
@@ -120,7 +120,7 @@ RSpec.describe 'Promos', type: :request do
     context 'when stock is zero' do
       it 'returns a 422' do
         body[:stock] = 0
-        post api_v1_promos_path, { params: { promo: body } }
+        sub_post api_v1_promos_path, { params: { promo: body } }
         expect(response).to have_http_status(422)
       end
     end
@@ -128,7 +128,7 @@ RSpec.describe 'Promos', type: :request do
     context 'when price is negative' do
       it 'returns a 422' do
         body[:price] = Faker::Number.negative
-        post api_v1_promos_path, { params: { promo: body } }
+        sub_post api_v1_promos_path, { params: { promo: body } }
         expect(response).to have_http_status(422)
       end
     end
@@ -136,7 +136,7 @@ RSpec.describe 'Promos', type: :request do
     context 'when start_date is before current date' do
       it 'returns a 422' do
         body[:start_date] = Faker::Number.between(2, 15).days.ago
-        post api_v1_promos_path, { params: { promo: body } }
+        sub_post api_v1_promos_path, { params: { promo: body } }
         expect(response).to have_http_status(422)
       end
     end
@@ -144,7 +144,7 @@ RSpec.describe 'Promos', type: :request do
     context 'when start_date is equal to current date' do
       it 'returns a 201' do
         body[:start_date] = DateTime.now + 5.minutes
-        post api_v1_promos_path, { params: { promo: body } }
+        sub_post api_v1_promos_path, { params: { promo: body } }
         expect(response).to have_http_status(201)
       end
     end
@@ -152,7 +152,7 @@ RSpec.describe 'Promos', type: :request do
     context 'when start_date is after current date' do
       it 'returns a 201' do
         body[:start_date] = Faker::Number.between(2, 15).days.from_now
-        post api_v1_promos_path, { params: { promo: body } }
+        sub_post api_v1_promos_path, { params: { promo: body } }
         expect(response).to have_http_status(201)
       end
     end
@@ -160,7 +160,7 @@ RSpec.describe 'Promos', type: :request do
     context 'when end_date is before current date' do
       it 'returns a 422' do
         body[:end_date] = Faker::Number.between(2, 15).days.ago
-        post api_v1_promos_path, { params: { promo: body } }
+        sub_post api_v1_promos_path, { params: { promo: body } }
         expect(response).to have_http_status(422)
       end
     end
@@ -168,7 +168,7 @@ RSpec.describe 'Promos', type: :request do
     context 'when end_date is equal to current date' do
       it 'returns a 201' do
         body[:end_date] = DateTime.now + 5.minutes
-        post api_v1_promos_path, { params: { promo: body } }
+        sub_post api_v1_promos_path, { params: { promo: body } }
         expect(response).to have_http_status(201)
       end
     end
@@ -176,7 +176,7 @@ RSpec.describe 'Promos', type: :request do
     context 'when end_date is after current date' do
       it 'returns a 201' do
         body[:end_date] = Faker::Number.between(2, 15).days.from_now
-        post api_v1_promos_path, { params: { promo: body } }
+        sub_post api_v1_promos_path, { params: { promo: body } }
         expect(response).to have_http_status(201)
       end
     end
@@ -185,7 +185,7 @@ RSpec.describe 'Promos', type: :request do
       it 'returns a 201' do
         body[:start_date] = Faker::Number.between(2, 15).days.from_now
         body[:end_date] = Faker::Number.between(17, 30).days.from_now
-        post api_v1_promos_path, { params: { promo: body } }
+        sub_post api_v1_promos_path, { params: { promo: body } }
         expect(response).to have_http_status(201)
       end
     end
@@ -194,7 +194,7 @@ RSpec.describe 'Promos', type: :request do
       it 'returns a 201' do
         body[:start_date] = Faker::Number.between(2, 15).days.from_now
         body[:end_date] = body[:start_date]
-        post api_v1_promos_path, { params: { promo: body } }
+        sub_post api_v1_promos_path, { params: { promo: body } }
         expect(response).to have_http_status(201)
       end
     end
@@ -203,13 +203,13 @@ RSpec.describe 'Promos', type: :request do
       it 'returns a 422' do
         body[:start_date] = Faker::Number.between(17, 30).days.from_now
         body[:end_date] = Faker::Number.between(2, 15).days.from_now
-        post api_v1_promos_path, { params: { promo: body } }
+        sub_post api_v1_promos_path, { params: { promo: body } }
         expect(response).to have_http_status(422)
       end
     end
   end
 
-  describe 'PUT /api/v1/promos' do
+  describe 'PUT /v1/promos' do
     let(:existing_promo) { create :promo }
     let(:body) do
       { name: Faker::Lorem.sentence, description: Faker::Lorem.paragraph }
@@ -217,7 +217,7 @@ RSpec.describe 'Promos', type: :request do
     context 'when updating an existing promo' do
       context 'when new name is valid' do
         it 'updates the promo' do
-          put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
+          sub_put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
           expect(response).to have_http_status(200)
           updated_promo = JSON.parse(response.body)
           expect(updated_promo['name']).to eq body[:name]
@@ -228,7 +228,7 @@ RSpec.describe 'Promos', type: :request do
       context 'when name is nil' do
         it 'returns a 422' do
           body[:name] = nil
-          put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
+          sub_put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
           expect(response).to have_http_status(422)
         end
       end
@@ -236,7 +236,7 @@ RSpec.describe 'Promos', type: :request do
       context 'when name is empty' do
         it 'returns a 422' do
           body[:name] = ''
-          put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
+          sub_put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
           expect(response).to have_http_status(422)
         end
       end
@@ -244,7 +244,7 @@ RSpec.describe 'Promos', type: :request do
       context 'when name has more then 140 characters' do
         it 'returns a 422' do
           body[:name] = Faker::Lorem.characters(141)
-          put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
+          sub_put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
           expect(response).to have_http_status(422)
         end
       end
@@ -252,7 +252,7 @@ RSpec.describe 'Promos', type: :request do
       context 'when description is nil' do
         it 'returns a 422' do
           body[:description] = nil
-          put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
+          sub_put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
           expect(response).to have_http_status(422)
         end
       end
@@ -260,7 +260,7 @@ RSpec.describe 'Promos', type: :request do
       context 'when description is empty' do
         it 'returns a 422' do
           body[:description] = ''
-          put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
+          sub_put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
           expect(response).to have_http_status(422)
         end
       end
@@ -268,7 +268,7 @@ RSpec.describe 'Promos', type: :request do
       context 'when terms is nil' do
         it 'returns a 422' do
           body[:terms] = nil
-          put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
+          sub_put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
           expect(response).to have_http_status(422)
         end
       end
@@ -276,7 +276,7 @@ RSpec.describe 'Promos', type: :request do
       context 'when terms is empty' do
         it 'returns a 422' do
           body[:terms] = ''
-          put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
+          sub_put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
           expect(response).to have_http_status(422)
         end
       end
@@ -286,7 +286,7 @@ RSpec.describe 'Promos', type: :request do
         context 'and stock is zero' do
           it 'returns a 422' do
             body[:stock] = 0
-            put api_v1_promo_path(nil_stock_promo.id), { params: { promo: body } }
+            sub_put api_v1_promo_path(nil_stock_promo.id), { params: { promo: body } }
             expect(response).to have_http_status(422)
           end
         end
@@ -296,7 +296,7 @@ RSpec.describe 'Promos', type: :request do
         context 'and stock is zero' do
           it 'returns a 200' do
             body[:stock] = 0
-            put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
+            sub_put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
             expect(response).to have_http_status(200)
           end
         end
@@ -305,7 +305,7 @@ RSpec.describe 'Promos', type: :request do
       context 'when price is negative' do
         it 'returns a 422' do
           body[:price] = Faker::Number.negative
-          put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
+          sub_put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
           expect(response).to have_http_status(422)
         end
       end
@@ -313,7 +313,7 @@ RSpec.describe 'Promos', type: :request do
       context 'when start_date is before current date' do
         it 'returns a 422' do
           body[:start_date] = Faker::Number.between(2, 15).days.ago
-          put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
+          sub_put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
           expect(response).to have_http_status(422)
         end
       end
@@ -321,7 +321,7 @@ RSpec.describe 'Promos', type: :request do
       context 'when start_date is equal to current date' do
         it 'returns a 200' do
           body[:start_date] = DateTime.now + 5.minutes
-          put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
+          sub_put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
           expect(response).to have_http_status(200)
         end
       end
@@ -329,7 +329,7 @@ RSpec.describe 'Promos', type: :request do
       context 'when start_date is after current date' do
         it 'returns a 200' do
           body[:start_date] = Faker::Number.between(2, 15).days.from_now
-          put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
+          sub_put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
           expect(response).to have_http_status(200)
         end
       end
@@ -337,7 +337,7 @@ RSpec.describe 'Promos', type: :request do
       context 'when end_date is before current date' do
         it 'returns a 422' do
           body[:end_date] = Faker::Number.between(2, 15).days.ago
-          put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
+          sub_put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
           expect(response).to have_http_status(422)
         end
       end
@@ -345,7 +345,7 @@ RSpec.describe 'Promos', type: :request do
       context 'when end_date is equal to current date' do
         it 'returns a 200' do
           body[:end_date] = DateTime.now + 5.minutes
-          put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
+          sub_put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
           expect(response).to have_http_status(200)
         end
       end
@@ -353,7 +353,7 @@ RSpec.describe 'Promos', type: :request do
       context 'when end_date is after current date' do
         it 'returns a 200' do
           body[:end_date] = Faker::Number.between(2, 15).days.from_now
-          put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
+          sub_put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
           expect(response).to have_http_status(200)
         end
       end
@@ -362,7 +362,7 @@ RSpec.describe 'Promos', type: :request do
         it 'returns a 200' do
           body[:start_date] = Faker::Number.between(2, 15).days.from_now
           body[:end_date] = Faker::Number.between(17, 30).days.from_now
-          put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
+          sub_put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
           expect(response).to have_http_status(200)
         end
       end
@@ -371,7 +371,7 @@ RSpec.describe 'Promos', type: :request do
         it 'returns a 200' do
           body[:start_date] = Faker::Number.between(2, 15).days.from_now
           body[:end_date] = body[:start_date]
-          put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
+          sub_put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
           expect(response).to have_http_status(200)
         end
       end
@@ -380,7 +380,7 @@ RSpec.describe 'Promos', type: :request do
         it 'returns a 422' do
           body[:start_date] = Faker::Number.between(17, 30).days.from_now
           body[:end_date] = Faker::Number.between(2, 15).days.from_now
-          put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
+          sub_put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
           expect(response).to have_http_status(422)
         end
       end
@@ -389,17 +389,17 @@ RSpec.describe 'Promos', type: :request do
     context 'when updating a non-existing promo' do
       it 'raises a RecordNotFound' do # No way to get the 404.
         expect do
-          put api_v1_promo_path('non-existing-id')
+          sub_put api_v1_promo_path('non-existing-id')
         end.to raise_error ActiveRecord::RecordNotFound
       end
     end
   end
 
-  describe 'DELETE /api/v1/promos' do
+  describe 'DELETE /v1/promos' do
     context 'when deleting an existing promo' do
       let(:existing_promo) { create :promo }
       it 'returns a 200' do
-        delete api_v1_promo_path(existing_promo.id)
+        sub_delete api_v1_promo_path(existing_promo.id)
         expect(response).to have_http_status(200)
       end
     end
@@ -407,7 +407,7 @@ RSpec.describe 'Promos', type: :request do
     context 'when deleting a non-existing promo' do
       it 'raises a RecordNotFound' do # No way to get the 404.
         expect do
-          delete api_v1_promo_path('non-existing-id')
+          sub_delete api_v1_promo_path('non-existing-id')
         end.to raise_error ActiveRecord::RecordNotFound
       end
     end
