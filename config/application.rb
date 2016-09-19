@@ -27,5 +27,8 @@ module NowerServer
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
     config.active_record.primary_key = :uuid
+
+    # Include the lib folder to autoload components such as JWT encoding/decoding.
+    config.autoload_paths << Rails.root.join('lib')
   end
 end
