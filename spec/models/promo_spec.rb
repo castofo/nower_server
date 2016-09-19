@@ -24,7 +24,7 @@ RSpec.describe Promo, type: :model do
       end
     end
 
-    context 'with no more than 100 characters' do
+    context 'with no more than 140 characters' do
       it 'is valid' do
         name = Faker::Lorem.characters(Faker::Number.between(1, 140)) # From 1 to 140 characters
         expect(build(:promo, name: name)).to be_valid
