@@ -1,6 +1,17 @@
 module Api::V1
   class PromosController < ApplicationController
+    include Swagger::Docs::ImpotentMethods
+
     before_action :set_promo, only: [:show, :update, :destroy]
+
+    swagger_controller :promos, 'Promos'
+
+    swagger_api :index do
+      summary 'Fetches all Promos'
+      notes 'This lists all the promos'
+      response :ok
+      response :unauthorized
+    end
 
     # GET /promos
     def index
@@ -12,6 +23,25 @@ module Api::V1
     # GET /promos/1
     def show
       render json: @promo
+    end
+
+    swagger_model :Promo do
+      description "A Promo object."
+      property :name, :string, :required, 'Name of the promo'
+      property :description, :text, :required, 'Description of the promo'
+      property :terms, :text, :required, 'Terms and condition for the promo'
+      property :stock, :integer, 'Stock for the promo (available items)'
+      property :price, :double, 'Price of each item related with the promo'
+      property :start_date, :date, 'Start date of the promo'
+      property :end_date, :date, 'End date of the promo'
+    end
+
+    swagger_api :create do
+      summary 'Creates a new promo'
+      param :body, :body, :Promo, :required, 'Promo to be created'
+      response :created
+      response :unauthorized
+      response :unprocessable_entity
     end
 
     # POST /promos
