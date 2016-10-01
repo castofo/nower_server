@@ -12,11 +12,17 @@
           "notes": "This lists all the promos",
           "responseMessages": [
             {
+              "code": 200,
+              "responseModel": null,
+              "message": "Ok"
+            },
+            {
               "code": 401,
               "responseModel": null,
               "message": "Unauthorized"
             }
           ],
+          "type": "index_response",
           "nickname": "Api::V1::Promos#index",
           "method": "get"
         }
@@ -29,9 +35,9 @@
           "summary": "Creates a new promo",
           "responseMessages": [
             {
-              "code": 200,
+              "code": 201,
               "responseModel": null,
-              "message": "Ok"
+              "message": "Created"
             },
             {
               "code": 401,
@@ -48,7 +54,7 @@
             {
               "paramType": "body",
               "name": "body",
-              "type": "Promo",
+              "type": "promo",
               "description": "Promo to be created",
               "required": true
             }
@@ -61,8 +67,23 @@
   ],
   "authorizations": null,
   "models": {
-    "Promo": {
-      "id": "Promo",
+    "index_response": {
+      "id": "index_response",
+      "required": [
+        "promos"
+      ],
+      "properties": {
+        "promos": {
+          "type": "array",
+          "description": "List of promos",
+          "items": {
+            "$ref": "promo"
+          }
+        }
+      }
+    },
+    "promo": {
+      "id": "promo",
       "required": [
         "name",
         "description",

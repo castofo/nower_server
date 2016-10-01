@@ -11,6 +11,11 @@ module Api::V1
       notes 'This lists all the promos'
       response :ok
       response :unauthorized
+      type :index_response
+    end
+
+    swagger_model :index_response do
+       property :promos, :array, :required, 'List of promos', { items: { "$ref" => "promo" } }
     end
 
     # GET /promos
@@ -25,7 +30,7 @@ module Api::V1
       render json: @promo
     end
 
-    swagger_model :Promo do
+    swagger_model :promo do
       description "A Promo object."
       property :name, :string, :required, 'Name of the promo'
       property :description, :text, :required, 'Description of the promo'
@@ -38,7 +43,7 @@ module Api::V1
 
     swagger_api :create do
       summary 'Creates a new promo'
-      param :body, :body, :Promo, :required, 'Promo to be created'
+      param :body, :body, :promo, :required, 'Promo to be created'
       response :created
       response :unauthorized
       response :unprocessable_entity
