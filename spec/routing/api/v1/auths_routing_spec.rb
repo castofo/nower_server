@@ -8,6 +8,10 @@ RSpec.describe Api::V1::AuthsController, type: :routing do
       it 'routes to #login' do
         expect(post: "#{base_url}/v1/auths/login").to route_to('api/v1/auths#login')
       end
+
+      it 'routes to #register' do
+        expect(post: "#{base_url}/v1/auths/register").to route_to('api/v1/auths#register')
+      end
     end
 
     describe 'when api subdomain is not present' do
@@ -15,6 +19,10 @@ RSpec.describe Api::V1::AuthsController, type: :routing do
 
       it 'does not route to #login' do
         expect(post: "#{base_url}/v1/auths/login").not_to route_to('api/v1/auths#login')
+      end
+
+      it 'does not route to #register' do
+        expect(post: "#{base_url}/v1/auths/register").not_to route_to('api/v1/auths#register')
       end
     end
   end

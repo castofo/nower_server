@@ -80,6 +80,26 @@ RSpec.describe User, type: :model do
         expect(build(:user, password: '')).not_to be_valid
       end
     end
+
+    context 'when has less than 8 characters' do
+      it 'is invalid' do
+        password_length = Faker::Number.between(1, 7)
+        expect(build(:user, password: Faker::Lorem.characters(password_length))).not_to be_valid
+      end
+    end
+
+    context 'when has exactly 8 characters' do
+      it 'is valid' do
+        expect(build(:user, password: Faker::Lorem.characters(8))).to be_valid
+      end
+    end
+
+    context 'when has more than 8 characters' do
+      it 'is valid' do
+        password_length = Faker::Number.between(9, 30)
+        expect(build(:user, password: Faker::Lorem.characters(password_length))).to be_valid
+      end
+    end
   end
 
   describe 'birthday' do

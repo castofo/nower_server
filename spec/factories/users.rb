@@ -7,8 +7,8 @@ FactoryGirl.define do
     first_name name.split(' ').first
     last_name name.split(' ').second
     email Faker::Internet.email name
-    password Faker::Internet.password
+    password Faker::Internet.password(8)
     birthday Faker::Date.between(70.years.ago, 5.years.ago)
-    gender [nil, 'M', 'F'].sample
+    gender ['M', 'F'].sample
   end
 end
