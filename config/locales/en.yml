@@ -6,6 +6,10 @@ en:
   activerecord:
     errors:
       models:
+        promo:
+          attributes:
+            start_date:
+              already_started: 'cannot be changed once started'
         user:
           attributes:
             email:

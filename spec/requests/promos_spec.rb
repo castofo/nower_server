@@ -310,27 +310,56 @@ RSpec.describe 'Promos', type: :request do
         end
       end
 
-      context 'when start_date is before current date' do
-        it 'returns a 422' do
-          body[:start_date] = Faker::Number.between(2, 15).days.ago
-          sub_put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
-          expect(response).to have_http_status(422)
+      context 'when has already started' do
+        let(:started_promo) { create(:promo_already_started) }
+        context 'when start_date is before current date' do
+          it 'returns a 422' do
+            body[:start_date] = Faker::Number.between(2, 15).days.ago
+            sub_put api_v1_promo_path(started_promo.id), { params: { promo: body } }
+            expect(response).to have_http_status(422)
+          end
+        end
+
+        context 'when start_date is equal to current date' do
+          it 'returns a 422' do
+            body[:start_date] = DateTime.now + 5.minutes
+            sub_put api_v1_promo_path(started_promo.id), { params: { promo: body } }
+            expect(response).to have_http_status(422)
+          end
+        end
+
+        context 'when start_date is after current date' do
+          it 'returns a 422' do
+            body[:start_date] = Faker::Number.between(2, 15).days.from_now
+            sub_put api_v1_promo_path(started_promo.id), { params: { promo: body } }
+            expect(response).to have_http_status(422)
+          end
         end
       end
 
-      context 'when start_date is equal to current date' do
-        it 'returns a 200' do
-          body[:start_date] = DateTime.now + 5.minutes
-          sub_put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
-          expect(response).to have_http_status(200)
+      context 'when has not started yet' do
+        context 'when start_date is before current date' do
+          it 'returns a 422' do
+            body[:start_date] = Faker::Number.between(2, 15).days.ago
+            sub_put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
+            expect(response).to have_http_status(422)
+          end
         end
-      end
 
-      context 'when start_date is after current date' do
-        it 'returns a 200' do
-          body[:start_date] = Faker::Number.between(2, 15).days.from_now
-          sub_put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
-          expect(response).to have_http_status(200)
+        context 'when start_date is equal to current date' do
+          it 'returns a 200' do
+            body[:start_date] = DateTime.now + 5.minutes
+            sub_put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
+            expect(response).to have_http_status(200)
+          end
+        end
+
+        context 'when start_date is after current date' do
+          it 'returns a 200' do
+            body[:start_date] = Faker::Number.between(2, 15).days.from_now
+            sub_put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
+            expect(response).to have_http_status(200)
+          end
         end
       end
 

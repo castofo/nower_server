@@ -169,26 +169,53 @@ RSpec.describe Promo, type: :model do
     end
 
     context 'when not new record but changed state' do
-      let!(:existing_promo) { create :promo_with_dates }
-      context 'and is before current date' do
-        it 'is invalid' do
-          existing_promo.start_date = Faker::Number.between(1, 10).days.ago
-          expect(existing_promo).not_to be_valid
+      context 'and has already started' do
+        let!(:started_promo) { create :promo_already_started }
+        context 'and new date is before current date' do
+          it 'is invalid (not modifiable)' do
+            started_promo.start_date = Faker::Number.between(1, 10).days.ago
+            expect(started_promo).not_to be_valid
+          end
+        end
+
+        context 'and is equals current date' do
+          it 'is invalid (not modifiable)' do
+            started_promo.start_date = DateTime.now + 2.minutes
+            expect(started_promo).not_to be_valid
+          end
+        end
+
+        context 'and is after current date' do
+          it 'is invalid (not modifiable)' do
+            started_promo.start_date = Faker::Number.between(1, 10).days.from_now
+            started_promo.end_date = Faker::Number.between(15, 20).days.from_now
+            expect(started_promo).not_to be_valid
+          end
         end
       end
 
-      context 'and is equals current date' do
-        it 'is valid' do
-          existing_promo.start_date = DateTime.now + 2.minutes
-          expect(existing_promo).to be_valid
+      context 'and has not started yet' do
+        let!(:existing_promo) { create :promo_with_dates }
+        context 'and is before current date' do
+          it 'is invalid' do
+            existing_promo.start_date = Faker::Number.between(1, 10).days.ago
+            expect(existing_promo).not_to be_valid
+          end
         end
-      end
 
-      context 'and is after current date' do
-        it 'is valid' do
-          existing_promo.start_date = Faker::Number.between(1, 10).days.from_now
-          existing_promo.end_date = Faker::Number.between(15, 20).days.from_now
-          expect(existing_promo).to be_valid
+        context 'and is equals current date' do
+          it 'is valid' do
+            existing_promo.start_date = DateTime.now + 2.minutes
+            expect(existing_promo).to be_valid
+          end
+        end
+
+        context 'and is after current date' do
+          it 'is valid' do
+            existing_promo.start_date = Faker::Number.between(1, 10).days.from_now
+            existing_promo.end_date = Faker::Number.between(15, 20).days.from_now
+            expect(existing_promo).to be_valid
+          end
         end
       end
     end
