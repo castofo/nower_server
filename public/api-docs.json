@@ -5,7 +5,11 @@
   "apis": [
     {
       "path": "/api/v1/promos.{format}",
-      "description": "Promos"
+      "description": "Promos Management"
+    },
+    {
+      "path": "/api/v1/auths.{format}",
+      "description": "Authorization Management"
     }
   ],
   "authorizations": null
