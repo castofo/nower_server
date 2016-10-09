@@ -84,7 +84,7 @@ $ rails s -b 0.0.0.0
 ```
 You'll see Puma's output indicating the port the server is running on, as well
 as the amount of workers it's running. This configuration can be found in
-TDJobs's ``config`` folder, in ``puma.rb``, where you can edit it.
+Nower's ``config`` folder, in ``puma.rb``, where you can edit it.
 
 [Ruby]:https://rvm.io/
 [Rails]:http://rubyonrails.org/
