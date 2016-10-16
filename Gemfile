@@ -4,12 +4,15 @@ gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
 gem 'pg', '~> 0.18'
 gem 'puma', '~> 3.0'
 gem 'validates_timeliness', '~> 4.0'
+gem 'bcrypt', '~> 3.1.11'
+gem 'jwt', '~> 1.5.5'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.5.1'
   gem 'rails-controller-testing', '~> 1.0.1'
   gem 'factory_girl_rails', '~> 4.7.0'
   gem 'faker', '~> 1.6.6'
+  gem 'swagger-docs', '~> 0.2.9'
 end
 
 group :development do

@@ -11,6 +11,7 @@ It has a simple REST HTTP API so that it can be used with ease.
   * [Dependencies](#dependencies)
   * [Setup](#setup)
   * [How to get Nower up and running](#how-to-get-nower-up-and-running)
+  * [API Documentation](#api-documentation)
 
 ## Dependencies
 
@@ -85,6 +86,22 @@ $ rails s -b 0.0.0.0
 You'll see Puma's output indicating the port the server is running on, as well
 as the amount of workers it's running. This configuration can be found in
 Nower's ``config`` folder, in ``puma.rb``, where you can edit it.
+
+## API Documentation
+
+You can use the Swagger API documentation to check how to use endpoints.
+
+Run the task
+
+```
+$ rake swagger:docs
+```
+
+And then use the `/doc` path to open Swagger.
+
+**NOTE**: In order to test the endpoints through Swagger you must access the application using the
+`api` subdomain. That is, you can create a local alias like: `api.local.nower.co` pointing to
+`localhost`, and then use `http://api.local.nower.co:3000/doc` to open Swagger.
 
 [Ruby]:https://rvm.io/
 [Rails]:http://rubyonrails.org/

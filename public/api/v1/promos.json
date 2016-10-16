@@ -1,0 +1,255 @@
+{
+  "apiVersion": "1.0",
+  "swaggerVersion": "1.2",
+  "basePath": "",
+  "resourcePath": "promos",
+  "apis": [
+    {
+      "path": "/v1/promos",
+      "operations": [
+        {
+          "summary": "Fetches all Promos",
+          "responseMessages": [
+            {
+              "code": 200,
+              "responseModel": null,
+              "message": "Ok"
+            },
+            {
+              "code": 401,
+              "responseModel": null,
+              "message": "Unauthorized"
+            }
+          ],
+          "type": "index_response",
+          "nickname": "Api::V1::Promos#index",
+          "method": "get"
+        }
+      ]
+    },
+    {
+      "path": "/v1/promos",
+      "operations": [
+        {
+          "summary": "Creates a new promo",
+          "responseMessages": [
+            {
+              "code": 201,
+              "responseModel": null,
+              "message": "Created"
+            },
+            {
+              "code": 401,
+              "responseModel": null,
+              "message": "Unauthorized"
+            },
+            {
+              "code": 422,
+              "responseModel": null,
+              "message": "Unprocessable Entity"
+            }
+          ],
+          "type": "create_promo",
+          "parameters": [
+            {
+              "paramType": "body",
+              "name": "body",
+              "type": "create_promo",
+              "description": "Promo to be created",
+              "required": true
+            }
+          ],
+          "nickname": "Api::V1::Promos#create",
+          "method": "post"
+        }
+      ]
+    },
+    {
+      "path": "/v1/promos/{id}",
+      "operations": [
+        {
+          "summary": "Updates an existing promo",
+          "responseMessages": [
+            {
+              "code": 200,
+              "responseModel": null,
+              "message": "Ok"
+            },
+            {
+              "code": 400,
+              "responseModel": null,
+              "message": "Bad Request"
+            },
+            {
+              "code": 401,
+              "responseModel": null,
+              "message": "Unauthorized"
+            },
+            {
+              "code": 404,
+              "responseModel": null,
+              "message": "Not Found"
+            },
+            {
+              "code": 422,
+              "responseModel": null,
+              "message": "Unprocessable Entity"
+            }
+          ],
+          "type": "update_promo",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "id",
+              "type": "uuid",
+              "description": "Id of the promo to be updated",
+              "required": true
+            },
+            {
+              "paramType": "body",
+              "name": "body",
+              "type": "update_promo",
+              "description": "Promo values to be changed",
+              "required": true
+            }
+          ],
+          "nickname": "Api::V1::Promos#update",
+          "method": "patch"
+        }
+      ]
+    },
+    {
+      "path": "/v1/promos/{id}",
+      "operations": [
+        {
+          "summary": "Deletes an existing promo",
+          "responseMessages": [
+            {
+              "code": 200,
+              "responseModel": null,
+              "message": "Ok"
+            },
+            {
+              "code": 401,
+              "responseModel": null,
+              "message": "Unauthorized"
+            },
+            {
+              "code": 404,
+              "responseModel": null,
+              "message": "Not Found"
+            },
+            {
+              "code": 422,
+              "responseModel": null,
+              "message": "Unprocessable Entity"
+            }
+          ],
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "id",
+              "type": "uuid",
+              "description": "Id of the promo to be deleted",
+              "required": true
+            }
+          ],
+          "nickname": "Api::V1::Promos#destroy",
+          "method": "delete"
+        }
+      ]
+    }
+  ],
+  "authorizations": null,
+  "models": {
+    "index_response": {
+      "id": "index_response",
+      "required": [
+        "promos"
+      ],
+      "properties": {
+        "promos": {
+          "type": "array",
+          "description": "List of promos",
+          "items": {
+            "$ref": "promo"
+          }
+        }
+      }
+    },
+    "create_promo": {
+      "id": "create_promo",
+      "required": [
+        "name",
+        "description",
+        "terms"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the promo"
+        },
+        "description": {
+          "type": "text",
+          "description": "Description of the promo"
+        },
+        "terms": {
+          "type": "text",
+          "description": "Terms and condition for the promo"
+        },
+        "stock": {
+          "type": "integer",
+          "description": null
+        },
+        "price": {
+          "type": "double",
+          "description": null
+        },
+        "start_date": {
+          "type": "date",
+          "description": null
+        },
+        "end_date": {
+          "type": "date",
+          "description": null
+        }
+      },
+      "description": "A Promo object."
+    },
+    "update_promo": {
+      "id": "update_promo",
+      "required": null,
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": null
+        },
+        "description": {
+          "type": "text",
+          "description": null
+        },
+        "terms": {
+          "type": "text",
+          "description": null
+        },
+        "stock": {
+          "type": "integer",
+          "description": null
+        },
+        "price": {
+          "type": "double",
+          "description": null
+        },
+        "start_date": {
+          "type": "date",
+          "description": null
+        },
+        "end_date": {
+          "type": "date",
+          "description": null
+        }
+      },
+      "description": "A Promo object."
+    }
+  }
+}
