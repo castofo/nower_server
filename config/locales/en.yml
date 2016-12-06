@@ -14,3 +14,6 @@ en:
           attributes:
             email:
               unregistered: 'is not registered'
+  admin_mailer:
+    password_confirmation:
+      subject: 'Account activation'
