@@ -6,6 +6,10 @@ Rails.application.routes.draw do
       get 'auths/index' # TODO: Delete, development purposes.
       post 'auths/login'
       post 'auths/register'
+
+      get 'admins/index' # TODO: Delete, development purposes.
+      post 'admins/login'
+      post 'admins/register'
     end
   end
 end

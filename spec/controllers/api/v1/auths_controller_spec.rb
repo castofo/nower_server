@@ -23,14 +23,13 @@ RSpec.describe Api::V1::AuthsController, type: :controller do
   describe "POST #register" do
     context "with valid params" do
       it "creates a new User" do
-        par = valid_attributes
         expect {
-          post :register, params: { user: par }, session: valid_session
+          post :register, params: valid_attributes, session: valid_session
         }.to change(User, :count).by(1)
       end
 
       it "assigns a newly created user as @user" do
-        post :register, params: { user: valid_attributes }, session: valid_session
+        post :register, params: valid_attributes, session: valid_session
         expect(assigns(:user)).to be_a(User)
         expect(assigns(:user)).to be_persisted
       end
@@ -38,7 +37,7 @@ RSpec.describe Api::V1::AuthsController, type: :controller do
 
     context "with invalid params" do
       it "assigns a newly created but unsaved user as @user" do
-        post :register, params: { user: invalid_attributes }, session: valid_session
+        post :register, params: invalid_attributes, session: valid_session
         expect(assigns(:user)).to be_a_new(User)
       end
     end

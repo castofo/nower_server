@@ -30,7 +30,7 @@ module Api::V1
     end
 
     swagger_api :login do
-      summary 'Logins an application user'
+      summary 'Logs in an application user'
       param :body, :body, :login_body, :required, 'Login request body'
       response :ok
       response :unauthorized
@@ -84,7 +84,6 @@ module Api::V1
 
     # POST auths/register
     def register
-      params[:user] = params[:auth] if params[:user].nil? && !params[:auth].nil?
       @user = User.new(user_params)
 
       if @user.save
@@ -102,7 +101,7 @@ module Api::V1
 
       # Only allow a trusted parameter "white list" through.
       def user_params
-        params.require(:user).permit(
+        params.permit(
             :first_name,
             :last_name,
             :email,
