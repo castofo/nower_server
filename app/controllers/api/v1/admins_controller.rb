@@ -59,7 +59,6 @@ module Api::V1
       property :admin_type, :string, 'Type of admin'
       property :privileges, :integer, 'Privileges of the admin'
       property :activated_at, :date, 'Activation date of the admin (null -> not activated)'
-      property :gender, :char, 'Gender of the admin'
     end
 
     swagger_model :register_body do

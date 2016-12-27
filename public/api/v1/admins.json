@@ -154,10 +154,6 @@
         "activated_at": {
           "type": "date",
           "description": null
-        },
-        "gender": {
-          "type": "char",
-          "description": null
         }
       },
       "description": "The created admin."
