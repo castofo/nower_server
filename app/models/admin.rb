@@ -1,5 +1,4 @@
 class Admin < ApplicationRecord
-  before_save :setup_admin_type
   validates :email, uniqueness: true
   validates_format_of :email, with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
   validates :password, length: { minimum: 8 }
@@ -8,6 +7,11 @@ class Admin < ApplicationRecord
   validate :activated_at_must_not_change_once_set
   validates_datetime :activated_at, allow_nil: true, on_or_before: lambda { DateTime.now }
   has_secure_password
+
+  def initialize(attrs = {})
+    attrs[:admin_type] = :branch_admin
+    super(attrs)
+  end
 
   def activated?
     !self.activated_at.nil?
@@ -24,10 +28,6 @@ class Admin < ApplicationRecord
     return JsonWebToken.encode(admin_id: self.id) if self.authenticate(password)
     self.errors.add(:password, :invalid)
     nil
-  end
-
-  def setup_admin_type
-    self.admin_type = :branch_admin
   end
 
   def activated_at_must_not_change_once_set
