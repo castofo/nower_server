@@ -6,6 +6,7 @@ class Admin < ApplicationRecord
   validates :privileges, numericality: { only_integer: true }
   validate :activated_at_must_not_change_once_set
   validates_datetime :activated_at, allow_nil: true, on_or_before: lambda { DateTime.now }
+  after_create :send_verification_email
   has_secure_password
 
   def initialize(attrs = {})
@@ -17,10 +18,6 @@ class Admin < ApplicationRecord
     !self.activated_at.nil?
   end
 
-  def generate_confirmation_email_token
-    JsonWebToken.encode(action: :confirmation_email, email: self.email)
-  end
-
   # Tries to login the current admin with the given password. Adds an error if the password
   # is invalid.
   # @return [String] the authorization token if the password is correct, nil otherwise.
@@ -28,6 +25,14 @@ class Admin < ApplicationRecord
     return JsonWebToken.encode(admin_id: self.id) if self.authenticate(password)
     self.errors.add(:password, :invalid)
     nil
+  end
+
+  def send_verification_email
+    AdminMailer.password_confirmation(self).deliver_later
+  end
+
+  def generate_confirmation_email_token
+    JsonWebToken.encode(action: :confirmation_email, email: self.email)
   end
 
   def activated_at_must_not_change_once_set
