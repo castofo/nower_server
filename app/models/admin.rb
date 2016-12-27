@@ -1,5 +1,12 @@
 class Admin < ApplicationRecord
   before_save :setup_admin_type
+  validates :email, uniqueness: true
+  validates_format_of :email, with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
+  validates :password, length: { minimum: 8 }
+  validates :admin_type, presence: true
+  validates :privileges, numericality: { only_integer: true }
+  validate :activated_at_must_not_change_once_set
+  validates_datetime :activated_at, allow_nil: true, on_or_before: lambda { DateTime.now }
   has_secure_password
 
   def activated?
@@ -21,5 +28,10 @@ class Admin < ApplicationRecord
 
   def setup_admin_type
     self.admin_type = :branch_admin
+  end
+
+  def activated_at_must_not_change_once_set
+    return unless self.activated_at_changed?
+    self.errors.add(:activated_at, :changed) unless self.activated_at_change.first.nil?
   end
 end

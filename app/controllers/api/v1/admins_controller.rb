@@ -101,7 +101,8 @@ module Api::V1
         params.permit(
             :email,
             :password,
-            :privileges
+            :privileges,
+            :admin_type # Only used in tests, check :before_save in model
         )
       end
   end
