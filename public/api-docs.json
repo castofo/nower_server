@@ -10,6 +10,10 @@
     {
       "path": "/api/v1/auths.{format}",
       "description": "Authorization Management"
+    },
+    {
+      "path": "/api/v1/admins.{format}",
+      "description": "Admins Management"
     }
   ],
   "authorizations": null

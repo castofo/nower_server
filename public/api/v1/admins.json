@@ -2,13 +2,13 @@
   "apiVersion": "1.0",
   "swaggerVersion": "1.2",
   "basePath": "",
-  "resourcePath": "auths",
+  "resourcePath": "admins",
   "apis": [
     {
-      "path": "/v1/auths/index",
+      "path": "/v1/admins/index",
       "operations": [
         {
-          "summary": "Fetches all application users (Development only)",
+          "summary": "Fetches all web admins (Development only)",
           "responseMessages": [
             {
               "code": 200,
@@ -16,16 +16,16 @@
               "message": "Ok"
             }
           ],
-          "nickname": "Api::V1::Auths#index",
+          "nickname": "Api::V1::Admins#index",
           "method": "get"
         }
       ]
     },
     {
-      "path": "/v1/auths/login",
+      "path": "/v1/admins/login",
       "operations": [
         {
-          "summary": "Logs in an application user",
+          "summary": "Logs in an application admin",
           "responseMessages": [
             {
               "code": 200,
@@ -48,16 +48,16 @@
               "required": true
             }
           ],
-          "nickname": "Api::V1::Auths#login",
+          "nickname": "Api::V1::Admins#login",
           "method": "post"
         }
       ]
     },
     {
-      "path": "/v1/auths/register",
+      "path": "/v1/admins/register",
       "operations": [
         {
-          "summary": "Registers an application user",
+          "summary": "Registers an application admin",
           "responseMessages": [
             {
               "code": 201,
@@ -90,7 +90,7 @@
               "required": true
             }
           ],
-          "nickname": "Api::V1::Auths#register",
+          "nickname": "Api::V1::Admins#register",
           "method": "post"
         }
       ]
@@ -102,7 +102,7 @@
       "id": "login_response",
       "required": null,
       "properties": {
-        "user_id": {
+        "admin_id": {
           "type": "uuid",
           "description": null
         },
@@ -111,7 +111,7 @@
           "description": null
         }
       },
-      "description": "A Login response."
+      "description": "A login response."
     },
     "login_body": {
       "id": "login_body",
@@ -122,14 +122,14 @@
       "properties": {
         "email": {
           "type": "string",
-          "description": "Email of the user to be logged in"
+          "description": "Email of the admin to be logged in"
         },
         "password": {
           "type": "string",
-          "description": "Password of the user to be logged in"
+          "description": "Password of the admin to be logged in"
         }
       },
-      "description": "A Login request body."
+      "description": "A login request body."
     },
     "register_response": {
       "id": "register_response",
@@ -139,64 +139,46 @@
           "type": "uuid",
           "description": null
         },
-        "first_name": {
-          "type": "string",
-          "description": null
-        },
-        "last_name": {
-          "type": "string",
-          "description": null
-        },
         "email": {
           "type": "string",
           "description": null
         },
-        "birthday": {
-          "type": "date",
+        "admin_type": {
+          "type": "string",
           "description": null
         },
-        "gender": {
-          "type": "char",
+        "privileges": {
+          "type": "integer",
+          "description": null
+        },
+        "activated_at": {
+          "type": "date",
           "description": null
         }
       },
-      "description": "The created user."
+      "description": "The created admin."
     },
     "register_body": {
       "id": "register_body",
       "required": [
-        "first_name",
-        "last_name",
         "email",
         "password"
       ],
       "properties": {
-        "first_name": {
-          "type": "string",
-          "description": "First name of the user user"
-        },
-        "last_name": {
-          "type": "string",
-          "description": "Last name of the user"
-        },
         "email": {
           "type": "string",
-          "description": "Email of the user"
+          "description": "Email of the admin"
         },
         "password": {
           "type": "string",
-          "description": "Password of the user"
+          "description": "Password of the admin"
         },
-        "birthday": {
-          "type": "date",
-          "description": null
-        },
-        "gender": {
-          "type": "char",
+        "privileges": {
+          "type": "integer",
           "description": null
         }
       },
-      "description": "User parameters to be created."
+      "description": "Parameters of Admin to be created."
     }
   }
 }
