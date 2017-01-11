@@ -8,6 +8,10 @@
       "description": "Promos Management"
     },
     {
+      "path": "/api/v1/branches.{format}",
+      "description": "Branches Management"
+    },
+    {
       "path": "/api/v1/auths.{format}",
       "description": "Authorization Management"
     },
