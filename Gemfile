@@ -7,6 +7,7 @@ gem 'validates_timeliness', '~> 4.0'
 gem 'bcrypt', '~> 3.1.11'
 gem 'jwt', '~> 1.5.5'
 gem 'figaro', '~> 1.1.1'
+gem 'rack-cors', '~> 0.4.0'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.5.1'
