@@ -83,23 +83,9 @@ RSpec.describe Admin, type: :model do
   end
 
   describe 'privileges' do
-    context 'when is not a number' do
-      it 'is invalid' do
-        expect(build(:admin, privileges: Faker::Lorem.word)).not_to be_valid
-      end
-    end
-
-    context 'when is a number' do
-      context 'and is not integer' do
-        it 'is invalid' do
-          expect(build(:admin, privileges: Faker::Number.positive)).not_to be_valid
-        end
-      end
-
-      context 'and is integer' do
-        it 'is valid' do
-          expect(build(:admin, privileges: Faker::Number.between(0, 32))).to be_valid
-        end
+    context 'when is an array' do
+      it 'is valid' do
+        expect(build(:admin, privileges: [])).to be_valid
       end
     end
   end

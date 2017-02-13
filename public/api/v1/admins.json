@@ -148,7 +148,7 @@
           "description": null
         },
         "privileges": {
-          "type": "integer",
+          "type": "array",
           "description": null
         },
         "activated_at": {
@@ -174,7 +174,7 @@
           "description": "Password of the admin"
         },
         "privileges": {
-          "type": "integer",
+          "type": "array",
           "description": null
         }
       },

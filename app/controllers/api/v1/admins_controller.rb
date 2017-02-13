@@ -57,7 +57,7 @@ module Api::V1
       property :id, :uuid, 'Id of the created admin'
       property :email, :string, 'Email of the admin'
       property :admin_type, :string, 'Type of admin'
-      property :privileges, :integer, 'Privileges of the admin'
+      property :privileges, :array, 'Privileges of the admin'
       property :activated_at, :date, 'Activation date of the admin (null -> not activated)'
     end
 
@@ -65,7 +65,7 @@ module Api::V1
       description "Parameters of Admin to be created."
       property :email, :string, :required, 'Email of the admin'
       property :password, :string, :required, 'Password of the admin'
-      property :privileges, :integer, 'Privileges of the admin'
+      property :privileges, :array, 'Privileges of the admin'
     end
 
     swagger_api :register do
@@ -100,8 +100,8 @@ module Api::V1
         params.permit(
             :email,
             :password,
-            :privileges,
-            :admin_type # Only used in tests, check :before_save in model
+            :admin_type, # Only used in tests, check :before_save in model
+            privileges: []
         )
       end
   end

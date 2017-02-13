@@ -3,7 +3,7 @@ FactoryGirl.define do
     email Faker::Internet.email
     password Faker::Internet.password(8)
     admin_type [:branch_admin].sample
-    privileges [*1..32].sample
+    privileges []
     activated_at nil
 
     factory :admin_activated do
