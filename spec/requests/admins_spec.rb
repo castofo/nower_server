@@ -57,17 +57,33 @@ RSpec.describe 'Admins', type: :request do
       end
     end
 
-    context 'when email is not present' do
+    context 'when first_name is not present' do
       it 'returns a 422' do
-        body[:email] = nil
+        body[:first_name] = nil
         sub_post api_v1_admins_register_path, { params: body }
         expect(response).to have_http_status(422)
       end
     end
 
-    context 'when email is empty' do
+    context 'when first_name is empty' do
       it 'returns a 422' do
-        body[:email] = ''
+        body[:first_name] = ''
+        sub_post api_v1_admins_register_path, { params: body }
+        expect(response).to have_http_status(422)
+      end
+    end
+
+    context 'when last_name is not present' do
+      it 'returns a 422' do
+        body[:last_name] = nil
+        sub_post api_v1_admins_register_path, { params: body }
+        expect(response).to have_http_status(422)
+      end
+    end
+
+    context 'when last_name is empty' do
+      it 'returns a 422' do
+        body[:last_name] = ''
         sub_post api_v1_admins_register_path, { params: body }
         expect(response).to have_http_status(422)
       end

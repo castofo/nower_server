@@ -55,6 +55,8 @@ module Api::V1
     swagger_model :register_response do
       description "The created admin."
       property :id, :uuid, 'Id of the created admin'
+      property :first_name, :string, 'First name of the admin'
+      property :last_name, :string, 'Last name of the admin'
       property :email, :string, 'Email of the admin'
       property :admin_type, :string, 'Type of admin'
       property :privileges, :array, 'Privileges of the admin'
@@ -63,6 +65,8 @@ module Api::V1
 
     swagger_model :register_body do
       description "Parameters of Admin to be created."
+      property :first_name, :string, :required, 'First name of the admin'
+      property :last_name, :string, :required, 'Last name of the admin'
       property :email, :string, :required, 'Email of the admin'
       property :password, :string, :required, 'Password of the admin'
       property :privileges, :array, 'Privileges of the admin'
@@ -98,6 +102,8 @@ module Api::V1
       # Only allow a trusted parameter "white list" through.
       def admin_params
         params.permit(
+            :first_name,
+            :last_name,
             :email,
             :password,
             :admin_type, # Only used in tests, check :before_save in model

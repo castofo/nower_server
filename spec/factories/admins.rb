@@ -1,6 +1,10 @@
 FactoryGirl.define do
+  name = Faker::Name.name
+
   factory :admin do
-    email Faker::Internet.email
+    first_name name.split(' ').first
+    last_name name.split(' ').second
+    email Faker::Internet.email name
     password Faker::Internet.password(8)
     admin_type [:branch_admin].sample
     privileges []

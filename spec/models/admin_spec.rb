@@ -5,6 +5,34 @@ RSpec.describe Admin, type: :model do
     expect(build(:admin)).to be_valid
   end
 
+  describe 'first_name' do
+    context 'when nil' do
+      it 'is invalid' do
+        expect(build(:admin, first_name: nil)).not_to be_valid
+      end
+    end
+
+    context 'when empty' do
+      it 'is invalid' do
+        expect(build(:admin, first_name: '')).not_to be_valid
+      end
+    end
+  end
+
+  describe 'last_name' do
+    context 'when nil' do
+      it 'is invalid' do
+        expect(build(:admin, last_name: nil)).not_to be_valid
+      end
+    end
+
+    context 'when empty' do
+      it 'is invalid' do
+        expect(build(:admin, last_name: '')).not_to be_valid
+      end
+    end
+  end
+
   describe 'email' do
     context 'when nil' do
       it 'is invalid' do
