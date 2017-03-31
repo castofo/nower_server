@@ -323,6 +323,36 @@ paths:
           description: Unexpected error.
           schema:
             $ref: '#/definitions/Error'
+  /branches/{id}:
+    get:
+      summary: Fetches a branch.
+      description: |
+        With a branch id, fetches id and its related information.
+      tags:
+        - branches
+      parameters:
+        - name: id
+          in: path
+          description: The branch identifier
+          type: string
+          required: true
+      responses:
+        200:
+          description: Found branch information.
+          schema:
+            $ref: '#/definitions/Branch'
+        401:
+          description: Unauthorized error.
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: The given branch was not found.
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+          description: Unexpected error.
+          schema:
+            $ref: '#/definitions/Error'
 
 tags:
   - name: promos
