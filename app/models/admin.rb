@@ -1,9 +1,10 @@
 class Admin < ApplicationRecord
+  validates :first_name, :last_name, presence: true
   validates :email, uniqueness: true
   validates_format_of :email, with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
   validates :password, length: { minimum: 8 }
   validates :admin_type, presence: true
-  validates :privileges, numericality: { only_integer: true }
+  validate :privileges_array_values
   validate :activated_at_must_not_change_once_set
   validates_datetime :activated_at, allow_nil: true, on_or_before: lambda { DateTime.now }
   after_create :send_verification_email
@@ -33,6 +34,15 @@ class Admin < ApplicationRecord
 
   def generate_confirmation_email_token
     JsonWebToken.encode(action: :confirmation_email, email: self.email)
+  end
+
+  def privileges_array_values
+    return self.errors.add(:privileges, :not_array) unless self.privileges.is_a?(Array)
+    self.privileges.each do |privilege|
+      if Constants::Admin::PRIVILEGES[privilege].nil?
+        self.errors.add(:privileges, :invalid, privilege: privilege)
+      end
+    end
   end
 
   def activated_at_must_not_change_once_set

@@ -57,17 +57,33 @@ RSpec.describe 'Admins', type: :request do
       end
     end
 
-    context 'when email is not present' do
+    context 'when first_name is not present' do
       it 'returns a 422' do
-        body[:email] = nil
+        body[:first_name] = nil
         sub_post api_v1_admins_register_path, { params: body }
         expect(response).to have_http_status(422)
       end
     end
 
-    context 'when email is empty' do
+    context 'when first_name is empty' do
       it 'returns a 422' do
-        body[:email] = ''
+        body[:first_name] = ''
+        sub_post api_v1_admins_register_path, { params: body }
+        expect(response).to have_http_status(422)
+      end
+    end
+
+    context 'when last_name is not present' do
+      it 'returns a 422' do
+        body[:last_name] = nil
+        sub_post api_v1_admins_register_path, { params: body }
+        expect(response).to have_http_status(422)
+      end
+    end
+
+    context 'when last_name is empty' do
+      it 'returns a 422' do
+        body[:last_name] = ''
         sub_post api_v1_admins_register_path, { params: body }
         expect(response).to have_http_status(422)
       end
@@ -130,45 +146,33 @@ RSpec.describe 'Admins', type: :request do
       end
     end
 
-
-
-
-
     context 'when privileges is not present' do
-      it 'returns a 422' do
-        body[:privileges] = nil
+      it 'returns a 201' do
+        body[:privileges] = nil # Will default to []
         sub_post api_v1_admins_register_path, { params: body }
-        expect(response).to have_http_status(422)
+        expect(response).to have_http_status(201)
       end
     end
 
     context 'when privileges is empty' do
-      it 'returns a 422' do
-        body[:privileges] = ''
+      it 'returns a 201' do
+        body[:privileges] = '' # Will default to []
         sub_post api_v1_admins_register_path, { params: body }
-        expect(response).to have_http_status(422)
+        expect(response).to have_http_status(201)
       end
     end
 
-    context 'when privileges is not a number' do
-      it 'returns a 422' do
-        body[:privileges] = Faker::Lorem.word
+    context 'when privileges is not an array' do
+      it 'returns a 201' do
+        body[:privileges] = Faker::Lorem.word # Will default to []
         sub_post api_v1_admins_register_path, { params: body }
-        expect(response).to have_http_status(422)
+        expect(response).to have_http_status(201)
       end
     end
 
-    context 'when privileges is not a number' do
-      it 'returns a 422' do
-        body[:privileges] = Faker::Number.positive
-        sub_post api_v1_admins_register_path, { params: body }
-        expect(response).to have_http_status(422)
-      end
-    end
-
-    context 'when privileges is an integer' do
+    context 'when privileges is an array' do
       it 'creates the admin' do
-        body[:privileges] = Faker::Number.between(0, 32)
+        body[:privileges] = []
         sub_post api_v1_admins_register_path, { params: body }
         expect(response).to have_http_status(201)
       end

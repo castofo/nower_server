@@ -89,22 +89,31 @@ Nower's ``config`` folder, in ``puma.rb``, where you can edit it.
 
 ## API Documentation
 
-You can use the Swagger API documentation to check how to use endpoints.
-
-Run the task
+Nower parses a YAML file with the [Swagger] documentation and uses [swagger-ui] to display it.
+The `.yml` file is located at `app/doc/swagger.yml`, and running the rask:
 
 ```
-$ rake swagger:docs
+$ rake nower:doc
 ```
 
-And then use the `/doc` path to open Swagger.
+Will parse it to a `.json` file which is used by the swagger-ui located in the root public folder.
+Then, use the `/` path to open Swagger.
+
+A good alternative to write documentation efficiently is to run guard, which is installed for the
+development environment, it will listen for the `.yml` file changes and parse it to `.json`
+automatically.
+
+```
+$ bundle exec guard
+```
 
 **NOTE**: In order to test the endpoints through Swagger you must access the application using the
 `api` subdomain. That is, you can create a local alias like: `api.local.nower.co` pointing to
-`localhost`, and then use `http://api.local.nower.co:3000/doc` to open Swagger.
+`localhost`, and then use `http://api.local.nower.co:3000` to open Swagger.
 
 [Ruby]:https://rvm.io/
 [Rails]:http://rubyonrails.org/
 [PostgreSQL]:http://www.postgresql.org/download/
 [Bundler]:http://bundler.io/
 [Swagger]:http://swagger.io/
+[swagger-ui]:http://swagger.io/swagger-ui/
