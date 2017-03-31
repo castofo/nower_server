@@ -39,7 +39,7 @@ class Admin < ApplicationRecord
   def privileges_array_values
     return self.errors.add(:privileges, :not_array) unless self.privileges.is_a?(Array)
     self.privileges.each do |privilege|
-      if Constants::Admin::PRIVILEGES[privilege].nil?
+      if Constants::Admin::PRIVILEGES[privilege.to_sym].nil?
         self.errors.add(:privileges, :invalid, privilege: privilege)
       end
     end

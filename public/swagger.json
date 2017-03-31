@@ -434,6 +434,38 @@
           }
         }
       }
+    },
+    "/branches": {
+      "get": {
+        "summary": "Fetches all branches.",
+        "description": "Returns a list of all created branches.\n",
+        "tags": [
+          "branches"
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of branches.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Branch"
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication failed.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "default": {
+            "description": "Unexpected error.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
     }
   },
   "tags": [
@@ -448,6 +480,10 @@
     {
       "name": "admins",
       "description": "Admins management"
+    },
+    {
+      "name": "branches",
+      "description": "Branches management"
     }
   ],
   "definitions": {
@@ -468,7 +504,7 @@
       "properties": {
         "id": {
           "type": "string",
-          "description": "Unique identifier representg an specific promo."
+          "description": "Unique identifier representing an specific promo."
         },
         "name": {
           "type": "string",
@@ -561,7 +597,7 @@
       "properties": {
         "id": {
           "type": "string",
-          "description": "Unique identifier representg an specific user."
+          "description": "Unique identifier representing an specific user."
         },
         "first_name": {
           "type": "string",
@@ -687,7 +723,7 @@
       "properties": {
         "id": {
           "type": "string",
-          "description": "Unique identifier representg an specific admin."
+          "description": "Unique identifier representing an specific admin."
         },
         "first_name": {
           "type": "string",
@@ -722,6 +758,10 @@
             "update_branch",
             "invite_to_branch"
           ]
+        },
+        "activated_at": {
+          "type": "string",
+          "description": "Date and time when the admin was activated via email confirmation. `null` if he/she hasn't confirmed the email yet."
         },
         "created_at": {
           "type": "string",
@@ -789,6 +829,48 @@
             "update_branch",
             "invite_to_branch"
           ]
+        }
+      }
+    },
+    "Branch": {
+      "type": "object",
+      "required": [
+        "id",
+        "latitude",
+        "longitude",
+        "address",
+        "default_contact_info",
+        "created_at",
+        "updated_at"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier representing an specific branch."
+        },
+        "latitude": {
+          "type": "string",
+          "description": "Latitude of the branch."
+        },
+        "longitude": {
+          "type": "string",
+          "description": "Longitude of the branch."
+        },
+        "address": {
+          "type": "string",
+          "description": "Street address of the branch."
+        },
+        "default_contact_info": {
+          "type": "boolean",
+          "description": "Whether to use the store contact information for this branch or not."
+        },
+        "created_at": {
+          "type": "string",
+          "description": "Date and time when the branch was created."
+        },
+        "updated_at": {
+          "type": "string",
+          "description": "Date and time when the branch was lastly modified."
         }
       }
     },
