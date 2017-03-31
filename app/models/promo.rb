@@ -1,4 +1,6 @@
 class Promo < ApplicationRecord
+  has_and_belongs_to_many :branches
+
   validates :name, presence: true, length: { maximum: 140 }
   validates :description, :terms, presence: true
   validate :stock_must_be_greater_than_zero_if_it_was_nil

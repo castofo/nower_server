@@ -15,10 +15,15 @@
   "paths": {
     "/promos": {
       "get": {
-        "summary": "Fetches all Promos.",
-        "description": "Returns a list of available promos. The reponse includes the display\nname and other details about each promo.\n",
+        "summary": "Fetches Promos.",
+        "description": "Returns a list of available promos. The reponse includes the display\nname and other details about each promo.\n\nIncluding the `branch_id` query parameter will only return promos that belong to the given\nbranch.\n",
         "tags": [
           "promos"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/BranchId"
+          }
         ],
         "responses": {
           "200": {
@@ -32,6 +37,12 @@
           },
           "401": {
             "description": "Unexpected error.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Some given entity was not found.",
             "schema": {
               "$ref": "#/definitions/Error"
             }
@@ -530,6 +541,14 @@
       "description": "Branches management"
     }
   ],
+  "parameters": {
+    "BranchId": {
+      "name": "branch_id",
+      "in": "query",
+      "description": "In order to filter results or find specific results by the given branch id.",
+      "type": "string"
+    }
+  },
   "definitions": {
     "Promo": {
       "type": "object",
