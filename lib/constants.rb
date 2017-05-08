@@ -8,4 +8,8 @@ module Constants
       invite_to_branch: 1 << 4
     }
   end
+
+  module Branch
+    DEFAULT_BRANCH_NEARNESS_KM = 3
+  end
 end

@@ -315,8 +315,14 @@ paths:
       summary: Fetches all branches.
       description: |
         Returns a list of all created branches.
+
+        Including both `latitude` and `longitude` query parameters will fetch only
+        branches that are located at most 3 km far from the given location.
       tags:
         - branches
+      parameters:
+        - $ref: "#/parameters/Latitude"
+        - $ref: "#/parameters/Longitude"
       responses:
         200:
           description: An array of branches.
@@ -379,6 +385,18 @@ parameters:
     in: query
     description: In order to filter results or find specific results by the given branch id.
     type: string
+  Latitude:
+    name: latitude
+    in: query
+    description: User's location latitude.
+    type: number
+    format: double
+  Longitude:
+    name: longitude
+    in: query
+    description: User's location longitude.
+    type: number
+    format: double
 
 definitions:
   Promo:

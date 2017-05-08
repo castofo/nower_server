@@ -4,7 +4,15 @@ module Api::V1
 
     # GET /branches
     def index
-      render json: Branch.all
+      if params[:latitude].blank? || params[:longitude].blank?
+        @branches = Branch.all
+      else
+        @branches = Branch.near([params[:latitude], params[:longitude]],
+                                Constants::Branch::DEFAULT_BRANCH_NEARNESS_KM,
+                                units: :km)
+      end
+
+      render json: @branches
     end
 
     # GET /branches/1
