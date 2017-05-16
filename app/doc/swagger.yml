@@ -338,6 +338,36 @@ paths:
           description: Unexpected error.
           schema:
             $ref: '#/definitions/Error'
+    post:
+      summary: Creates a new branch.
+      description: |
+        Given a set of properties, creates and returns a branch.
+      tags:
+        - branches
+      parameters:
+        - in: body
+          name: body
+          description: Branch with properties to be created with.
+          required: true
+          schema:
+            $ref: "#/definitions/BranchParams"
+      responses:
+        201:
+          description: Successfully created branch.
+          schema:
+            $ref: '#/definitions/Branch'
+        401:
+          description: Unauthorized error.
+          schema:
+            $ref: '#/definitions/Error'
+        422:
+          description: Branch couldn't be created with the given properties.
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+          description: Unexpected error.
+          schema:
+            $ref: '#/definitions/Error'
   /branches/{id}:
     get:
       summary: Fetches a branch.
@@ -356,6 +386,76 @@ paths:
           description: Found branch information.
           schema:
             $ref: '#/definitions/Branch'
+        401:
+          description: Unauthorized error.
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: The given branch was not found.
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+          description: Unexpected error.
+          schema:
+            $ref: '#/definitions/Error'
+    patch:
+      summary: Updates a branch.
+      description: |
+        With a branch id, updates on it the given properties.
+      tags:
+        - branches
+      parameters:
+        - name: id
+          in: path
+          description: The branch identifier
+          type: string
+          required: true
+        - in: body
+          name: body
+          description: Branch properties to be updated.
+          required: true
+          schema:
+            $ref: "#/definitions/BranchParams"
+      responses:
+        200:
+          description: Successfully updated branch.
+          schema:
+            $ref: '#/definitions/Branch'
+        400:
+          description: Bad request.
+          schema:
+            $ref: '#/definitions/Error'
+        401:
+          description: Unauthorized error.
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: The given branch was not found.
+          schema:
+            $ref: '#/definitions/Error'
+        422:
+          description: Branch couldn't be updated with the given properties.
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+          description: Unexpected error.
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      summary: Deletes a branch.
+      description: |
+        Deletes the specified branch, by id.
+      tags:
+        - branches
+      parameters:
+        - name: id
+          in: path
+          description: Identifier of the branch to be deleted.
+          type: string
+          required: true
+      responses:
+        200:
+          description: Successfully deleted branch.
         401:
           description: Unauthorized error.
           schema:
@@ -709,6 +809,29 @@ definitions:
       updated_at:
         type: string
         description: Date and time when the branch was lastly modified.
+
+  BranchParams:
+    type: object
+    required:
+      - name
+      - latitude
+      - longitude
+      - address
+    properties:
+      name:
+        type: string
+        description: Display name for the branch.
+      latitude:
+        type: number
+        format: double
+        description: Latitude of the branch for georeferencing purposes.
+      longitude:
+        type: number
+        format: double
+        description: Longitude of the branch for georeferencing purposes.
+      address:
+        type: string
+        description: Indicates how many items of the promo are available.
 
   Error:
     type: object
