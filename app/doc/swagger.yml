@@ -677,6 +677,7 @@ definitions:
     type: object
     required:
       - id
+      - name
       - latitude
       - longitude
       - address
@@ -687,6 +688,9 @@ definitions:
       id:
         type: string
         description: Unique identifier representing an specific branch.
+      name:
+        type: string
+        description: Associated name with the branch.
       latitude:
         type: string
         description: Latitude of the branch.
