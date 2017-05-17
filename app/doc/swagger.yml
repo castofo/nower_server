@@ -1,8 +1,6 @@
 swagger: '2.0'
 info:
-  title: Nower REST API
-  description: Specification for exposed Nower services.
-  version: "1.0"
+  $ref: ./info.yml
 schemes:
   - http
 basePath: /v1

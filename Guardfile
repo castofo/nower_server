@@ -16,5 +16,5 @@
 # and, you'll have to watch "config/Guardfile" instead of "Guardfile"
 
 guard 'rake', :task => 'nower:doc' do
-  watch(%r{^app/doc/swagger.yml})
+  watch(%r{^app/doc/(.+)\.yml})
 end
