@@ -1,0 +1,42 @@
+summary: Updates a Promo.
+description: |
+  With a promo id, updates on it the given properties.
+tags:
+  - promos
+parameters:
+  - name: id
+    in: path
+    description: The promo identifier
+    type: string
+    required: true
+  - in: body
+    name: body
+    description: Promo properties to be updated.
+    required: true
+    schema:
+      $ref: "#/definitions/PromoParams"
+responses:
+  200:
+    description: Successfully updated promo.
+    schema:
+      $ref: '#/definitions/Promo'
+  400:
+    description: Bad request.
+    schema:
+      $ref: '#/definitions/Error'
+  401:
+    description: Unauthorized error.
+    schema:
+      $ref: '#/definitions/Error'
+  404:
+    description: The given promo was not found.
+    schema:
+      $ref: '#/definitions/Error'
+  422:
+    description: Promo couldn't be updated with the given properties.
+    schema:
+      $ref: '#/definitions/Error'
+  default:
+    description: Unexpected error.
+    schema:
+      $ref: '#/definitions/Error'

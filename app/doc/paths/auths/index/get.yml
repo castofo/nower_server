@@ -1,0 +1,16 @@
+summary: Fetches all application users (Development only).
+description: |
+  Returns a list of all registered application users.
+tags:
+  - auths
+responses:
+  200:
+    description: An array of users.
+    schema:
+      type: array
+      items:
+        $ref: '#/definitions/User'
+  default:
+    description: Unexpected error.
+    schema:
+      $ref: '#/definitions/Error'

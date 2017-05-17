@@ -1,0 +1,26 @@
+summary: Fetches all branches.
+description: |
+  Returns a list of all created branches.
+
+  Including both `latitude` and `longitude` query parameters will fetch only
+  branches that are located at most 3 km far from the given location.
+tags:
+  - branches
+parameters:
+  - $ref: "#/parameters/Latitude"
+  - $ref: "#/parameters/Longitude"
+responses:
+  200:
+    description: An array of branches.
+    schema:
+      type: array
+      items:
+        $ref: '#/definitions/Branch'
+  401:
+    description: Authentication failed.
+    schema:
+      $ref: '#/definitions/Error'
+  default:
+    description: Unexpected error.
+    schema:
+      $ref: '#/definitions/Error'

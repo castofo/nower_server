@@ -1,0 +1,35 @@
+type: object
+required:
+  - id
+  - name
+  - latitude
+  - longitude
+  - address
+  - default_contact_info
+  - created_at
+  - updated_at
+properties:
+  id:
+    type: string
+    description: Unique identifier representing an specific branch.
+  name:
+    type: string
+    description: Associated name with the branch.
+  latitude:
+    type: string
+    description: Latitude of the branch.
+  longitude:
+    type: string
+    description: Longitude of the branch.
+  address:
+    type: string
+    description: Street address of the branch.
+  default_contact_info:
+    type: boolean
+    description: Whether to use the store contact information for this branch or not.
+  created_at:
+    type: string
+    description: Date and time when the branch was created.
+  updated_at:
+    type: string
+    description: Date and time when the branch was lastly modified.

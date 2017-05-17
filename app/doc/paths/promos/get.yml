@@ -1,0 +1,30 @@
+summary: Fetches Promos.
+description: |
+  Returns a list of available promos. The reponse includes the display
+  name and other details about each promo.
+
+  Including the `branch_id` query parameter will only return promos that belong to the given
+  branch.
+tags:
+  - promos
+parameters:
+  - $ref: "#/parameters/BranchId"
+responses:
+  200:
+    description: An array of promos.
+    schema:
+      type: array
+      items:
+        $ref: '#/definitions/Promo'
+  401:
+    description: Unexpected error.
+    schema:
+      $ref: '#/definitions/Error'
+  404:
+    description: Some given entity was not found.
+    schema:
+      $ref: '#/definitions/Error'
+  default:
+    description: Unexpected error.
+    schema:
+      $ref: '#/definitions/Error'

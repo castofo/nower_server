@@ -1,0 +1,29 @@
+type: object
+required:
+  - name
+  - description
+  - terms
+properties:
+  name:
+    type: string
+    description: Display name for the promo.
+  description:
+    type: string
+    description: A description of the promo, it may contain specific
+      information about it.
+  terms:
+    type: string
+    description: Terms and conditions related with the promo.
+  stock:
+    type: integer
+    description: Indicates how many items of the promo are available.
+  price:
+    type: number
+    description: Indicates what is the sale price for an item related with
+      the promo.
+  start_date:
+    type: string
+    description: Date and time when the promo starts to run.
+  end_date:
+    type: string
+    description: Date and time when the promo finishes.

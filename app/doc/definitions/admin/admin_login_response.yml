@@ -1,0 +1,11 @@
+type: object
+required:
+  - admin_id
+  - token
+properties:
+  admin_id:
+    type: string
+    description: Identifier of the authenticated admin.
+  token:
+    type: string
+    description: Authorization token for subsequent requests.

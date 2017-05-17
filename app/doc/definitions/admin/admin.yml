@@ -1,0 +1,51 @@
+type: object
+required:
+  - id
+  - first_name
+  - last_name
+  - email
+  - admin_type
+  - privileges
+  - activated_at
+  - created_at
+  - updated_at
+properties:
+  id:
+    type: string
+    description: Unique identifier representing an specific admin.
+  first_name:
+    type: string
+    description: First name of the admin.
+  last_name:
+    type: string
+    description: Last name of the admin.
+  email:
+    type: string
+    description: Email address of the admin.
+  admin_type:
+    type: string
+    description: Type of administrator.
+    enum:
+      - branch_admin
+      - store_admin
+  privileges:
+    type: array
+    description: Privileges of the admin.
+    items:
+      type: string
+    enum:
+      - create_promo
+      - update_promo
+      - delete_promo
+      - update_branch
+      - invite_to_branch
+  activated_at:
+    type: string
+    description: Date and time when the admin was activated via email confirmation.
+      `null` if he/she hasn't confirmed the email yet.
+  created_at:
+    type: string
+    description: Date and time when the admin was created.
+  updated_at:
+    type: string
+    description: Date and time when the admin was lastly modified.

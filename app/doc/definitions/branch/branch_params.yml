@@ -1,0 +1,21 @@
+type: object
+required:
+  - name
+  - latitude
+  - longitude
+  - address
+properties:
+  name:
+    type: string
+    description: Display name for the branch.
+  latitude:
+    type: number
+    format: double
+    description: Latitude of the branch for georeferencing purposes.
+  longitude:
+    type: number
+    format: double
+    description: Longitude of the branch for georeferencing purposes.
+  address:
+    type: string
+    description: Indicates how many items of the promo are available.

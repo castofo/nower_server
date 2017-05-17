@@ -1,0 +1,11 @@
+type: object
+required:
+  - user_id
+  - token
+properties:
+  user_id:
+    type: string
+    description: Identifier of the authenticated user.
+  token:
+    type: string
+    description: Authorization token for subsequent requests.

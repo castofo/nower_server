@@ -1,0 +1,29 @@
+/promos:
+  $ref: ./promos/index.yml
+
+/promos/{id}:
+  $ref: ./promos/{id}/index.yml
+
+/auths/index:
+  $ref: ./auths/index/index.yml
+
+/auths/login:
+  $ref: ./auths/login/index.yml
+
+/auths/register:
+  $ref: ./auths/register/index.yml
+
+/admins/index:
+  $ref: ./admins/index/index.yml
+
+/admins/login:
+  $ref: ./admins/login/index.yml
+
+/admins/register:
+  $ref: ./admins/register/index.yml
+
+/branches:
+  $ref: ./branches/index.yml
+
+/branches/{id}:
+  $ref: ./branches/{id}/index.yml

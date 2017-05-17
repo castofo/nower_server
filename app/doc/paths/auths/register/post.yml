@@ -1,0 +1,34 @@
+summary: Registers in an application user.
+description: |
+  Given a set of parameters, it creates an application user, returning the successfully
+  created user.
+tags:
+  - auths
+parameters:
+  - in: body
+    name: body
+    description: User information to be registered with.
+    required: true
+    schema:
+      $ref: "#/definitions/UserRegisterParams"
+responses:
+  201:
+    description: Successfully registered.
+    schema:
+      $ref: '#/definitions/User'
+  400:
+    description: Bad request.
+    schema:
+      $ref: '#/definitions/Error'
+  401:
+    description: Unauthorized to register an user.
+    schema:
+      $ref: '#/definitions/Error'
+  422:
+    description: Some field is unprocessable.
+    schema:
+      $ref: '#/definitions/Error'
+  default:
+    description: Unexpected error.
+    schema:
+      $ref: '#/definitions/Error'
