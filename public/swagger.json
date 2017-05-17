@@ -1098,7 +1098,7 @@
         },
         "default_contact_info": {
           "type": "boolean",
-          "description": "Whether to use the store contact information for this branch or not."
+          "description": "`true` if should use the store contact information, `false` if should use particular contact information for this branch."
         },
         "created_at": {
           "type": "string",
@@ -1136,6 +1136,10 @@
         "address": {
           "type": "string",
           "description": "Indicates how many items of the promo are available."
+        },
+        "default_contact_info": {
+          "type": "boolean",
+          "description": "`true` to use the store contact information, `false` to use particular contact information for this branch."
         }
       }
     },

@@ -19,3 +19,7 @@ properties:
   address:
     type: string
     description: Indicates how many items of the promo are available.
+  default_contact_info:
+    type: boolean
+    description: "`true` to use the store contact information, `false` to use particular contact
+     information for this branch."
