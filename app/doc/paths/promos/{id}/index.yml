@@ -1,3 +1,6 @@
+get:
+  $ref: ./get.yml
+
 patch:
   $ref: ./patch.yml
 

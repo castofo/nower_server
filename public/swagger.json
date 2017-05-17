@@ -101,6 +101,48 @@
       }
     },
     "/promos/{id}": {
+      "get": {
+        "summary": "Fetches a promo.",
+        "description": "With a promo id, fetches it and its related information.\n",
+        "tags": [
+          "promos"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The promo identifier",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Found promo information.",
+            "schema": {
+              "$ref": "#/definitions/Promo"
+            }
+          },
+          "401": {
+            "description": "Unauthorized error.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "The given promo was not found.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "default": {
+            "description": "Unexpected error.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
       "patch": {
         "summary": "Updates a Promo.",
         "description": "With a promo id, updates on it the given properties.\n",
@@ -533,7 +575,7 @@
     "/branches/{id}": {
       "get": {
         "summary": "Fetches a branch.",
-        "description": "With a branch id, fetches id and its related information.\n",
+        "description": "With a branch id, fetches it and its related information.\n",
         "tags": [
           "branches"
         ],
