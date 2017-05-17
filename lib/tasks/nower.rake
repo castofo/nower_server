@@ -1,16 +1,18 @@
 namespace :nower do
-  desc 'Converts the Swagger documentation from YAML to JSON, placing it under public/swagger.json'
+  desc "Converts the Swagger documentation from YAML to JSON, placing it under public/swagger.json"\
+       " PREREQUISITE: node installed in the machine, with 'multi-file-swagger' package globally"\
+       " installed. (npm i -g multi-file-swagger)"
   task doc: :environment do
-    input_path = Rails.root.join('app', 'doc', 'swagger.yml')
-    input_file = File.open(input_path, 'r')
-    puts "Processing YAML file from #{input_path}"
-    input_yaml = input_file.read
-    input_file.close
-    output_path = Rails.root.join('public', 'swagger.json')
-    output_file = File.open(output_path, 'w+')
-    output_json = JSON.pretty_generate(YAML::load(input_yaml))
-    output_file.write(output_json)
-    output_file.close
-    puts "JSON written in #{output_path}"
+    Dir.chdir(Rails.root.join('app', 'doc')) do
+      input_path = Rails.root.join('app', 'doc', 'swagger.yml')
+      output_path = Rails.root.join('public', 'swagger.json')
+      command = "multi-file-swagger #{input_path} > #{output_path}"
+      if system(command)
+        puts "JSON written in #{output_path}"
+      else
+        puts "ERROR: Could not process JSON with documentation. Do you have node and "\
+             "'multi-file-swagger' module globally installed?"
+      end
+    end
   end
 end

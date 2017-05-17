@@ -1,0 +1,5 @@
+name: latitude
+in: query
+description: User's location latitude.
+type: number
+format: double

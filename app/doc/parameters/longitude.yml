@@ -1,0 +1,5 @@
+name: longitude
+in: query
+description: User's location longitude.
+type: number
+format: double

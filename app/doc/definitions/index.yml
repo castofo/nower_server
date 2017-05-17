@@ -1,0 +1,35 @@
+Promo:
+  $ref: ./promo/promo.yml
+
+PromoParams:
+  $ref: ./promo/promo_params.yml
+
+User:
+  $ref: ./user/user.yml
+
+LoginParams:
+  $ref: ./common/login_params.yml
+
+UserLoginResponse:
+  $ref: ./user/user_login_response.yml
+
+UserRegisterParams:
+  $ref: ./user/user_register_params.yml
+
+Admin:
+  $ref: ./admin/admin.yml
+
+AdminLoginResponse:
+  $ref: ./admin/admin_login_response.yml
+
+AdminRegisterParams:
+  $ref: ./admin/admin_register_params.yml
+
+Branch:
+  $ref: ./branch/branch.yml
+
+BranchParams:
+  $ref: ./branch/branch_params.yml
+
+Error:
+  $ref: ./common/error.yml

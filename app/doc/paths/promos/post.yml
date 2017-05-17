@@ -1,0 +1,29 @@
+summary: Creates a new Promo.
+description: |
+  Given a set of properties, creates and returns a promo.
+tags:
+  - promos
+parameters:
+  - in: body
+    name: body
+    description: Promo with properties to be created with.
+    required: true
+    schema:
+      $ref: "#/definitions/PromoParams"
+responses:
+  201:
+    description: Successfully created promo.
+    schema:
+      $ref: '#/definitions/Promo'
+  401:
+    description: Unauthorized error.
+    schema:
+      $ref: '#/definitions/Error'
+  422:
+    description: Promo couldn't be created with the given properties.
+    schema:
+      $ref: '#/definitions/Error'
+  default:
+    description: Unexpected error.
+    schema:
+      $ref: '#/definitions/Error'

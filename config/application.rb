@@ -30,5 +30,13 @@ module NowerServer
 
     # Include the lib folder to autoload components such as JWT encoding/decoding.
     config.autoload_paths << Rails.root.join('lib')
+
+    # Enabling CORS
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins '*'
+        resource '*', headers: :any, methods: [:get, :post, :put, :patch, :delete, :options]
+      end
+    end
   end
 end

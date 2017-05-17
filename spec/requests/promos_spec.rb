@@ -14,7 +14,7 @@ RSpec.describe 'Promos', type: :request do
 
     context 'when there is a promo' do
       let!(:existing_promo) { create :promo }
-      it 'returns an array with the job' do
+      it 'returns an array with the promo' do
         sub_get api_v1_promos_path
         expect(response).to have_http_status(200)
         promos = JSON.parse(response.body)

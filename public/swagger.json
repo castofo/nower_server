@@ -15,10 +15,15 @@
   "paths": {
     "/promos": {
       "get": {
-        "summary": "Fetches all Promos.",
-        "description": "Returns a list of available promos. The reponse includes the display\nname and other details about each promo.\n",
+        "summary": "Fetches Promos.",
+        "description": "Returns a list of available promos. The reponse includes the display\nname and other details about each promo.\n\nIncluding the `branch_id` query parameter will only return promos that belong to the given\nbranch.\n",
         "tags": [
           "promos"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/BranchId"
+          }
         ],
         "responses": {
           "200": {
@@ -32,6 +37,12 @@
           },
           "401": {
             "description": "Unexpected error.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Some given entity was not found.",
             "schema": {
               "$ref": "#/definitions/Error"
             }
@@ -434,6 +445,236 @@
           }
         }
       }
+    },
+    "/branches": {
+      "get": {
+        "summary": "Fetches all branches.",
+        "description": "Returns a list of all created branches.\n\nIncluding both `latitude` and `longitude` query parameters will fetch only\nbranches that are located at most 3 km far from the given location.\n",
+        "tags": [
+          "branches"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/Latitude"
+          },
+          {
+            "$ref": "#/parameters/Longitude"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of branches.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Branch"
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication failed.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "default": {
+            "description": "Unexpected error.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Creates a new branch.",
+        "description": "Given a set of properties, creates and returns a branch.\n",
+        "tags": [
+          "branches"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Branch with properties to be created with.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/BranchParams"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successfully created branch.",
+            "schema": {
+              "$ref": "#/definitions/Branch"
+            }
+          },
+          "401": {
+            "description": "Unauthorized error.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "422": {
+            "description": "Branch couldn't be created with the given properties.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "default": {
+            "description": "Unexpected error.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/branches/{id}": {
+      "get": {
+        "summary": "Fetches a branch.",
+        "description": "With a branch id, fetches id and its related information.\n",
+        "tags": [
+          "branches"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The branch identifier",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Found branch information.",
+            "schema": {
+              "$ref": "#/definitions/Branch"
+            }
+          },
+          "401": {
+            "description": "Unauthorized error.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "The given branch was not found.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "default": {
+            "description": "Unexpected error.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Updates a branch.",
+        "description": "With a branch id, updates on it the given properties.\n",
+        "tags": [
+          "branches"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The branch identifier",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Branch properties to be updated.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/BranchParams"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully updated branch.",
+            "schema": {
+              "$ref": "#/definitions/Branch"
+            }
+          },
+          "400": {
+            "description": "Bad request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "401": {
+            "description": "Unauthorized error.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "The given branch was not found.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "422": {
+            "description": "Branch couldn't be updated with the given properties.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "default": {
+            "description": "Unexpected error.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletes a branch.",
+        "description": "Deletes the specified branch, by id.\n",
+        "tags": [
+          "branches"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of the branch to be deleted.",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully deleted branch."
+          },
+          "401": {
+            "description": "Unauthorized error.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "The given branch was not found.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "default": {
+            "description": "Unexpected error.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
     }
   },
   "tags": [
@@ -448,8 +689,34 @@
     {
       "name": "admins",
       "description": "Admins management"
+    },
+    {
+      "name": "branches",
+      "description": "Branches management"
     }
   ],
+  "parameters": {
+    "BranchId": {
+      "name": "branch_id",
+      "in": "query",
+      "description": "In order to filter results or find specific results by the given branch id.",
+      "type": "string"
+    },
+    "Latitude": {
+      "name": "latitude",
+      "in": "query",
+      "description": "User's location latitude.",
+      "type": "number",
+      "format": "double"
+    },
+    "Longitude": {
+      "name": "longitude",
+      "in": "query",
+      "description": "User's location longitude.",
+      "type": "number",
+      "format": "double"
+    }
+  },
   "definitions": {
     "Promo": {
       "type": "object",
@@ -468,7 +735,7 @@
       "properties": {
         "id": {
           "type": "string",
-          "description": "Unique identifier representg an specific promo."
+          "description": "Unique identifier representing an specific promo."
         },
         "name": {
           "type": "string",
@@ -561,7 +828,7 @@
       "properties": {
         "id": {
           "type": "string",
-          "description": "Unique identifier representg an specific user."
+          "description": "Unique identifier representing an specific user."
         },
         "first_name": {
           "type": "string",
@@ -687,7 +954,7 @@
       "properties": {
         "id": {
           "type": "string",
-          "description": "Unique identifier representg an specific admin."
+          "description": "Unique identifier representing an specific admin."
         },
         "first_name": {
           "type": "string",
@@ -722,6 +989,10 @@
             "update_branch",
             "invite_to_branch"
           ]
+        },
+        "activated_at": {
+          "type": "string",
+          "description": "Date and time when the admin was activated via email confirmation. `null` if he/she hasn't confirmed the email yet."
         },
         "created_at": {
           "type": "string",
@@ -789,6 +1060,86 @@
             "update_branch",
             "invite_to_branch"
           ]
+        }
+      }
+    },
+    "Branch": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "latitude",
+        "longitude",
+        "address",
+        "default_contact_info",
+        "created_at",
+        "updated_at"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier representing an specific branch."
+        },
+        "name": {
+          "type": "string",
+          "description": "Associated name with the branch."
+        },
+        "latitude": {
+          "type": "string",
+          "description": "Latitude of the branch."
+        },
+        "longitude": {
+          "type": "string",
+          "description": "Longitude of the branch."
+        },
+        "address": {
+          "type": "string",
+          "description": "Street address of the branch."
+        },
+        "default_contact_info": {
+          "type": "boolean",
+          "description": "`true` if should use the store contact information, `false` if should use particular contact information for this branch."
+        },
+        "created_at": {
+          "type": "string",
+          "description": "Date and time when the branch was created."
+        },
+        "updated_at": {
+          "type": "string",
+          "description": "Date and time when the branch was lastly modified."
+        }
+      }
+    },
+    "BranchParams": {
+      "type": "object",
+      "required": [
+        "name",
+        "latitude",
+        "longitude",
+        "address"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Display name for the branch."
+        },
+        "latitude": {
+          "type": "number",
+          "format": "double",
+          "description": "Latitude of the branch for georeferencing purposes."
+        },
+        "longitude": {
+          "type": "number",
+          "format": "double",
+          "description": "Longitude of the branch for georeferencing purposes."
+        },
+        "address": {
+          "type": "string",
+          "description": "Indicates how many items of the promo are available."
+        },
+        "default_contact_info": {
+          "type": "boolean",
+          "description": "`true` to use the store contact information, `false` to use particular contact information for this branch."
         }
       }
     },

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170214001745) do
+ActiveRecord::Schema.define(version: 20170515212313) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,22 @@ ActiveRecord::Schema.define(version: 20170214001745) do
     t.string   "first_name",                   null: false
     t.string   "last_name",                    null: false
     t.index ["email"], name: "index_admins_on_email", unique: true, using: :btree
+  end
+
+  create_table "branches", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
+    t.decimal  "latitude",             precision: 10, scale: 6,                null: false
+    t.decimal  "longitude",            precision: 10, scale: 6,                null: false
+    t.string   "address",                                                      null: false
+    t.boolean  "default_contact_info",                          default: true
+    t.datetime "created_at",                                                   null: false
+    t.datetime "updated_at",                                                   null: false
+    t.string   "name",                                                         null: false
+  end
+
+  create_table "branches_promos", id: false, force: :cascade do |t|
+    t.uuid "branch_id", null: false
+    t.uuid "promo_id",  null: false
+    t.index ["branch_id", "promo_id"], name: "index_branches_promos_on_branch_id_and_promo_id", using: :btree
   end
 
   create_table "promos", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|

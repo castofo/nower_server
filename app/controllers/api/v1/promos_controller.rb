@@ -4,7 +4,11 @@ module Api::V1
 
     # GET /promos
     def index
-      @promos = Promo.all
+      if params[:branch_id].blank?
+        @promos = Promo.all
+      else
+        @promos = Branch.find(params[:branch_id]).promos
+      end
 
       render json: @promos
     end

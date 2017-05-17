@@ -1,0 +1,8 @@
+BranchId:
+  $ref: ./branch_id.yml
+
+Latitude:
+  $ref: ./latitude.yml
+
+Longitude:
+  $ref: ./longitude.yml
