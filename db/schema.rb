@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 20170515212313) do
     t.boolean  "default_contact_info",                          default: true
     t.datetime "created_at",                                                   null: false
     t.datetime "updated_at",                                                   null: false
-    t.string   "name",                                                         null: false
+    t.string   "name",                                          default: "",   null: false
   end
 
   create_table "branches_promos", id: false, force: :cascade do |t|
