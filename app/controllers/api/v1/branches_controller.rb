@@ -62,7 +62,8 @@ module Api::V1
             :latitude,
             :longitude,
             :address,
-            :default_contact_info
+            :default_contact_info,
+            :store_id
         )
       end
   end

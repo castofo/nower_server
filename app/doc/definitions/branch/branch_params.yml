@@ -4,6 +4,7 @@ required:
   - latitude
   - longitude
   - address
+  - store_id
 properties:
   name:
     type: string
@@ -23,3 +24,6 @@ properties:
     type: boolean
     description: "`true` to use the store contact information, `false` to use particular contact
      information for this branch."
+  store_id:
+    type: string
+    description: Unique identifier representing the store that will own this branch.

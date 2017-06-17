@@ -21,6 +21,10 @@ en:
             privileges:
               not_array: 'is not an array'
               invalid: '%{privilege} is not allowed'
+        store:
+          attributes:
+            status:
+              invalid: '%{status} is not allowed'
   admin_mailer:
     password_confirmation:
       subject: 'Account activation'

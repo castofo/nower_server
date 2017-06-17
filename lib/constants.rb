@@ -12,4 +12,14 @@ module Constants
   module Branch
     DEFAULT_BRANCH_NEARNESS_KM = 3
   end
+
+  module Store
+    STATUSES = [
+      :pending_documentation,
+      :active,
+      :closed,
+      :denied,
+      :blocked
+    ]
+  end
 end

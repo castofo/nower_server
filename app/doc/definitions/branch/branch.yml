@@ -6,6 +6,7 @@ required:
   - longitude
   - address
   - default_contact_info
+  - store_id
   - created_at
   - updated_at
 properties:
@@ -28,6 +29,9 @@ properties:
     type: boolean
     description: "`true` if should use the store contact information, `false` if should use
       particular contact information for this branch."
+  store_id:
+    type: string
+    description: Unique identifier representing the store this branch belongs to.
   created_at:
     type: string
     description: Date and time when the branch was created.

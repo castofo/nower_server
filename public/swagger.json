@@ -1114,6 +1114,7 @@
         "longitude",
         "address",
         "default_contact_info",
+        "store_id",
         "created_at",
         "updated_at"
       ],
@@ -1142,6 +1143,10 @@
           "type": "boolean",
           "description": "`true` if should use the store contact information, `false` if should use particular contact information for this branch."
         },
+        "store_id": {
+          "type": "string",
+          "description": "Unique identifier representing the store this branch belongs to."
+        },
         "created_at": {
           "type": "string",
           "description": "Date and time when the branch was created."
@@ -1158,7 +1163,8 @@
         "name",
         "latitude",
         "longitude",
-        "address"
+        "address",
+        "store_id"
       ],
       "properties": {
         "name": {
@@ -1182,6 +1188,10 @@
         "default_contact_info": {
           "type": "boolean",
           "description": "`true` to use the store contact information, `false` to use particular contact information for this branch."
+        },
+        "store_id": {
+          "type": "string",
+          "description": "Unique identifier representing the store that will own this branch."
         }
       }
     },
