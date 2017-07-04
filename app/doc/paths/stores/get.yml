@@ -1,0 +1,21 @@
+summary: Fetches Stores.
+description: |
+  Returns a list of available stores. The reponse includes the display
+  name and other details about each store.
+tags:
+  - stores
+responses:
+  200:
+    description: An array of stores.
+    schema:
+      type: array
+      items:
+        $ref: '#/definitions/Store'
+  401:
+    description: Unexpected error.
+    schema:
+      $ref: '#/definitions/Error'
+  default:
+    description: Unexpected error.
+    schema:
+      $ref: '#/definitions/Error'

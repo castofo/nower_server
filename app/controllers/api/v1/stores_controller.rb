@@ -19,7 +19,7 @@ module Api::V1
       @store = Store.new(store_params)
 
       if @store.save
-        render json: @store, status: :created, location: @store
+        render json: @store, status: :created
       else
         render json: @store.errors, status: :unprocessable_entity
       end
@@ -36,7 +36,11 @@ module Api::V1
 
     # DELETE /stores/1
     def destroy
-      @store.destroy
+      if @store.destroy
+        render json: { success: true }
+      else
+        render json: @promo.errors, status: :unprocessable_entity
+      end
     end
 
     private
@@ -47,7 +51,13 @@ module Api::V1
 
       # Only allow a trusted parameter "white list" through.
       def store_params
-        params.require(:store).permit(:name, :description, :nit, :website, :address, :status)
+        params.require(:store).permit(
+          :name,
+          :description,
+          :nit,
+          :website,
+          :address
+        )
       end
   end
 end

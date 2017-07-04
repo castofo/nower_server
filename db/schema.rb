@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 20170617203627) do
     t.boolean  "default_contact_info",                          default: true
     t.datetime "created_at",                                                   null: false
     t.datetime "updated_at",                                                   null: false
-    t.string   "name",                                          default: "",   null: false
+    t.string   "name"
     t.uuid     "store_id"
     t.index ["store_id"], name: "index_branches_on_store_id", using: :btree
   end

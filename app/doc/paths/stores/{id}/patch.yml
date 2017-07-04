@@ -1,0 +1,42 @@
+summary: Updates a Store.
+description: |
+  With a store id, updates on it the given properties.
+tags:
+  - stores
+parameters:
+  - name: id
+    in: path
+    description: The store identifier
+    type: string
+    required: true
+  - in: body
+    name: body
+    description: Store properties to be updated.
+    required: true
+    schema:
+      $ref: "#/definitions/StoreParams"
+responses:
+  200:
+    description: Successfully updated store.
+    schema:
+      $ref: '#/definitions/Store'
+  400:
+    description: Bad request.
+    schema:
+      $ref: '#/definitions/Error'
+  401:
+    description: Unauthorized error.
+    schema:
+      $ref: '#/definitions/Error'
+  404:
+    description: The given store was not found.
+    schema:
+      $ref: '#/definitions/Error'
+  422:
+    description: Store couldn't be updated with the given properties.
+    schema:
+      $ref: '#/definitions/Error'
+  default:
+    description: Unexpected error.
+    schema:
+      $ref: '#/definitions/Error'

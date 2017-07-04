@@ -1,0 +1,22 @@
+type: object
+required:
+  - name
+  - description
+  - nit
+properties:
+  name:
+    type: string
+    description: Display name for the store.
+  description:
+    type: string
+    description: A description of the store, it may contain specific
+      information about it.
+  nit:
+    type: string
+    description: Unique business and social registry, given by commercial entity.
+  website:
+    type: string
+    description: "Website of the store. `null` if there is no website"
+  address:
+    type: string
+    description: "Headquarters street address. `null` if no address"

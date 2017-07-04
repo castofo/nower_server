@@ -77,7 +77,7 @@ RSpec.describe 'Promos', type: :request do
       end
     end
 
-    context 'when name has more then 140 characters' do
+    context 'when name has more than 140 characters' do
       it 'returns a 422' do
         body[:name] = Faker::Lorem.characters(141)
         sub_post api_v1_promos_path, { params: { promo: body } }
@@ -212,7 +212,7 @@ RSpec.describe 'Promos', type: :request do
   describe 'PUT /v1/promos' do
     let(:existing_promo) { create :promo }
     let(:body) do
-      { name: Faker::Lorem.sentence, description: Faker::Lorem.paragraph }
+      { name: Faker::Lorem.sentence[0..139], description: Faker::Lorem.paragraph }
     end
     context 'when updating an existing promo' do
       context 'when new name is valid' do
@@ -241,7 +241,7 @@ RSpec.describe 'Promos', type: :request do
         end
       end
 
-      context 'when name has more then 140 characters' do
+      context 'when name has more than 140 characters' do
         it 'returns a 422' do
           body[:name] = Faker::Lorem.characters(141)
           sub_put api_v1_promo_path(existing_promo.id), { params: { promo: body } }

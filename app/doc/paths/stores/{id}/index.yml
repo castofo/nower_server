@@ -1,0 +1,8 @@
+get:
+  $ref: ./get.yml
+
+patch:
+  $ref: ./patch.yml
+
+delete:
+  $ref: ./delete.yml

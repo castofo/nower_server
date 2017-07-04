@@ -13,6 +13,8 @@ paths:
 tags:
   - name: promos
     description: Promos management
+  - name: stores
+    description: Stores management
   - name: auths
     description: Authorizations management
   - name: admins

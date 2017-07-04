@@ -246,6 +246,228 @@
         }
       }
     },
+    "/stores": {
+      "get": {
+        "summary": "Fetches Stores.",
+        "description": "Returns a list of available stores. The reponse includes the display\nname and other details about each store.\n",
+        "tags": [
+          "stores"
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of stores.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Store"
+              }
+            }
+          },
+          "401": {
+            "description": "Unexpected error.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "default": {
+            "description": "Unexpected error.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Creates a new Store.",
+        "description": "Given a set of properties, creates and returns a store.\n",
+        "tags": [
+          "stores"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Store with properties to be created with.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/StoreParams"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successfully created store.",
+            "schema": {
+              "$ref": "#/definitions/Store"
+            }
+          },
+          "401": {
+            "description": "Unauthorized error.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "422": {
+            "description": "Store couldn't be created with the given properties.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "default": {
+            "description": "Unexpected error.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/stores/{id}": {
+      "get": {
+        "summary": "Fetches a store.",
+        "description": "With a store id, fetches it and its related information.\n",
+        "tags": [
+          "stores"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The store identifier",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Found store information.",
+            "schema": {
+              "$ref": "#/definitions/Store"
+            }
+          },
+          "401": {
+            "description": "Unauthorized error.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "The given store was not found.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "default": {
+            "description": "Unexpected error.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Updates a Store.",
+        "description": "With a store id, updates on it the given properties.\n",
+        "tags": [
+          "stores"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The store identifier",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Store properties to be updated.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/StoreParams"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully updated store.",
+            "schema": {
+              "$ref": "#/definitions/Store"
+            }
+          },
+          "400": {
+            "description": "Bad request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "401": {
+            "description": "Unauthorized error.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "The given store was not found.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "422": {
+            "description": "Store couldn't be updated with the given properties.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "default": {
+            "description": "Unexpected error.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletes a Store.",
+        "description": "Deletes the specified store, by id.\n",
+        "tags": [
+          "stores"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of the store to be deleted.",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully deleted store."
+          },
+          "401": {
+            "description": "Unauthorized error.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "The given store was not found.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "default": {
+            "description": "Unexpected error.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
     "/auths/index": {
       "get": {
         "summary": "Fetches all application users (Development only).",
@@ -725,6 +947,10 @@
       "description": "Promos management"
     },
     {
+      "name": "stores",
+      "description": "Stores management"
+    },
+    {
       "name": "auths",
       "description": "Authorizations management"
     },
@@ -852,6 +1078,95 @@
         "end_date": {
           "type": "string",
           "description": "Date and time when the promo finishes."
+        }
+      }
+    },
+    "Store": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "description",
+        "nit",
+        "website",
+        "address",
+        "status",
+        "created_at",
+        "updated_at"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier representing an specific store."
+        },
+        "name": {
+          "type": "string",
+          "description": "Display name for the store."
+        },
+        "description": {
+          "type": "string",
+          "description": "A description of the store, it may contain specific information about it."
+        },
+        "nit": {
+          "type": "string",
+          "description": "Unique business and social registry, given by commercial entity."
+        },
+        "website": {
+          "type": "string",
+          "description": "Website of the store."
+        },
+        "address": {
+          "type": "string",
+          "description": "Headquarters street address, if there is one."
+        },
+        "status": {
+          "type": "string",
+          "description": "Current status of the store.",
+          "enum": [
+            "pending_documentation",
+            "active",
+            "closed",
+            "denied",
+            "blocked"
+          ]
+        },
+        "created_at": {
+          "type": "string",
+          "description": "Date and time when this instance was created."
+        },
+        "updated_at": {
+          "type": "string",
+          "description": "Date and time when this instance was last modified."
+        }
+      }
+    },
+    "StoreParams": {
+      "type": "object",
+      "required": [
+        "name",
+        "description",
+        "nit"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Display name for the store."
+        },
+        "description": {
+          "type": "string",
+          "description": "A description of the store, it may contain specific information about it."
+        },
+        "nit": {
+          "type": "string",
+          "description": "Unique business and social registry, given by commercial entity."
+        },
+        "website": {
+          "type": "string",
+          "description": "Website of the store. `null` if there is no website"
+        },
+        "address": {
+          "type": "string",
+          "description": "Headquarters street address. `null` if no address"
         }
       }
     },
