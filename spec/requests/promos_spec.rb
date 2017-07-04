@@ -24,6 +24,32 @@ RSpec.describe 'Promos', type: :request do
         expect(promos.first['description']).to eq existing_promo.description
       end
     end
+
+    context "when 'branch_id' query param is included" do
+      let(:existing_branch) { create :branch }
+      let(:associated_count) { rand(5..10) }
+
+      # Create promos associated to existing branch
+      before do
+        associated_count.times do
+          promo = build(:promo)
+          promo.branches.push(existing_branch)
+          promo.save
+        end
+      end
+
+      # Create some other branches that are not associated to existing branch
+      before do
+        rand(5..10).times { create(:promo) }
+      end
+
+      it 'returns only promos that belong to the given branch' do
+        sub_get api_v1_promos_path, { params: { branch_id: existing_branch.id } }
+        expect(response).to have_http_status(200)
+        promos = JSON.parse(response.body)
+        expect(promos.length).to eq associated_count
+      end
+    end
   end
 
   describe 'GET /v1/promos/:id' do

@@ -24,6 +24,29 @@ RSpec.describe 'Branches', type: :request do
         expect(branches.first['address']).to eq existing_branch.address
       end
     end
+
+    context "when 'store_id' query param is included" do
+      let(:existing_store) { create :store }
+      let(:associated_count) { rand(5..10) }
+
+      # Create branches associated to existing store
+      before do
+        associated_count.times { create(:branch, store_id: existing_store.id) }
+      end
+
+      # Create some other branches that are not associated to existing store
+      before do
+        rand(5..10).times { create(:branch) }
+      end
+
+      it 'returns only branches that belong to the given store' do
+        sub_get api_v1_branches_path, { params: { store_id: existing_store.id } }
+        expect(response).to have_http_status(200)
+        branches = JSON.parse(response.body)
+        expect(branches.length).to eq associated_count
+        branches.each { |branch| expect(branch['store_id']).to eq existing_store.id }
+      end
+    end
   end
 
   describe 'GET /v1/branches/:id' do
