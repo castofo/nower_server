@@ -1,3 +1,6 @@
+StoreId:
+  $ref: ./store_id.yml
+
 BranchId:
   $ref: ./branch_id.yml
 

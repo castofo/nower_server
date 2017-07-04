@@ -1,0 +1,4 @@
+name: store_id
+in: query
+description: In order to filter results or find specific results by the given store id.
+type: string

@@ -2,16 +2,20 @@ summary: Fetches all branches.
 description: |
   Returns a list of all created branches.
 
-  Including both `latitude` and `longitude` query parameters will fetch only
+  - Including both `latitude` and `longitude` query parameters will fetch only
   branches that are located at most 3 km far from the given location.
+
+  - Including the `store_id` query parameter will only return branches that belong to the given
+  store.
 tags:
   - branches
 parameters:
   - $ref: "#/parameters/Latitude"
   - $ref: "#/parameters/Longitude"
+  - $ref: "#/parameters/StoreId"
 responses:
   200:
-    description: An array of branches.
+    description: An array of branches matching given parameters.
     schema:
       type: array
       items:

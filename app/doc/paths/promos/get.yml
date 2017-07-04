@@ -3,7 +3,7 @@ description: |
   Returns a list of available promos. The reponse includes the display
   name and other details about each promo.
 
-  Including the `branch_id` query parameter will only return promos that belong to the given
+  - Including the `branch_id` query parameter will only return promos that belong to the given
   branch.
 tags:
   - promos
@@ -11,7 +11,7 @@ parameters:
   - $ref: "#/parameters/BranchId"
 responses:
   200:
-    description: An array of promos.
+    description: An array of promos matching given parameters.
     schema:
       type: array
       items:

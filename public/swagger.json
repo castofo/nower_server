@@ -16,7 +16,7 @@
     "/promos": {
       "get": {
         "summary": "Fetches Promos.",
-        "description": "Returns a list of available promos. The reponse includes the display\nname and other details about each promo.\n\nIncluding the `branch_id` query parameter will only return promos that belong to the given\nbranch.\n",
+        "description": "Returns a list of available promos. The reponse includes the display\nname and other details about each promo.\n\n- Including the `branch_id` query parameter will only return promos that belong to the given\nbranch.\n",
         "tags": [
           "promos"
         ],
@@ -27,7 +27,7 @@
         ],
         "responses": {
           "200": {
-            "description": "An array of promos.",
+            "description": "An array of promos matching given parameters.",
             "schema": {
               "type": "array",
               "items": {
@@ -713,7 +713,7 @@
     "/branches": {
       "get": {
         "summary": "Fetches all branches.",
-        "description": "Returns a list of all created branches.\n\nIncluding both `latitude` and `longitude` query parameters will fetch only\nbranches that are located at most 3 km far from the given location.\n",
+        "description": "Returns a list of all created branches.\n\n- Including both `latitude` and `longitude` query parameters will fetch only\nbranches that are located at most 3 km far from the given location.\n\n- Including the `store_id` query parameter will only return branches that belong to the given\nstore.\n",
         "tags": [
           "branches"
         ],
@@ -723,11 +723,14 @@
           },
           {
             "$ref": "#/parameters/Longitude"
+          },
+          {
+            "$ref": "#/parameters/StoreId"
           }
         ],
         "responses": {
           "200": {
-            "description": "An array of branches.",
+            "description": "An array of branches matching given parameters.",
             "schema": {
               "type": "array",
               "items": {
@@ -964,6 +967,12 @@
     }
   ],
   "parameters": {
+    "StoreId": {
+      "name": "store_id",
+      "in": "query",
+      "description": "In order to filter results or find specific results by the given store id.",
+      "type": "string"
+    },
     "BranchId": {
       "name": "branch_id",
       "in": "query",

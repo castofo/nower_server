@@ -4,12 +4,11 @@ module Api::V1
 
     # GET /branches
     def index
-      if params[:latitude].blank? || params[:longitude].blank?
-        @branches = Branch.all
-      else
-        @branches = Branch.near([params[:latitude], params[:longitude]],
-                                Constants::Branch::DEFAULT_BRANCH_NEARNESS_KM,
-                                units: :km)
+      @branches = Branch.all
+
+      @branches = @branches.store_id(params[:store_id]) unless params[:store_id].blank?
+      unless params[:latitude].blank? || params[:longitude].blank?
+        @branches = @branches.geolocated(params[:latitude], params[:longitude])
       end
 
       render json: @branches
