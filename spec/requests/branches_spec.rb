@@ -47,6 +47,39 @@ RSpec.describe 'Branches', type: :request do
         branches.each { |branch| expect(branch['store_id']).to eq existing_store.id }
       end
     end
+
+    context "when 'expand' query param contains 'store'" do
+      before do
+        rand(5..10).times { create :branch }
+      end
+
+      it 'returns branches with embedded store entity' do
+        sub_get api_v1_branches_path, { params: { expand: :store } }
+        expect(response).to have_http_status(200)
+        branches = JSON.parse(response.body)
+        branches.each { |branch| expect(branch['store']).not_to be_nil }
+      end
+    end
+
+    context "when 'expand' query param contains 'promos'" do
+      # Create some branches with promos
+      before do
+        rand(5..10).times do
+          branch = create :branch
+          rand(5..10).times { branch.promos.push(create :promo) }
+        end
+      end
+
+      it 'returns branches with embedded promos entities' do
+        sub_get api_v1_branches_path, { params: { expand: :promos } }
+        expect(response).to have_http_status(200)
+        branches = JSON.parse(response.body)
+        branches.each do |branch|
+          expect(branch['promos']).not_to be_nil
+          expect(branch['promos']).to be_a_kind_of(Array)
+        end
+      end
+    end
   end
 
   describe 'GET /v1/branches/:id' do
@@ -59,6 +92,33 @@ RSpec.describe 'Branches', type: :request do
         expect(found_branch['id']).to eq existing_branch.id
         expect(found_branch['name']).to eq existing_branch.name
         expect(found_branch['address']).to eq existing_branch.address
+      end
+    end
+
+    context "when 'expand' query param contains 'store'" do
+      it 'returns the branch with embedded store entity' do
+        sub_get api_v1_branch_path(existing_branch.id), { params: { expand: :store } }
+        expect(response).to have_http_status(200)
+        found_branch = JSON.parse(response.body)
+        expect(found_branch['store']['id']).to eq existing_branch.store.id
+        expect(found_branch['store']['name']).to eq existing_branch.store.name
+      end
+    end
+
+    context "when 'expand' query param contains 'promos'" do
+      let(:promos_count) { rand(5..10) }
+      before do
+        promos_count.times do
+          existing_branch.promos.push(create :promo)
+        end
+      end
+      it 'returns the branch with embedded promos entities' do
+        sub_get api_v1_branch_path(existing_branch.id), { params: { expand: :promos } }
+        expect(response).to have_http_status(200)
+        found_branch = JSON.parse(response.body)
+        expect(found_branch['promos']).not_to be_nil
+        expect(found_branch['promos']).to be_a_kind_of(Array)
+        expect(found_branch['promos'].length).to eq promos_count
       end
     end
 

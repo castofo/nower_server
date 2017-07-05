@@ -1,5 +1,8 @@
 module Api::V1
   class PromosController < ApplicationController
+    include Expandable
+    expandable_attrs :branches
+
     before_action :set_promo, only: [:show, :update, :destroy]
 
     # GET /promos
@@ -10,12 +13,12 @@ module Api::V1
         @promos = Branch.find(params[:branch_id]).promos
       end
 
-      render json: @promos
+      render json: @promos, include: expand_attrs
     end
 
     # GET /promos/1
     def show
-      render json: @promo
+      render json: @promo, include: expand_attrs
     end
 
     # POST /promos

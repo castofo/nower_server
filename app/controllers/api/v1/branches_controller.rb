@@ -1,5 +1,8 @@
 module Api::V1
   class BranchesController < ApplicationController
+    include Expandable
+    expandable_attrs :store, :promos
+
     before_action :set_branch, only: [:show, :update, :destroy]
 
     # GET /branches
@@ -11,12 +14,12 @@ module Api::V1
         @branches = @branches.geolocated(params[:latitude], params[:longitude])
       end
 
-      render json: @branches
+      render json: @branches, include: expand_attrs
     end
 
     # GET /branches/1
     def show
-      render json: @branch
+      render json: @branch, include: expand_attrs
     end
 
     # POST /branches

@@ -50,6 +50,26 @@ RSpec.describe 'Promos', type: :request do
         expect(promos.length).to eq associated_count
       end
     end
+
+    context "when 'expand' query param contains 'branches'" do
+      # Create some promos and associate them to branches
+      before do
+        rand(5..10).times do
+          promo = create :promo
+          rand(5..10).times { promo.branches.push(create :branch) }
+        end
+      end
+
+      it 'returns promos with embedded branches entities' do
+        sub_get api_v1_promos_path, { params: { expand: :branches } }
+        expect(response).to have_http_status(200)
+        promos = JSON.parse(response.body)
+        promos.each do |promo|
+          expect(promo['branches']).not_to be_nil
+          expect(promo['branches']).to be_a_kind_of(Array)
+        end
+      end
+    end
   end
 
   describe 'GET /v1/promos/:id' do
@@ -62,6 +82,23 @@ RSpec.describe 'Promos', type: :request do
         expect(found_promo['id']).to eq existing_promo.id
         expect(found_promo['name']).to eq existing_promo.name
         expect(found_promo['description']).to eq existing_promo.description
+      end
+    end
+
+    context "when 'expand' query param contains 'branches'" do
+      let(:branches_count) { rand(5..10) }
+      before do
+        branches_count.times do
+          existing_promo.branches.push(create :branch)
+        end
+      end
+      it 'returns the promo with embedded branches entities' do
+        sub_get api_v1_promo_path(existing_promo.id), { params: { expand: :branches } }
+        expect(response).to have_http_status(200)
+        found_promo = JSON.parse(response.body)
+        expect(found_promo['branches']).not_to be_nil
+        expect(found_promo['branches']).to be_a_kind_of(Array)
+        expect(found_promo['branches'].length).to eq branches_count
       end
     end
 

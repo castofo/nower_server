@@ -7,12 +7,17 @@ description: |
 
   - Including the `store_id` query parameter will only return branches that belong to the given
   store.
+
+  - The `expand` query parameter supports:
+    - `store`: will append the store the branch belongs to
+    - `promos`: will append promos that are being published in the branch
 tags:
   - branches
 parameters:
   - $ref: "#/parameters/Latitude"
   - $ref: "#/parameters/Longitude"
   - $ref: "#/parameters/StoreId"
+  - $ref: "#/parameters/Expand"
 responses:
   200:
     description: An array of branches matching given parameters.

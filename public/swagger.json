@@ -16,13 +16,16 @@
     "/promos": {
       "get": {
         "summary": "Fetches Promos.",
-        "description": "Returns a list of available promos. The reponse includes the display\nname and other details about each promo.\n\n- Including the `branch_id` query parameter will only return promos that belong to the given\nbranch.\n",
+        "description": "Returns a list of available promos. The reponse includes the display\nname and other details about each promo.\n\n- Including the `branch_id` query parameter will only return promos that belong to the given\nbranch.\n\n- The `expand` query parameter supports:\n  - `branches`: will append the branches where the promo is being published\n",
         "tags": [
           "promos"
         ],
         "parameters": [
           {
             "$ref": "#/parameters/BranchId"
+          },
+          {
+            "$ref": "#/parameters/Expand"
           }
         ],
         "responses": {
@@ -103,7 +106,7 @@
     "/promos/{id}": {
       "get": {
         "summary": "Fetches a promo.",
-        "description": "With a promo id, fetches it and its related information.\n",
+        "description": "With a promo id, fetches it and its related information.\n\n- The `expand` query parameter supports:\n  - `branches`: will append the branches where the promo is being published\n",
         "tags": [
           "promos"
         ],
@@ -114,6 +117,9 @@
             "description": "The promo identifier",
             "type": "string",
             "required": true
+          },
+          {
+            "$ref": "#/parameters/Expand"
           }
         ],
         "responses": {
@@ -249,9 +255,14 @@
     "/stores": {
       "get": {
         "summary": "Fetches Stores.",
-        "description": "Returns a list of available stores. The reponse includes the display\nname and other details about each store.\n",
+        "description": "Returns a list of available stores. The reponse includes the display\nname and other details about each store.\n\n- The `expand` query parameter supports:\n  - `branches`: will append the branches that belong to the store\n",
         "tags": [
           "stores"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/Expand"
+          }
         ],
         "responses": {
           "200": {
@@ -325,7 +336,7 @@
     "/stores/{id}": {
       "get": {
         "summary": "Fetches a store.",
-        "description": "With a store id, fetches it and its related information.\n",
+        "description": "With a store id, fetches it and its related information.\n\n- The `expand` query parameter supports:\n  - `branches`: will append the branches that belong to the store\n",
         "tags": [
           "stores"
         ],
@@ -336,6 +347,9 @@
             "description": "The store identifier",
             "type": "string",
             "required": true
+          },
+          {
+            "$ref": "#/parameters/Expand"
           }
         ],
         "responses": {
@@ -713,7 +727,7 @@
     "/branches": {
       "get": {
         "summary": "Fetches all branches.",
-        "description": "Returns a list of all created branches.\n\n- Including both `latitude` and `longitude` query parameters will fetch only\nbranches that are located at most 3 km far from the given location.\n\n- Including the `store_id` query parameter will only return branches that belong to the given\nstore.\n",
+        "description": "Returns a list of all created branches.\n\n- Including both `latitude` and `longitude` query parameters will fetch only\nbranches that are located at most 3 km far from the given location.\n\n- Including the `store_id` query parameter will only return branches that belong to the given\nstore.\n\n- The `expand` query parameter supports:\n  - `store`: will append the store the branch belongs to\n  - `promos`: will append promos that are being published in the branch\n",
         "tags": [
           "branches"
         ],
@@ -726,6 +740,9 @@
           },
           {
             "$ref": "#/parameters/StoreId"
+          },
+          {
+            "$ref": "#/parameters/Expand"
           }
         ],
         "responses": {
@@ -800,7 +817,7 @@
     "/branches/{id}": {
       "get": {
         "summary": "Fetches a branch.",
-        "description": "With a branch id, fetches it and its related information.\n",
+        "description": "With a branch id, fetches it and its related information.\n\n- The `expand` query parameter supports:\n  - `store`: will append the store the branch belongs to\n  - `promos`: will append promos that are being published in the branch\n",
         "tags": [
           "branches"
         ],
@@ -811,6 +828,9 @@
             "description": "The branch identifier",
             "type": "string",
             "required": true
+          },
+          {
+            "$ref": "#/parameters/Expand"
           }
         ],
         "responses": {
@@ -992,6 +1012,12 @@
       "description": "User's location longitude.",
       "type": "number",
       "format": "double"
+    },
+    "Expand": {
+      "name": "expand",
+      "in": "query",
+      "description": "In order to embed the entities specified in this param. (comma-separated)",
+      "type": "string"
     }
   },
   "definitions": {

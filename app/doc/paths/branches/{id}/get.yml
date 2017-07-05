@@ -1,6 +1,10 @@
 summary: Fetches a branch.
 description: |
   With a branch id, fetches it and its related information.
+
+  - The `expand` query parameter supports:
+    - `store`: will append the store the branch belongs to
+    - `promos`: will append promos that are being published in the branch
 tags:
   - branches
 parameters:
@@ -9,6 +13,7 @@ parameters:
     description: The branch identifier
     type: string
     required: true
+  - $ref: "#/parameters/Expand"
 responses:
   200:
     description: Found branch information.

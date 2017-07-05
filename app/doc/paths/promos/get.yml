@@ -5,10 +5,14 @@ description: |
 
   - Including the `branch_id` query parameter will only return promos that belong to the given
   branch.
+
+  - The `expand` query parameter supports:
+    - `branches`: will append the branches where the promo is being published
 tags:
   - promos
 parameters:
   - $ref: "#/parameters/BranchId"
+  - $ref: "#/parameters/Expand"
 responses:
   200:
     description: An array of promos matching given parameters.

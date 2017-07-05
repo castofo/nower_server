@@ -1,6 +1,9 @@
 summary: Fetches a promo.
 description: |
   With a promo id, fetches it and its related information.
+
+  - The `expand` query parameter supports:
+    - `branches`: will append the branches where the promo is being published
 tags:
   - promos
 parameters:
@@ -9,6 +12,7 @@ parameters:
     description: The promo identifier
     type: string
     required: true
+  - $ref: "#/parameters/Expand"
 responses:
   200:
     description: Found promo information.

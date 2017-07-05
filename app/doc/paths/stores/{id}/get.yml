@@ -1,6 +1,9 @@
 summary: Fetches a store.
 description: |
   With a store id, fetches it and its related information.
+
+  - The `expand` query parameter supports:
+    - `branches`: will append the branches that belong to the store
 tags:
   - stores
 parameters:
@@ -9,6 +12,7 @@ parameters:
     description: The store identifier
     type: string
     required: true
+  - $ref: "#/parameters/Expand"
 responses:
   200:
     description: Found store information.

@@ -1,17 +1,20 @@
 module Api::V1
   class StoresController < ApplicationController
+    include Expandable
+    expandable_attrs :branches
+
     before_action :set_store, only: [:show, :update, :destroy]
 
     # GET /stores
     def index
       @stores = Store.all
 
-      render json: @stores
+      render json: @stores, include: expand_attrs
     end
 
     # GET /stores/1
     def show
-      render json: @store
+      render json: @store, include: expand_attrs
     end
 
     # POST /stores

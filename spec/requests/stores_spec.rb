@@ -24,6 +24,27 @@ RSpec.describe 'Stores', type: :request do
         expect(stores.first['description']).to eq existing_store.description
       end
     end
+
+    context "when 'expand' query param contains 'branches'" do
+
+      # Create some stores with branches
+      before do
+        rand(5..10).times do
+          store = create :store
+          rand(5..10).times { create(:branch, store_id: store.id) }
+        end
+      end
+
+      it 'returns stores with embedded branches entities' do
+        sub_get api_v1_stores_path, { params: { expand: :branches } }
+        expect(response).to have_http_status(200)
+        stores = JSON.parse(response.body)
+        stores.each do |store|
+          expect(store['branches']).not_to be_nil
+          expect(store['branches']).to be_a_kind_of(Array)
+        end
+      end
+    end
   end
 
   describe 'GET /v1/stores/:id' do
@@ -36,6 +57,22 @@ RSpec.describe 'Stores', type: :request do
         expect(found_store['id']).to eq existing_store.id
         expect(found_store['name']).to eq existing_store.name
         expect(found_store['description']).to eq existing_store.description
+      end
+    end
+
+    context "when 'expand' query param contains 'store'" do
+      let(:branches_count) { rand(5..10) }
+      before do
+        branches_count.times { create(:branch, store_id: existing_store.id) }
+      end
+
+      it 'returns the store with embedded branches entities' do
+        sub_get api_v1_store_path(existing_store.id), { params: { expand: :branches } }
+        expect(response).to have_http_status(200)
+        found_store = JSON.parse(response.body)
+        expect(found_store['branches']).not_to be_nil
+        expect(found_store['branches']).to be_a_kind_of(Array)
+        expect(found_store['branches'].length).to eq branches_count
       end
     end
 

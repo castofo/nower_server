@@ -2,8 +2,13 @@ summary: Fetches Stores.
 description: |
   Returns a list of available stores. The reponse includes the display
   name and other details about each store.
+
+  - The `expand` query parameter supports:
+    - `branches`: will append the branches that belong to the store
 tags:
   - stores
+parameters:
+  - $ref: "#/parameters/Expand"
 responses:
   200:
     description: An array of stores.
