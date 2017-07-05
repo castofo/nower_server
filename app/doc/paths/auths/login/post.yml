@@ -1,26 +1,26 @@
 summary: Logs in an application user.
 description: |
   Given an user email and password, it authenticates the user with the given credentials,
-  returning an access token for subsequent requests.
+  returning an access token for subsequent requests
 tags:
   - auths
 parameters:
   - in: body
     name: body
-    description: User credentials to authenticate.
+    description: User credentials to authenticate
     required: true
     schema:
       $ref: "#/definitions/LoginParams"
 responses:
   200:
-    description: Successfully logged in.
+    description: Successfully logged in
     schema:
       $ref: '#/definitions/UserLoginResponse'
   401:
-    description: Authentication failed.
+    description: Authentication failed
     schema:
       $ref: '#/definitions/Error'
   default:
-    description: Unexpected error.
+    description: Unexpected error
     schema:
       $ref: '#/definitions/Error'

@@ -1,20 +1,20 @@
 summary: Fetches all web admins.
 description: |
-  Returns a list of all registered web admins.
+  Returns a list of all registered web admins
 tags:
   - admins
 responses:
   200:
-    description: An array of admins.
+    description: An array of admins
     schema:
       type: array
       items:
         $ref: '#/definitions/Admin'
   401:
-    description: Authentication failed.
+    description: Authentication failed
     schema:
       $ref: '#/definitions/Error'
   default:
-    description: Unexpected error.
+    description: Unexpected error
     schema:
       $ref: '#/definitions/Error'

@@ -1,7 +1,7 @@
 summary: Fetches Stores.
 description: |
   Returns a list of available stores. The reponse includes the display
-  name and other details about each store.
+  name and other details about each store
 
   - The `expand` query parameter supports:
     - `branches`: will append the branches that belong to the store
@@ -11,16 +11,16 @@ parameters:
   - $ref: "#/parameters/Expand"
 responses:
   200:
-    description: An array of stores.
+    description: An array of stores
     schema:
       type: array
       items:
         $ref: '#/definitions/Store'
   401:
-    description: Unexpected error.
+    description: Unexpected error
     schema:
       $ref: '#/definitions/Error'
   default:
-    description: Unexpected error.
+    description: Unexpected error
     schema:
       $ref: '#/definitions/Error'

@@ -1,26 +1,26 @@
 summary: Deletes a Promo.
 description: |
-  Deletes the specified promo, by id.
+  Deletes the specified promo, by id
 tags:
   - promos
 parameters:
   - name: id
     in: path
-    description: Identifier of the promo to be deleted.
+    description: Identifier of the promo to be deleted
     type: string
     required: true
 responses:
   200:
-    description: Successfully deleted promo.
+    description: Successfully deleted promo
   401:
-    description: Unauthorized error.
+    description: Unauthorized error
     schema:
       $ref: '#/definitions/Error'
   404:
-    description: The given promo was not found.
+    description: The given promo was not found
     schema:
       $ref: '#/definitions/Error'
   default:
-    description: Unexpected error.
+    description: Unexpected error
     schema:
       $ref: '#/definitions/Error'

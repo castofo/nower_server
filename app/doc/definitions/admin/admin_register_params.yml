@@ -7,20 +7,20 @@ required:
 properties:
   first_name:
     type: string
-    description: First given name of the admin.
+    description: First given name of the admin
   last_name:
     type: string
-    description: Last given name of the admin.
+    description: Last given name of the admin
   email:
     type: string
     description: "Email address to register the admin with. **(Used to login)**"
   password:
     type: string
     format: password
-    description: Password to register the admin with.
+    description: Password to register the admin with
   privileges:
     type: array
-    description: Array of privileges the admin to be created with.
+    description: Array of privileges the admin to be created with
     items:
       type: string
     enum:

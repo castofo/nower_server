@@ -1,26 +1,26 @@
 summary: Logs in a web admin.
 description: |
   Given an admin email and password, it authenticates the admin with the given credentials,
-  returning an access token for subsequent requests.
+  returning an access token for subsequent requests
 tags:
   - admins
 parameters:
   - in: body
     name: body
-    description: Admins credentials to authenticate.
+    description: Admins credentials to authenticate
     required: true
     schema:
       $ref: "#/definitions/LoginParams"
 responses:
   200:
-    description: Successfully logged in.
+    description: Successfully logged in
     schema:
       $ref: '#/definitions/AdminLoginResponse'
   401:
-    description: Authentication failed.
+    description: Authentication failed
     schema:
       $ref: '#/definitions/Error'
   default:
-    description: Unexpected error.
+    description: Unexpected error
     schema:
       $ref: '#/definitions/Error'

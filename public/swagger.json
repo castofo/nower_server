@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Nower REST API",
-    "description": "Specification for exposed Nower services.",
+    "description": "Specification for exposed Nower services",
     "version": "1.0"
   },
   "schemes": [
@@ -16,7 +16,7 @@
     "/promos": {
       "get": {
         "summary": "Fetches Promos.",
-        "description": "Returns a list of available promos. The reponse includes the display\nname and other details about each promo.\n\n- Including the `branch_id` query parameter will only return promos that belong to the given\nbranch.\n\n- The `expand` query parameter supports:\n  - `branches`: will append the branches where the promo is being published\n",
+        "description": "Returns a list of available promos. The reponse includes the display\nname and other details about each promo.\n\n- Including the `branch_id` query parameter will only return promos that belong to the given\nbranch\n\n- The `expand` query parameter supports:\n  - `branches`: will append the branches where the promo is being published\n",
         "tags": [
           "promos"
         ],
@@ -30,7 +30,7 @@
         ],
         "responses": {
           "200": {
-            "description": "An array of promos matching given parameters.",
+            "description": "An array of promos matching given parameters",
             "schema": {
               "type": "array",
               "items": {
@@ -39,19 +39,19 @@
             }
           },
           "401": {
-            "description": "Unexpected error.",
+            "description": "Unexpected error",
             "schema": {
               "$ref": "#/definitions/Error"
             }
           },
           "404": {
-            "description": "Some given entity was not found.",
+            "description": "Some given entity was not found",
             "schema": {
               "$ref": "#/definitions/Error"
             }
           },
           "default": {
-            "description": "Unexpected error.",
+            "description": "Unexpected error",
             "schema": {
               "$ref": "#/definitions/Error"
             }
@@ -60,7 +60,7 @@
       },
       "post": {
         "summary": "Creates a new Promo.",
-        "description": "Given a set of properties, creates and returns a promo.\n",
+        "description": "Given a set of properties, creates and returns a promo\n",
         "tags": [
           "promos"
         ],
@@ -68,7 +68,7 @@
           {
             "in": "body",
             "name": "body",
-            "description": "Promo with properties to be created with.",
+            "description": "Promo with properties to be created with",
             "required": true,
             "schema": {
               "$ref": "#/definitions/PromoParams"
@@ -77,25 +77,25 @@
         ],
         "responses": {
           "201": {
-            "description": "Successfully created promo.",
+            "description": "Successfully created promo",
             "schema": {
               "$ref": "#/definitions/Promo"
             }
           },
           "401": {
-            "description": "Unauthorized error.",
+            "description": "Unauthorized error",
             "schema": {
               "$ref": "#/definitions/Error"
             }
           },
           "422": {
-            "description": "Promo couldn't be created with the given properties.",
+            "description": "Promo couldn't be created with the given properties",
             "schema": {
               "$ref": "#/definitions/Error"
             }
           },
           "default": {
-            "description": "Unexpected error.",
+            "description": "Unexpected error",
             "schema": {
               "$ref": "#/definitions/Error"
             }
@@ -124,25 +124,25 @@
         ],
         "responses": {
           "200": {
-            "description": "Found promo information.",
+            "description": "Found promo information",
             "schema": {
               "$ref": "#/definitions/Promo"
             }
           },
           "401": {
-            "description": "Unauthorized error.",
+            "description": "Unauthorized error",
             "schema": {
               "$ref": "#/definitions/Error"
             }
           },
           "404": {
-            "description": "The given promo was not found.",
+            "description": "The given promo was not found",
             "schema": {
               "$ref": "#/definitions/Error"
             }
           },
           "default": {
-            "description": "Unexpected error.",
+            "description": "Unexpected error",
             "schema": {
               "$ref": "#/definitions/Error"
             }
@@ -151,7 +151,7 @@
       },
       "patch": {
         "summary": "Updates a Promo.",
-        "description": "With a promo id, updates on it the given properties.\n",
+        "description": "With a promo id, updates on it the given properties\n",
         "tags": [
           "promos"
         ],
@@ -166,7 +166,7 @@
           {
             "in": "body",
             "name": "body",
-            "description": "Promo properties to be updated.",
+            "description": "Promo properties to be updated",
             "required": true,
             "schema": {
               "$ref": "#/definitions/PromoParams"
@@ -175,7 +175,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully updated promo.",
+            "description": "Successfully updated promo",
             "schema": {
               "$ref": "#/definitions/Promo"
             }
@@ -187,25 +187,25 @@
             }
           },
           "401": {
-            "description": "Unauthorized error.",
+            "description": "Unauthorized error",
             "schema": {
               "$ref": "#/definitions/Error"
             }
           },
           "404": {
-            "description": "The given promo was not found.",
+            "description": "The given promo was not found",
             "schema": {
               "$ref": "#/definitions/Error"
             }
           },
           "422": {
-            "description": "Promo couldn't be updated with the given properties.",
+            "description": "Promo couldn't be updated with the given properties",
             "schema": {
               "$ref": "#/definitions/Error"
             }
           },
           "default": {
-            "description": "Unexpected error.",
+            "description": "Unexpected error",
             "schema": {
               "$ref": "#/definitions/Error"
             }
@@ -214,7 +214,7 @@
       },
       "delete": {
         "summary": "Deletes a Promo.",
-        "description": "Deletes the specified promo, by id.\n",
+        "description": "Deletes the specified promo, by id\n",
         "tags": [
           "promos"
         ],
@@ -222,29 +222,29 @@
           {
             "name": "id",
             "in": "path",
-            "description": "Identifier of the promo to be deleted.",
+            "description": "Identifier of the promo to be deleted",
             "type": "string",
             "required": true
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully deleted promo."
+            "description": "Successfully deleted promo"
           },
           "401": {
-            "description": "Unauthorized error.",
+            "description": "Unauthorized error",
             "schema": {
               "$ref": "#/definitions/Error"
             }
           },
           "404": {
-            "description": "The given promo was not found.",
+            "description": "The given promo was not found",
             "schema": {
               "$ref": "#/definitions/Error"
             }
           },
           "default": {
-            "description": "Unexpected error.",
+            "description": "Unexpected error",
             "schema": {
               "$ref": "#/definitions/Error"
             }
@@ -255,7 +255,7 @@
     "/stores": {
       "get": {
         "summary": "Fetches Stores.",
-        "description": "Returns a list of available stores. The reponse includes the display\nname and other details about each store.\n\n- The `expand` query parameter supports:\n  - `branches`: will append the branches that belong to the store\n",
+        "description": "Returns a list of available stores. The reponse includes the display\nname and other details about each store\n\n- The `expand` query parameter supports:\n  - `branches`: will append the branches that belong to the store\n",
         "tags": [
           "stores"
         ],
@@ -266,7 +266,7 @@
         ],
         "responses": {
           "200": {
-            "description": "An array of stores.",
+            "description": "An array of stores",
             "schema": {
               "type": "array",
               "items": {
@@ -275,13 +275,13 @@
             }
           },
           "401": {
-            "description": "Unexpected error.",
+            "description": "Unexpected error",
             "schema": {
               "$ref": "#/definitions/Error"
             }
           },
           "default": {
-            "description": "Unexpected error.",
+            "description": "Unexpected error",
             "schema": {
               "$ref": "#/definitions/Error"
             }
@@ -290,7 +290,7 @@
       },
       "post": {
         "summary": "Creates a new Store.",
-        "description": "Given a set of properties, creates and returns a store.\n",
+        "description": "Given a set of properties, creates and returns a store\n",
         "tags": [
           "stores"
         ],
@@ -298,7 +298,7 @@
           {
             "in": "body",
             "name": "body",
-            "description": "Store with properties to be created with.",
+            "description": "Store with properties to be created with",
             "required": true,
             "schema": {
               "$ref": "#/definitions/StoreParams"
@@ -307,25 +307,25 @@
         ],
         "responses": {
           "201": {
-            "description": "Successfully created store.",
+            "description": "Successfully created store",
             "schema": {
               "$ref": "#/definitions/Store"
             }
           },
           "401": {
-            "description": "Unauthorized error.",
+            "description": "Unauthorized error",
             "schema": {
               "$ref": "#/definitions/Error"
             }
           },
           "422": {
-            "description": "Store couldn't be created with the given properties.",
+            "description": "Store couldn't be created with the given properties",
             "schema": {
               "$ref": "#/definitions/Error"
             }
           },
           "default": {
-            "description": "Unexpected error.",
+            "description": "Unexpected error",
             "schema": {
               "$ref": "#/definitions/Error"
             }
@@ -354,25 +354,25 @@
         ],
         "responses": {
           "200": {
-            "description": "Found store information.",
+            "description": "Found store information",
             "schema": {
               "$ref": "#/definitions/Store"
             }
           },
           "401": {
-            "description": "Unauthorized error.",
+            "description": "Unauthorized error",
             "schema": {
               "$ref": "#/definitions/Error"
             }
           },
           "404": {
-            "description": "The given store was not found.",
+            "description": "The given store was not found",
             "schema": {
               "$ref": "#/definitions/Error"
             }
           },
           "default": {
-            "description": "Unexpected error.",
+            "description": "Unexpected error",
             "schema": {
               "$ref": "#/definitions/Error"
             }
@@ -381,7 +381,7 @@
       },
       "patch": {
         "summary": "Updates a Store.",
-        "description": "With a store id, updates on it the given properties.\n",
+        "description": "With a store id, updates on it the given properties\n",
         "tags": [
           "stores"
         ],
@@ -396,7 +396,7 @@
           {
             "in": "body",
             "name": "body",
-            "description": "Store properties to be updated.",
+            "description": "Store properties to be updated",
             "required": true,
             "schema": {
               "$ref": "#/definitions/StoreParams"
@@ -405,7 +405,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully updated store.",
+            "description": "Successfully updated store",
             "schema": {
               "$ref": "#/definitions/Store"
             }
@@ -417,25 +417,25 @@
             }
           },
           "401": {
-            "description": "Unauthorized error.",
+            "description": "Unauthorized error",
             "schema": {
               "$ref": "#/definitions/Error"
             }
           },
           "404": {
-            "description": "The given store was not found.",
+            "description": "The given store was not found",
             "schema": {
               "$ref": "#/definitions/Error"
             }
           },
           "422": {
-            "description": "Store couldn't be updated with the given properties.",
+            "description": "Store couldn't be updated with the given properties",
             "schema": {
               "$ref": "#/definitions/Error"
             }
           },
           "default": {
-            "description": "Unexpected error.",
+            "description": "Unexpected error",
             "schema": {
               "$ref": "#/definitions/Error"
             }
@@ -444,7 +444,7 @@
       },
       "delete": {
         "summary": "Deletes a Store.",
-        "description": "Deletes the specified store, by id.\n",
+        "description": "Deletes the specified store, by id\n",
         "tags": [
           "stores"
         ],
@@ -452,29 +452,29 @@
           {
             "name": "id",
             "in": "path",
-            "description": "Identifier of the store to be deleted.",
+            "description": "Identifier of the store to be deleted",
             "type": "string",
             "required": true
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully deleted store."
+            "description": "Successfully deleted store"
           },
           "401": {
-            "description": "Unauthorized error.",
+            "description": "Unauthorized error",
             "schema": {
               "$ref": "#/definitions/Error"
             }
           },
           "404": {
-            "description": "The given store was not found.",
+            "description": "The given store was not found",
             "schema": {
               "$ref": "#/definitions/Error"
             }
           },
           "default": {
-            "description": "Unexpected error.",
+            "description": "Unexpected error",
             "schema": {
               "$ref": "#/definitions/Error"
             }
@@ -485,13 +485,13 @@
     "/auths/index": {
       "get": {
         "summary": "Fetches all application users (Development only).",
-        "description": "Returns a list of all registered application users.\n",
+        "description": "Returns a list of all registered application users\n",
         "tags": [
           "auths"
         ],
         "responses": {
           "200": {
-            "description": "An array of users.",
+            "description": "An array of users",
             "schema": {
               "type": "array",
               "items": {
@@ -500,7 +500,7 @@
             }
           },
           "default": {
-            "description": "Unexpected error.",
+            "description": "Unexpected error",
             "schema": {
               "$ref": "#/definitions/Error"
             }
@@ -511,7 +511,7 @@
     "/auths/login": {
       "post": {
         "summary": "Logs in an application user.",
-        "description": "Given an user email and password, it authenticates the user with the given credentials,\nreturning an access token for subsequent requests.\n",
+        "description": "Given an user email and password, it authenticates the user with the given credentials,\nreturning an access token for subsequent requests\n",
         "tags": [
           "auths"
         ],
@@ -519,7 +519,7 @@
           {
             "in": "body",
             "name": "body",
-            "description": "User credentials to authenticate.",
+            "description": "User credentials to authenticate",
             "required": true,
             "schema": {
               "$ref": "#/definitions/LoginParams"
@@ -528,19 +528,19 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully logged in.",
+            "description": "Successfully logged in",
             "schema": {
               "$ref": "#/definitions/UserLoginResponse"
             }
           },
           "401": {
-            "description": "Authentication failed.",
+            "description": "Authentication failed",
             "schema": {
               "$ref": "#/definitions/Error"
             }
           },
           "default": {
-            "description": "Unexpected error.",
+            "description": "Unexpected error",
             "schema": {
               "$ref": "#/definitions/Error"
             }
@@ -551,7 +551,7 @@
     "/auths/register": {
       "post": {
         "summary": "Registers in an application user.",
-        "description": "Given a set of parameters, it creates an application user, returning the successfully\ncreated user.\n",
+        "description": "Given a set of parameters, it creates an application user, returning the successfully\ncreated user\n",
         "tags": [
           "auths"
         ],
@@ -559,7 +559,7 @@
           {
             "in": "body",
             "name": "body",
-            "description": "User information to be registered with.",
+            "description": "User information to be registered with",
             "required": true,
             "schema": {
               "$ref": "#/definitions/UserRegisterParams"
@@ -568,31 +568,31 @@
         ],
         "responses": {
           "201": {
-            "description": "Successfully registered.",
+            "description": "Successfully registered",
             "schema": {
               "$ref": "#/definitions/User"
             }
           },
           "400": {
-            "description": "Bad request.",
+            "description": "Bad request",
             "schema": {
               "$ref": "#/definitions/Error"
             }
           },
           "401": {
-            "description": "Unauthorized to register an user.",
+            "description": "Unauthorized to register an user",
             "schema": {
               "$ref": "#/definitions/Error"
             }
           },
           "422": {
-            "description": "Some field is unprocessable.",
+            "description": "Some field is unprocessable",
             "schema": {
               "$ref": "#/definitions/Error"
             }
           },
           "default": {
-            "description": "Unexpected error.",
+            "description": "Unexpected error",
             "schema": {
               "$ref": "#/definitions/Error"
             }
@@ -603,13 +603,13 @@
     "/admins/index": {
       "get": {
         "summary": "Fetches all web admins.",
-        "description": "Returns a list of all registered web admins.\n",
+        "description": "Returns a list of all registered web admins\n",
         "tags": [
           "admins"
         ],
         "responses": {
           "200": {
-            "description": "An array of admins.",
+            "description": "An array of admins",
             "schema": {
               "type": "array",
               "items": {
@@ -618,13 +618,13 @@
             }
           },
           "401": {
-            "description": "Authentication failed.",
+            "description": "Authentication failed",
             "schema": {
               "$ref": "#/definitions/Error"
             }
           },
           "default": {
-            "description": "Unexpected error.",
+            "description": "Unexpected error",
             "schema": {
               "$ref": "#/definitions/Error"
             }
@@ -635,7 +635,7 @@
     "/admins/login": {
       "post": {
         "summary": "Logs in a web admin.",
-        "description": "Given an admin email and password, it authenticates the admin with the given credentials,\nreturning an access token for subsequent requests.\n",
+        "description": "Given an admin email and password, it authenticates the admin with the given credentials,\nreturning an access token for subsequent requests\n",
         "tags": [
           "admins"
         ],
@@ -643,7 +643,7 @@
           {
             "in": "body",
             "name": "body",
-            "description": "Admins credentials to authenticate.",
+            "description": "Admins credentials to authenticate",
             "required": true,
             "schema": {
               "$ref": "#/definitions/LoginParams"
@@ -652,19 +652,19 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully logged in.",
+            "description": "Successfully logged in",
             "schema": {
               "$ref": "#/definitions/AdminLoginResponse"
             }
           },
           "401": {
-            "description": "Authentication failed.",
+            "description": "Authentication failed",
             "schema": {
               "$ref": "#/definitions/Error"
             }
           },
           "default": {
-            "description": "Unexpected error.",
+            "description": "Unexpected error",
             "schema": {
               "$ref": "#/definitions/Error"
             }
@@ -675,7 +675,7 @@
     "/admins/register": {
       "post": {
         "summary": "Registers in a web admin.",
-        "description": "Given a set of parameters, it creates a web admin, returning the successfully\ncreated admin.\n",
+        "description": "Given a set of parameters, it creates a web admin, returning the successfully\ncreated admin\n",
         "tags": [
           "admins"
         ],
@@ -683,7 +683,7 @@
           {
             "in": "body",
             "name": "body",
-            "description": "Admin information to be registered with.",
+            "description": "Admin information to be registered with",
             "required": true,
             "schema": {
               "$ref": "#/definitions/AdminRegisterParams"
@@ -692,31 +692,31 @@
         ],
         "responses": {
           "201": {
-            "description": "Successfully registered.",
+            "description": "Successfully registered",
             "schema": {
               "$ref": "#/definitions/Admin"
             }
           },
           "400": {
-            "description": "Bad request.",
+            "description": "Bad request",
             "schema": {
               "$ref": "#/definitions/Error"
             }
           },
           "401": {
-            "description": "Unauthorized to register an admin.",
+            "description": "Unauthorized to register an admin",
             "schema": {
               "$ref": "#/definitions/Error"
             }
           },
           "422": {
-            "description": "Some field is unprocessable.",
+            "description": "Some field is unprocessable",
             "schema": {
               "$ref": "#/definitions/Error"
             }
           },
           "default": {
-            "description": "Unexpected error.",
+            "description": "Unexpected error",
             "schema": {
               "$ref": "#/definitions/Error"
             }
@@ -727,7 +727,7 @@
     "/branches": {
       "get": {
         "summary": "Fetches all branches.",
-        "description": "Returns a list of all created branches.\n\n- Including both `latitude` and `longitude` query parameters will fetch only\nbranches that are located at most 3 km far from the given location.\n\n- Including the `store_id` query parameter will only return branches that belong to the given\nstore.\n\n- The `expand` query parameter supports:\n  - `store`: will append the store the branch belongs to\n  - `promos`: will append promos that are being published in the branch\n",
+        "description": "Returns a list of all created branches.\n\n- Including both `latitude` and `longitude` query parameters will fetch only\nbranches that are located at most 3 km far from the given location\n\n- Including the `store_id` query parameter will only return branches that belong to the given\nstore\n\n- The `expand` query parameter supports:\n  - `store`: will append the store the branch belongs to\n  - `promos`: will append promos that are being published in the branch\n",
         "tags": [
           "branches"
         ],
@@ -747,7 +747,7 @@
         ],
         "responses": {
           "200": {
-            "description": "An array of branches matching given parameters.",
+            "description": "An array of branches matching given parameters",
             "schema": {
               "type": "array",
               "items": {
@@ -756,13 +756,13 @@
             }
           },
           "401": {
-            "description": "Authentication failed.",
+            "description": "Authentication failed",
             "schema": {
               "$ref": "#/definitions/Error"
             }
           },
           "default": {
-            "description": "Unexpected error.",
+            "description": "Unexpected error",
             "schema": {
               "$ref": "#/definitions/Error"
             }
@@ -771,7 +771,7 @@
       },
       "post": {
         "summary": "Creates a new branch.",
-        "description": "Given a set of properties, creates and returns a branch.\n",
+        "description": "Given a set of properties, creates and returns a branch\n",
         "tags": [
           "branches"
         ],
@@ -779,7 +779,7 @@
           {
             "in": "body",
             "name": "body",
-            "description": "Branch with properties to be created with.",
+            "description": "Branch with properties to be created with",
             "required": true,
             "schema": {
               "$ref": "#/definitions/BranchParams"
@@ -788,7 +788,7 @@
         ],
         "responses": {
           "201": {
-            "description": "Successfully created branch.",
+            "description": "Successfully created branch",
             "schema": {
               "$ref": "#/definitions/Branch"
             }
@@ -800,13 +800,13 @@
             }
           },
           "422": {
-            "description": "Branch couldn't be created with the given properties.",
+            "description": "Branch couldn't be created with the given properties",
             "schema": {
               "$ref": "#/definitions/Error"
             }
           },
           "default": {
-            "description": "Unexpected error.",
+            "description": "Unexpected error",
             "schema": {
               "$ref": "#/definitions/Error"
             }
@@ -817,7 +817,7 @@
     "/branches/{id}": {
       "get": {
         "summary": "Fetches a branch.",
-        "description": "With a branch id, fetches it and its related information.\n\n- The `expand` query parameter supports:\n  - `store`: will append the store the branch belongs to\n  - `promos`: will append promos that are being published in the branch\n",
+        "description": "With a branch id, fetches it and its related information\n\n- The `expand` query parameter supports:\n  - `store`: will append the store the branch belongs to\n  - `promos`: will append promos that are being published in the branch\n",
         "tags": [
           "branches"
         ],
@@ -835,25 +835,25 @@
         ],
         "responses": {
           "200": {
-            "description": "Found branch information.",
+            "description": "Found branch information",
             "schema": {
               "$ref": "#/definitions/Branch"
             }
           },
           "401": {
-            "description": "Unauthorized error.",
+            "description": "Unauthorized error",
             "schema": {
               "$ref": "#/definitions/Error"
             }
           },
           "404": {
-            "description": "The given branch was not found.",
+            "description": "The given branch was not found",
             "schema": {
               "$ref": "#/definitions/Error"
             }
           },
           "default": {
-            "description": "Unexpected error.",
+            "description": "Unexpected error",
             "schema": {
               "$ref": "#/definitions/Error"
             }
@@ -862,7 +862,7 @@
       },
       "patch": {
         "summary": "Updates a branch.",
-        "description": "With a branch id, updates on it the given properties.\n",
+        "description": "With a branch id, updates on it the given properties\n",
         "tags": [
           "branches"
         ],
@@ -877,7 +877,7 @@
           {
             "in": "body",
             "name": "body",
-            "description": "Branch properties to be updated.",
+            "description": "Branch properties to be updated",
             "required": true,
             "schema": {
               "$ref": "#/definitions/BranchParams"
@@ -886,7 +886,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully updated branch.",
+            "description": "Successfully updated branch",
             "schema": {
               "$ref": "#/definitions/Branch"
             }
@@ -898,25 +898,25 @@
             }
           },
           "401": {
-            "description": "Unauthorized error.",
+            "description": "Unauthorized error",
             "schema": {
               "$ref": "#/definitions/Error"
             }
           },
           "404": {
-            "description": "The given branch was not found.",
+            "description": "The given branch was not found",
             "schema": {
               "$ref": "#/definitions/Error"
             }
           },
           "422": {
-            "description": "Branch couldn't be updated with the given properties.",
+            "description": "Branch couldn't be updated with the given properties",
             "schema": {
               "$ref": "#/definitions/Error"
             }
           },
           "default": {
-            "description": "Unexpected error.",
+            "description": "Unexpected error",
             "schema": {
               "$ref": "#/definitions/Error"
             }
@@ -925,7 +925,7 @@
       },
       "delete": {
         "summary": "Deletes a branch.",
-        "description": "Deletes the specified branch, by id.\n",
+        "description": "Deletes the specified branch, by id\n",
         "tags": [
           "branches"
         ],
@@ -933,29 +933,29 @@
           {
             "name": "id",
             "in": "path",
-            "description": "Identifier of the branch to be deleted.",
+            "description": "Identifier of the branch to be deleted",
             "type": "string",
             "required": true
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully deleted branch."
+            "description": "Successfully deleted branch"
           },
           "401": {
-            "description": "Unauthorized error.",
+            "description": "Unauthorized error",
             "schema": {
               "$ref": "#/definitions/Error"
             }
           },
           "404": {
-            "description": "The given branch was not found.",
+            "description": "The given branch was not found",
             "schema": {
               "$ref": "#/definitions/Error"
             }
           },
           "default": {
-            "description": "Unexpected error.",
+            "description": "Unexpected error",
             "schema": {
               "$ref": "#/definitions/Error"
             }
@@ -990,26 +990,26 @@
     "StoreId": {
       "name": "store_id",
       "in": "query",
-      "description": "In order to filter results or find specific results by the given store id.",
+      "description": "In order to filter results or find specific results by the given store id",
       "type": "string"
     },
     "BranchId": {
       "name": "branch_id",
       "in": "query",
-      "description": "In order to filter results or find specific results by the given branch id.",
+      "description": "In order to filter results or find specific results by the given branch id",
       "type": "string"
     },
     "Latitude": {
       "name": "latitude",
       "in": "query",
-      "description": "User's location latitude.",
+      "description": "User's location latitude",
       "type": "number",
       "format": "double"
     },
     "Longitude": {
       "name": "longitude",
       "in": "query",
-      "description": "User's location longitude.",
+      "description": "User's location longitude",
       "type": "number",
       "format": "double"
     },
@@ -1038,43 +1038,43 @@
       "properties": {
         "id": {
           "type": "string",
-          "description": "Unique identifier representing an specific promo."
+          "description": "Unique identifier representing an specific promo"
         },
         "name": {
           "type": "string",
-          "description": "Display name for the promo."
+          "description": "Display name for the promo"
         },
         "description": {
           "type": "string",
-          "description": "A description of the promo, it may contain specific information about it."
+          "description": "A description of the promo, it may contain specific information about it"
         },
         "terms": {
           "type": "string",
-          "description": "Terms and conditions related with the promo."
+          "description": "Terms and conditions related with the promo"
         },
         "stock": {
           "type": "integer",
-          "description": "Indicates how many items of the promo are available."
+          "description": "Indicates how many items of the promo are available"
         },
         "price": {
           "type": "number",
-          "description": "Indicates what is the sale price for an item related with the promo."
+          "description": "Indicates what is the sale price for an item related with the promo"
         },
         "start_date": {
           "type": "string",
-          "description": "Date and time when the promo starts to run."
+          "description": "Date and time when the promo starts to run"
         },
         "end_date": {
           "type": "string",
-          "description": "Date and time when the promo finishes."
+          "description": "Date and time when the promo finishes"
         },
         "created_at": {
           "type": "string",
-          "description": "Date and time when this instance was created."
+          "description": "Date and time when this instance was created"
         },
         "updated_at": {
           "type": "string",
-          "description": "Date and time when this instance was last modified."
+          "description": "Date and time when this instance was last modified"
         }
       }
     },
@@ -1088,31 +1088,31 @@
       "properties": {
         "name": {
           "type": "string",
-          "description": "Display name for the promo."
+          "description": "Display name for the promo"
         },
         "description": {
           "type": "string",
-          "description": "A description of the promo, it may contain specific information about it."
+          "description": "A description of the promo, it may contain specific information about it"
         },
         "terms": {
           "type": "string",
-          "description": "Terms and conditions related with the promo."
+          "description": "Terms and conditions related with the promo"
         },
         "stock": {
           "type": "integer",
-          "description": "Indicates how many items of the promo are available."
+          "description": "Indicates how many items of the promo are available"
         },
         "price": {
           "type": "number",
-          "description": "Indicates what is the sale price for an item related with the promo."
+          "description": "Indicates what is the sale price for an item related with the promo"
         },
         "start_date": {
           "type": "string",
-          "description": "Date and time when the promo starts to run."
+          "description": "Date and time when the promo starts to run"
         },
         "end_date": {
           "type": "string",
-          "description": "Date and time when the promo finishes."
+          "description": "Date and time when the promo finishes"
         }
       }
     },
@@ -1132,19 +1132,19 @@
       "properties": {
         "id": {
           "type": "string",
-          "description": "Unique identifier representing an specific store."
+          "description": "Unique identifier representing an specific store"
         },
         "name": {
           "type": "string",
-          "description": "Display name for the store."
+          "description": "Display name for the store"
         },
         "description": {
           "type": "string",
-          "description": "A description of the store, it may contain specific information about it."
+          "description": "A description of the store, it may contain specific information about it"
         },
         "nit": {
           "type": "string",
-          "description": "Unique business and social registry, given by commercial entity."
+          "description": "Unique business and social registry, given by commercial entity"
         },
         "website": {
           "type": "string",
@@ -1152,11 +1152,11 @@
         },
         "address": {
           "type": "string",
-          "description": "Headquarters street address, if there is one."
+          "description": "Headquarters street address, if there is one"
         },
         "status": {
           "type": "string",
-          "description": "Current status of the store.",
+          "description": "Current status of the store",
           "enum": [
             "pending_documentation",
             "active",
@@ -1167,11 +1167,11 @@
         },
         "created_at": {
           "type": "string",
-          "description": "Date and time when this instance was created."
+          "description": "Date and time when this instance was created"
         },
         "updated_at": {
           "type": "string",
-          "description": "Date and time when this instance was last modified."
+          "description": "Date and time when this instance was last modified"
         }
       }
     },
@@ -1185,15 +1185,15 @@
       "properties": {
         "name": {
           "type": "string",
-          "description": "Display name for the store."
+          "description": "Display name for the store"
         },
         "description": {
           "type": "string",
-          "description": "A description of the store, it may contain specific information about it."
+          "description": "A description of the store, it may contain specific information about it"
         },
         "nit": {
           "type": "string",
-          "description": "Unique business and social registry, given by commercial entity."
+          "description": "Unique business and social registry, given by commercial entity"
         },
         "website": {
           "type": "string",
@@ -1220,19 +1220,19 @@
       "properties": {
         "id": {
           "type": "string",
-          "description": "Unique identifier representing an specific user."
+          "description": "Unique identifier representing an specific user"
         },
         "first_name": {
           "type": "string",
-          "description": "First name of the user."
+          "description": "First name of the user"
         },
         "last_name": {
           "type": "string",
-          "description": "Last name of the user."
+          "description": "Last name of the user"
         },
         "email": {
           "type": "string",
-          "description": "Email address of the user."
+          "description": "Email address of the user"
         },
         "birthday": {
           "type": "string",
@@ -1240,7 +1240,7 @@
         },
         "gender": {
           "type": "string",
-          "description": "Gender of the user.",
+          "description": "Gender of the user",
           "enum": [
             "M",
             "F"
@@ -1248,11 +1248,11 @@
         },
         "created_at": {
           "type": "string",
-          "description": "Date and time when the user was created."
+          "description": "Date and time when the user was created"
         },
         "updated_at": {
           "type": "string",
-          "description": "Date and time when the user was lastly modified."
+          "description": "Date and time when the user was lastly modified"
         }
       }
     },
@@ -1265,11 +1265,11 @@
       "properties": {
         "email": {
           "type": "string",
-          "description": "Email address of the user or user to be authenticated."
+          "description": "Email address of the user or user to be authenticated"
         },
         "password": {
           "type": "string",
-          "description": "Password associated with the given email address."
+          "description": "Password associated with the given email address"
         }
       }
     },
@@ -1282,11 +1282,11 @@
       "properties": {
         "user_id": {
           "type": "string",
-          "description": "Identifier of the authenticated user."
+          "description": "Identifier of the authenticated user"
         },
         "token": {
           "type": "string",
-          "description": "Authorization token for subsequent requests."
+          "description": "Authorization token for subsequent requests"
         }
       }
     },
@@ -1301,11 +1301,11 @@
       "properties": {
         "first_name": {
           "type": "string",
-          "description": "First given name of the user."
+          "description": "First given name of the user"
         },
         "last_name": {
           "type": "string",
-          "description": "Last given name of the user."
+          "description": "Last given name of the user"
         },
         "email": {
           "type": "string",
@@ -1314,15 +1314,15 @@
         "password": {
           "type": "string",
           "format": "password",
-          "description": "Password to register the user with."
+          "description": "Password to register the user with"
         },
         "birthday": {
           "type": "string",
-          "description": "Date of birth of the user."
+          "description": "Date of birth of the user"
         },
         "gender": {
           "type": "string",
-          "description": "Gender of the user.",
+          "description": "Gender of the user",
           "enum": [
             "M",
             "F"
@@ -1346,23 +1346,23 @@
       "properties": {
         "id": {
           "type": "string",
-          "description": "Unique identifier representing an specific admin."
+          "description": "Unique identifier representing an specific admin"
         },
         "first_name": {
           "type": "string",
-          "description": "First name of the admin."
+          "description": "First name of the admin"
         },
         "last_name": {
           "type": "string",
-          "description": "Last name of the admin."
+          "description": "Last name of the admin"
         },
         "email": {
           "type": "string",
-          "description": "Email address of the admin."
+          "description": "Email address of the admin"
         },
         "admin_type": {
           "type": "string",
-          "description": "Type of administrator.",
+          "description": "Type of administrator",
           "enum": [
             "branch_admin",
             "store_admin"
@@ -1370,7 +1370,7 @@
         },
         "privileges": {
           "type": "array",
-          "description": "Privileges of the admin.",
+          "description": "Privileges of the admin",
           "items": {
             "type": "string"
           },
@@ -1384,15 +1384,15 @@
         },
         "activated_at": {
           "type": "string",
-          "description": "Date and time when the admin was activated via email confirmation. `null` if he/she hasn't confirmed the email yet."
+          "description": "Date and time when the admin was activated via email confirmation, `null` if he/she hasn't confirmed the email yet"
         },
         "created_at": {
           "type": "string",
-          "description": "Date and time when the admin was created."
+          "description": "Date and time when the admin was created"
         },
         "updated_at": {
           "type": "string",
-          "description": "Date and time when the admin was lastly modified."
+          "description": "Date and time when the admin was lastly modified"
         }
       }
     },
@@ -1405,11 +1405,11 @@
       "properties": {
         "admin_id": {
           "type": "string",
-          "description": "Identifier of the authenticated admin."
+          "description": "Identifier of the authenticated admin"
         },
         "token": {
           "type": "string",
-          "description": "Authorization token for subsequent requests."
+          "description": "Authorization token for subsequent requests"
         }
       }
     },
@@ -1424,11 +1424,11 @@
       "properties": {
         "first_name": {
           "type": "string",
-          "description": "First given name of the admin."
+          "description": "First given name of the admin"
         },
         "last_name": {
           "type": "string",
-          "description": "Last given name of the admin."
+          "description": "Last given name of the admin"
         },
         "email": {
           "type": "string",
@@ -1437,11 +1437,11 @@
         "password": {
           "type": "string",
           "format": "password",
-          "description": "Password to register the admin with."
+          "description": "Password to register the admin with"
         },
         "privileges": {
           "type": "array",
-          "description": "Array of privileges the admin to be created with.",
+          "description": "Array of privileges the admin to be created with",
           "items": {
             "type": "string"
           },
@@ -1471,39 +1471,39 @@
       "properties": {
         "id": {
           "type": "string",
-          "description": "Unique identifier representing an specific branch."
+          "description": "Unique identifier representing an specific branch"
         },
         "name": {
           "type": "string",
-          "description": "Associated name with the branch."
+          "description": "Associated name with the branch"
         },
         "latitude": {
           "type": "string",
-          "description": "Latitude of the branch."
+          "description": "Latitude of the branch"
         },
         "longitude": {
           "type": "string",
-          "description": "Longitude of the branch."
+          "description": "Longitude of the branch"
         },
         "address": {
           "type": "string",
-          "description": "Street address of the branch."
+          "description": "Street address of the branch"
         },
         "default_contact_info": {
           "type": "boolean",
-          "description": "`true` if should use the store contact information, `false` if should use particular contact information for this branch."
+          "description": "`true` if should use the store contact information, `false` if should use particular contact information for this branch"
         },
         "store_id": {
           "type": "string",
-          "description": "Unique identifier representing the store this branch belongs to."
+          "description": "Unique identifier representing the store this branch belongs to"
         },
         "created_at": {
           "type": "string",
-          "description": "Date and time when the branch was created."
+          "description": "Date and time when the branch was created"
         },
         "updated_at": {
           "type": "string",
-          "description": "Date and time when the branch was lastly modified."
+          "description": "Date and time when the branch was lastly modified"
         }
       }
     },
@@ -1519,29 +1519,29 @@
       "properties": {
         "name": {
           "type": "string",
-          "description": "Display name for the branch."
+          "description": "Display name for the branch"
         },
         "latitude": {
           "type": "number",
           "format": "double",
-          "description": "Latitude of the branch for georeferencing purposes."
+          "description": "Latitude of the branch for georeferencing purposes"
         },
         "longitude": {
           "type": "number",
           "format": "double",
-          "description": "Longitude of the branch for georeferencing purposes."
+          "description": "Longitude of the branch for georeferencing purposes"
         },
         "address": {
           "type": "string",
-          "description": "Indicates how many items of the promo are available."
+          "description": "Indicates how many items of the promo are available"
         },
         "default_contact_info": {
           "type": "boolean",
-          "description": "`true` to use the store contact information, `false` to use particular contact information for this branch."
+          "description": "`true` to use the store contact information, `false` to use particular contact information for this branch"
         },
         "store_id": {
           "type": "string",
-          "description": "Unique identifier representing the store that will own this branch."
+          "description": "Unique identifier representing the store that will own this branch"
         }
       }
     },

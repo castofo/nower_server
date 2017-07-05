@@ -15,18 +15,18 @@ parameters:
   - $ref: "#/parameters/Expand"
 responses:
   200:
-    description: Found store information.
+    description: Found store information
     schema:
       $ref: '#/definitions/Store'
   401:
-    description: Unauthorized error.
+    description: Unauthorized error
     schema:
       $ref: '#/definitions/Error'
   404:
-    description: The given store was not found.
+    description: The given store was not found
     schema:
       $ref: '#/definitions/Error'
   default:
-    description: Unexpected error.
+    description: Unexpected error
     schema:
       $ref: '#/definitions/Error'

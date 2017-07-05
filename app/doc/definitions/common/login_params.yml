@@ -5,7 +5,7 @@ required:
 properties:
   email:
     type: string
-    description: Email address of the user or user to be authenticated.
+    description: Email address of the user or user to be authenticated
   password:
     type: string
-    description: Password associated with the given email address.
+    description: Password associated with the given email address

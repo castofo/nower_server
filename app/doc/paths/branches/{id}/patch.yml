@@ -1,6 +1,6 @@
 summary: Updates a branch.
 description: |
-  With a branch id, updates on it the given properties.
+  With a branch id, updates on it the given properties
 tags:
   - branches
 parameters:
@@ -11,13 +11,13 @@ parameters:
     required: true
   - in: body
     name: body
-    description: Branch properties to be updated.
+    description: Branch properties to be updated
     required: true
     schema:
       $ref: "#/definitions/BranchParams"
 responses:
   200:
-    description: Successfully updated branch.
+    description: Successfully updated branch
     schema:
       $ref: '#/definitions/Branch'
   400:
@@ -25,18 +25,18 @@ responses:
     schema:
       $ref: '#/definitions/Error'
   401:
-    description: Unauthorized error.
+    description: Unauthorized error
     schema:
       $ref: '#/definitions/Error'
   404:
-    description: The given branch was not found.
+    description: The given branch was not found
     schema:
       $ref: '#/definitions/Error'
   422:
-    description: Branch couldn't be updated with the given properties.
+    description: Branch couldn't be updated with the given properties
     schema:
       $ref: '#/definitions/Error'
   default:
-    description: Unexpected error.
+    description: Unexpected error
     schema:
       $ref: '#/definitions/Error'

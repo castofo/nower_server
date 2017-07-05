@@ -1,26 +1,26 @@
 summary: Deletes a Store.
 description: |
-  Deletes the specified store, by id.
+  Deletes the specified store, by id
 tags:
   - stores
 parameters:
   - name: id
     in: path
-    description: Identifier of the store to be deleted.
+    description: Identifier of the store to be deleted
     type: string
     required: true
 responses:
   200:
-    description: Successfully deleted store.
+    description: Successfully deleted store
   401:
-    description: Unauthorized error.
+    description: Unauthorized error
     schema:
       $ref: '#/definitions/Error'
   404:
-    description: The given store was not found.
+    description: The given store was not found
     schema:
       $ref: '#/definitions/Error'
   default:
-    description: Unexpected error.
+    description: Unexpected error
     schema:
       $ref: '#/definitions/Error'

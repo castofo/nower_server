@@ -8,22 +8,22 @@ required:
 properties:
   name:
     type: string
-    description: Display name for the branch.
+    description: Display name for the branch
   latitude:
     type: number
     format: double
-    description: Latitude of the branch for georeferencing purposes.
+    description: Latitude of the branch for georeferencing purposes
   longitude:
     type: number
     format: double
-    description: Longitude of the branch for georeferencing purposes.
+    description: Longitude of the branch for georeferencing purposes
   address:
     type: string
-    description: Indicates how many items of the promo are available.
+    description: Indicates how many items of the promo are available
   default_contact_info:
     type: boolean
     description: "`true` to use the store contact information, `false` to use particular contact
-     information for this branch."
+     information for this branch"
   store_id:
     type: string
-    description: Unique identifier representing the store that will own this branch.
+    description: Unique identifier representing the store that will own this branch

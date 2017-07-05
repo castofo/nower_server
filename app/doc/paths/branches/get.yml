@@ -3,10 +3,10 @@ description: |
   Returns a list of all created branches.
 
   - Including both `latitude` and `longitude` query parameters will fetch only
-  branches that are located at most 3 km far from the given location.
+  branches that are located at most 3 km far from the given location
 
   - Including the `store_id` query parameter will only return branches that belong to the given
-  store.
+  store
 
   - The `expand` query parameter supports:
     - `store`: will append the store the branch belongs to
@@ -20,16 +20,16 @@ parameters:
   - $ref: "#/parameters/Expand"
 responses:
   200:
-    description: An array of branches matching given parameters.
+    description: An array of branches matching given parameters
     schema:
       type: array
       items:
         $ref: '#/definitions/Branch'
   401:
-    description: Authentication failed.
+    description: Authentication failed
     schema:
       $ref: '#/definitions/Error'
   default:
-    description: Unexpected error.
+    description: Unexpected error
     schema:
       $ref: '#/definitions/Error'

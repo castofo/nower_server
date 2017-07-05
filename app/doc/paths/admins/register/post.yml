@@ -1,34 +1,34 @@
 summary: Registers in a web admin.
 description: |
   Given a set of parameters, it creates a web admin, returning the successfully
-  created admin.
+  created admin
 tags:
   - admins
 parameters:
   - in: body
     name: body
-    description: Admin information to be registered with.
+    description: Admin information to be registered with
     required: true
     schema:
       $ref: "#/definitions/AdminRegisterParams"
 responses:
   201:
-    description: Successfully registered.
+    description: Successfully registered
     schema:
       $ref: '#/definitions/Admin'
   400:
-    description: Bad request.
+    description: Bad request
     schema:
       $ref: '#/definitions/Error'
   401:
-    description: Unauthorized to register an admin.
+    description: Unauthorized to register an admin
     schema:
       $ref: '#/definitions/Error'
   422:
-    description: Some field is unprocessable.
+    description: Some field is unprocessable
     schema:
       $ref: '#/definitions/Error'
   default:
-    description: Unexpected error.
+    description: Unexpected error
     schema:
       $ref: '#/definitions/Error'

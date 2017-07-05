@@ -5,7 +5,7 @@ required:
 properties:
   user_id:
     type: string
-    description: Identifier of the authenticated user.
+    description: Identifier of the authenticated user
   token:
     type: string
-    description: Authorization token for subsequent requests.
+    description: Authorization token for subsequent requests

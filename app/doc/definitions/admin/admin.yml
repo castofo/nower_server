@@ -12,25 +12,25 @@ required:
 properties:
   id:
     type: string
-    description: Unique identifier representing an specific admin.
+    description: Unique identifier representing an specific admin
   first_name:
     type: string
-    description: First name of the admin.
+    description: First name of the admin
   last_name:
     type: string
-    description: Last name of the admin.
+    description: Last name of the admin
   email:
     type: string
-    description: Email address of the admin.
+    description: Email address of the admin
   admin_type:
     type: string
-    description: Type of administrator.
+    description: Type of administrator
     enum:
       - branch_admin
       - store_admin
   privileges:
     type: array
-    description: Privileges of the admin.
+    description: Privileges of the admin
     items:
       type: string
     enum:
@@ -41,11 +41,11 @@ properties:
       - invite_to_branch
   activated_at:
     type: string
-    description: Date and time when the admin was activated via email confirmation.
-      `null` if he/she hasn't confirmed the email yet.
+    description: Date and time when the admin was activated via email confirmation,
+      `null` if he/she hasn't confirmed the email yet
   created_at:
     type: string
-    description: Date and time when the admin was created.
+    description: Date and time when the admin was created
   updated_at:
     type: string
-    description: Date and time when the admin was lastly modified.
+    description: Date and time when the admin was lastly modified
