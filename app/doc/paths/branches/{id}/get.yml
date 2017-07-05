@@ -1,6 +1,10 @@
 summary: Fetches a branch.
 description: |
-  With a branch id, fetches it and its related information.
+  With a branch id, fetches it and its related information
+
+  - The `expand` query parameter supports:
+    - `store`: will append the store the branch belongs to
+    - `promos`: will append promos that are being published in the branch
 tags:
   - branches
 parameters:
@@ -9,20 +13,21 @@ parameters:
     description: The branch identifier
     type: string
     required: true
+  - $ref: "#/parameters/Expand"
 responses:
   200:
-    description: Found branch information.
+    description: Found branch information
     schema:
       $ref: '#/definitions/Branch'
   401:
-    description: Unauthorized error.
+    description: Unauthorized error
     schema:
       $ref: '#/definitions/Error'
   404:
-    description: The given branch was not found.
+    description: The given branch was not found
     schema:
       $ref: '#/definitions/Error'
   default:
-    description: Unexpected error.
+    description: Unexpected error
     schema:
       $ref: '#/definitions/Error'

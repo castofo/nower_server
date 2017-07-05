@@ -5,7 +5,7 @@ required:
 properties:
   admin_id:
     type: string
-    description: Identifier of the authenticated admin.
+    description: Identifier of the authenticated admin
   token:
     type: string
-    description: Authorization token for subsequent requests.
+    description: Authorization token for subsequent requests

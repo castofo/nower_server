@@ -1,6 +1,6 @@
 summary: Updates a Promo.
 description: |
-  With a promo id, updates on it the given properties.
+  With a promo id, updates on it the given properties
 tags:
   - promos
 parameters:
@@ -11,13 +11,13 @@ parameters:
     required: true
   - in: body
     name: body
-    description: Promo properties to be updated.
+    description: Promo properties to be updated
     required: true
     schema:
       $ref: "#/definitions/PromoParams"
 responses:
   200:
-    description: Successfully updated promo.
+    description: Successfully updated promo
     schema:
       $ref: '#/definitions/Promo'
   400:
@@ -25,18 +25,18 @@ responses:
     schema:
       $ref: '#/definitions/Error'
   401:
-    description: Unauthorized error.
+    description: Unauthorized error
     schema:
       $ref: '#/definitions/Error'
   404:
-    description: The given promo was not found.
+    description: The given promo was not found
     schema:
       $ref: '#/definitions/Error'
   422:
-    description: Promo couldn't be updated with the given properties.
+    description: Promo couldn't be updated with the given properties
     schema:
       $ref: '#/definitions/Error'
   default:
-    description: Unexpected error.
+    description: Unexpected error
     schema:
       $ref: '#/definitions/Error'

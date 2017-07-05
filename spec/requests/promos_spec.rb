@@ -24,6 +24,52 @@ RSpec.describe 'Promos', type: :request do
         expect(promos.first['description']).to eq existing_promo.description
       end
     end
+
+    context "when 'branch_id' query param is included" do
+      let(:existing_branch) { create :branch }
+      let(:associated_count) { rand(5..10) }
+
+      # Create promos associated to existing branch
+      before do
+        associated_count.times do
+          promo = build(:promo)
+          promo.branches.push(existing_branch)
+          promo.save
+        end
+      end
+
+      # Create some other branches that are not associated to existing branch
+      before do
+        rand(5..10).times { create(:promo) }
+      end
+
+      it 'returns only promos that belong to the given branch' do
+        sub_get api_v1_promos_path, { params: { branch_id: existing_branch.id } }
+        expect(response).to have_http_status(200)
+        promos = JSON.parse(response.body)
+        expect(promos.length).to eq associated_count
+      end
+    end
+
+    context "when 'expand' query param contains 'branches'" do
+      # Create some promos and associate them to branches
+      before do
+        rand(5..10).times do
+          promo = create :promo
+          rand(5..10).times { promo.branches.push(create :branch) }
+        end
+      end
+
+      it 'returns promos with embedded branches entities' do
+        sub_get api_v1_promos_path, { params: { expand: :branches } }
+        expect(response).to have_http_status(200)
+        promos = JSON.parse(response.body)
+        promos.each do |promo|
+          expect(promo['branches']).not_to be_nil
+          expect(promo['branches']).to be_a_kind_of(Array)
+        end
+      end
+    end
   end
 
   describe 'GET /v1/promos/:id' do
@@ -36,6 +82,23 @@ RSpec.describe 'Promos', type: :request do
         expect(found_promo['id']).to eq existing_promo.id
         expect(found_promo['name']).to eq existing_promo.name
         expect(found_promo['description']).to eq existing_promo.description
+      end
+    end
+
+    context "when 'expand' query param contains 'branches'" do
+      let(:branches_count) { rand(5..10) }
+      before do
+        branches_count.times do
+          existing_promo.branches.push(create :branch)
+        end
+      end
+      it 'returns the promo with embedded branches entities' do
+        sub_get api_v1_promo_path(existing_promo.id), { params: { expand: :branches } }
+        expect(response).to have_http_status(200)
+        found_promo = JSON.parse(response.body)
+        expect(found_promo['branches']).not_to be_nil
+        expect(found_promo['branches']).to be_a_kind_of(Array)
+        expect(found_promo['branches'].length).to eq branches_count
       end
     end
 
@@ -77,7 +140,7 @@ RSpec.describe 'Promos', type: :request do
       end
     end
 
-    context 'when name has more then 140 characters' do
+    context 'when name has more than 140 characters' do
       it 'returns a 422' do
         body[:name] = Faker::Lorem.characters(141)
         sub_post api_v1_promos_path, { params: { promo: body } }
@@ -212,7 +275,7 @@ RSpec.describe 'Promos', type: :request do
   describe 'PUT /v1/promos' do
     let(:existing_promo) { create :promo }
     let(:body) do
-      { name: Faker::Lorem.sentence, description: Faker::Lorem.paragraph }
+      { name: Faker::Lorem.sentence[0..139], description: Faker::Lorem.paragraph }
     end
     context 'when updating an existing promo' do
       context 'when new name is valid' do
@@ -241,7 +304,7 @@ RSpec.describe 'Promos', type: :request do
         end
       end
 
-      context 'when name has more then 140 characters' do
+      context 'when name has more than 140 characters' do
         it 'returns a 422' do
           body[:name] = Faker::Lorem.characters(141)
           sub_put api_v1_promo_path(existing_promo.id), { params: { promo: body } }

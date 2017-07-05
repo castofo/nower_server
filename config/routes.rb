@@ -3,6 +3,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :promos
       resources :branches
+      resources :stores
 
       get 'auths/index' # TODO: Delete, development purposes.
       post 'auths/login'

@@ -1,23 +1,25 @@
 module Api::V1
   class BranchesController < ApplicationController
+    include Expandable
+    expandable_attrs :store, :promos
+
     before_action :set_branch, only: [:show, :update, :destroy]
 
     # GET /branches
     def index
-      if params[:latitude].blank? || params[:longitude].blank?
-        @branches = Branch.all
-      else
-        @branches = Branch.near([params[:latitude], params[:longitude]],
-                                Constants::Branch::DEFAULT_BRANCH_NEARNESS_KM,
-                                units: :km)
+      @branches = Branch.all
+
+      @branches = @branches.store_id(params[:store_id]) unless params[:store_id].blank?
+      unless params[:latitude].blank? || params[:longitude].blank?
+        @branches = @branches.geolocated(params[:latitude], params[:longitude])
       end
 
-      render json: @branches
+      render json: @branches, include: expand_attrs
     end
 
     # GET /branches/1
     def show
-      render json: @branch
+      render json: @branch, include: expand_attrs
     end
 
     # POST /branches
@@ -62,7 +64,8 @@ module Api::V1
             :latitude,
             :longitude,
             :address,
-            :default_contact_info
+            :default_contact_info,
+            :store_id
         )
       end
   end

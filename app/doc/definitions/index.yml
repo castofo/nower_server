@@ -4,6 +4,12 @@ Promo:
 PromoParams:
   $ref: ./promo/promo_params.yml
 
+Store:
+  $ref: ./store/store.yml
+
+StoreParams:
+  $ref: ./store/store_params.yml
+
 User:
   $ref: ./user/user.yml
 

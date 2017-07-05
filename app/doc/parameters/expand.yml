@@ -1,0 +1,4 @@
+name: expand
+in: query
+description: In order to embed the entities specified in this param. (comma-separated)
+type: string

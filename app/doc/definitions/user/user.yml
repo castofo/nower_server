@@ -11,28 +11,28 @@ required:
 properties:
   id:
     type: string
-    description: Unique identifier representing an specific user.
+    description: Unique identifier representing an specific user
   first_name:
     type: string
-    description: First name of the user.
+    description: First name of the user
   last_name:
     type: string
-    description: Last name of the user.
+    description: Last name of the user
   email:
     type: string
-    description: Email address of the user.
+    description: Email address of the user
   birthday:
     type: string
     description: "Day of birth of the user. **(Format: YYYY-MM-dd)**"
   gender:
     type: string
-    description: Gender of the user.
+    description: Gender of the user
     enum:
       - M
       - F
   created_at:
     type: string
-    description: Date and time when the user was created.
+    description: Date and time when the user was created
   updated_at:
     type: string
-    description: Date and time when the user was lastly modified.
+    description: Date and time when the user was lastly modified

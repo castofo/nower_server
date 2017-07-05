@@ -1,18 +1,18 @@
 summary: Creates a new branch.
 description: |
-  Given a set of properties, creates and returns a branch.
+  Given a set of properties, creates and returns a branch
 tags:
   - branches
 parameters:
   - in: body
     name: body
-    description: Branch with properties to be created with.
+    description: Branch with properties to be created with
     required: true
     schema:
       $ref: "#/definitions/BranchParams"
 responses:
   201:
-    description: Successfully created branch.
+    description: Successfully created branch
     schema:
       $ref: '#/definitions/Branch'
   401:
@@ -20,10 +20,10 @@ responses:
     schema:
       $ref: '#/definitions/Error'
   422:
-    description: Branch couldn't be created with the given properties.
+    description: Branch couldn't be created with the given properties
     schema:
       $ref: '#/definitions/Error'
   default:
-    description: Unexpected error.
+    description: Unexpected error
     schema:
       $ref: '#/definitions/Error'

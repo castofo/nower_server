@@ -1,0 +1,29 @@
+summary: Creates a new Store.
+description: |
+  Given a set of properties, creates and returns a store
+tags:
+  - stores
+parameters:
+  - in: body
+    name: body
+    description: Store with properties to be created with
+    required: true
+    schema:
+      $ref: "#/definitions/StoreParams"
+responses:
+  201:
+    description: Successfully created store
+    schema:
+      $ref: '#/definitions/Store'
+  401:
+    description: Unauthorized error
+    schema:
+      $ref: '#/definitions/Error'
+  422:
+    description: Store couldn't be created with the given properties
+    schema:
+      $ref: '#/definitions/Error'
+  default:
+    description: Unexpected error
+    schema:
+      $ref: '#/definitions/Error'

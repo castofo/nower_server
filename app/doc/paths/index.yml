@@ -4,6 +4,12 @@
 /promos/{id}:
   $ref: ./promos/{id}/index.yml
 
+/stores:
+  $ref: ./stores/index.yml
+
+/stores/{id}:
+  $ref: ./stores/{id}/index.yml
+
 /auths/index:
   $ref: ./auths/index/index.yml
 

@@ -1,6 +1,9 @@
 summary: Fetches a promo.
 description: |
   With a promo id, fetches it and its related information.
+
+  - The `expand` query parameter supports:
+    - `branches`: will append the branches where the promo is being published
 tags:
   - promos
 parameters:
@@ -9,20 +12,21 @@ parameters:
     description: The promo identifier
     type: string
     required: true
+  - $ref: "#/parameters/Expand"
 responses:
   200:
-    description: Found promo information.
+    description: Found promo information
     schema:
       $ref: '#/definitions/Promo'
   401:
-    description: Unauthorized error.
+    description: Unauthorized error
     schema:
       $ref: '#/definitions/Error'
   404:
-    description: The given promo was not found.
+    description: The given promo was not found
     schema:
       $ref: '#/definitions/Error'
   default:
-    description: Unexpected error.
+    description: Unexpected error
     schema:
       $ref: '#/definitions/Error'

@@ -1,3 +1,6 @@
+StoreId:
+  $ref: ./store_id.yml
+
 BranchId:
   $ref: ./branch_id.yml
 
@@ -6,3 +9,6 @@ Latitude:
 
 Longitude:
   $ref: ./longitude.yml
+
+Expand:
+  $ref: ./expand.yml

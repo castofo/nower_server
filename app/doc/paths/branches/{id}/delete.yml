@@ -1,26 +1,26 @@
 summary: Deletes a branch.
 description: |
-  Deletes the specified branch, by id.
+  Deletes the specified branch, by id
 tags:
   - branches
 parameters:
   - name: id
     in: path
-    description: Identifier of the branch to be deleted.
+    description: Identifier of the branch to be deleted
     type: string
     required: true
 responses:
   200:
-    description: Successfully deleted branch.
+    description: Successfully deleted branch
   401:
-    description: Unauthorized error.
+    description: Unauthorized error
     schema:
       $ref: '#/definitions/Error'
   404:
-    description: The given branch was not found.
+    description: The given branch was not found
     schema:
       $ref: '#/definitions/Error'
   default:
-    description: Unexpected error.
+    description: Unexpected error
     schema:
       $ref: '#/definitions/Error'
