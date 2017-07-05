@@ -1,4 +1,4 @@
-summary: Deletes a branch.
+summary: Deletes a branch
 description: |
   Deletes the specified branch, by id
 tags:

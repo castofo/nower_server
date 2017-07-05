@@ -1,4 +1,4 @@
-summary: Logs in an application user.
+summary: Logs in an application user
 description: |
   Given an user email and password, it authenticates the user with the given credentials,
   returning an access token for subsequent requests

@@ -1,4 +1,4 @@
-summary: Registers in a web admin.
+summary: Registers in a web admin
 description: |
   Given a set of parameters, it creates a web admin, returning the successfully
   created admin

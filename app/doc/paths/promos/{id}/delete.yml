@@ -1,4 +1,4 @@
-summary: Deletes a Promo.
+summary: Deletes a promo
 description: |
   Deletes the specified promo, by id
 tags:

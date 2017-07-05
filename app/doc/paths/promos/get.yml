@@ -1,4 +1,4 @@
-summary: Fetches Promos.
+summary: Fetches promos
 description: |
   Returns a list of available promos. The reponse includes the display
   name and other details about each promo.

@@ -1,4 +1,4 @@
-summary: Deletes a Store.
+summary: Deletes a store
 description: |
   Deletes the specified store, by id
 tags:

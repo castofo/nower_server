@@ -1,4 +1,4 @@
-summary: Fetches all branches.
+summary: Fetches all branches
 description: |
   Returns a list of all created branches.
 

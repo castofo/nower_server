@@ -1,4 +1,4 @@
-summary: Fetches a branch.
+summary: Fetches a branch
 description: |
   With a branch id, fetches it and its related information
 

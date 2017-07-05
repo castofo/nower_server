@@ -1,4 +1,4 @@
-summary: Fetches Stores.
+summary: Fetches stores
 description: |
   Returns a list of available stores. The reponse includes the display
   name and other details about each store

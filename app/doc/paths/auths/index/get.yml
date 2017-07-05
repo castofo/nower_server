@@ -1,4 +1,4 @@
-summary: Fetches all application users (Development only).
+summary: Fetches all application users
 description: |
   Returns a list of all registered application users
 tags:

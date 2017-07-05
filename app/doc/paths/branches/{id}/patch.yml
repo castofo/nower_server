@@ -1,4 +1,4 @@
-summary: Updates a branch.
+summary: Updates a branch
 description: |
   With a branch id, updates on it the given properties
 tags:

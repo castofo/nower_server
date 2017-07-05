@@ -1,4 +1,4 @@
-summary: Fetches a store.
+summary: Fetches a store
 description: |
   With a store id, fetches it and its related information.
 

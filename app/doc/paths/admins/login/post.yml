@@ -1,4 +1,4 @@
-summary: Logs in a web admin.
+summary: Logs in a web admin
 description: |
   Given an admin email and password, it authenticates the admin with the given credentials,
   returning an access token for subsequent requests

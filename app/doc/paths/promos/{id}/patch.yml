@@ -1,4 +1,4 @@
-summary: Updates a Promo.
+summary: Updates a promo
 description: |
   With a promo id, updates on it the given properties
 tags:

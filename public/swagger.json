@@ -15,7 +15,7 @@
   "paths": {
     "/promos": {
       "get": {
-        "summary": "Fetches Promos.",
+        "summary": "Fetches promos",
         "description": "Returns a list of available promos. The reponse includes the display\nname and other details about each promo.\n\n- Including the `branch_id` query parameter will only return promos that belong to the given\nbranch\n\n- The `expand` query parameter supports:\n  - `branches`: will append the branches where the promo is being published\n",
         "tags": [
           "promos"
@@ -59,7 +59,7 @@
         }
       },
       "post": {
-        "summary": "Creates a new Promo.",
+        "summary": "Creates a new promo",
         "description": "Given a set of properties, creates and returns a promo\n",
         "tags": [
           "promos"
@@ -105,7 +105,7 @@
     },
     "/promos/{id}": {
       "get": {
-        "summary": "Fetches a promo.",
+        "summary": "Fetches a promo",
         "description": "With a promo id, fetches it and its related information.\n\n- The `expand` query parameter supports:\n  - `branches`: will append the branches where the promo is being published\n",
         "tags": [
           "promos"
@@ -150,7 +150,7 @@
         }
       },
       "patch": {
-        "summary": "Updates a Promo.",
+        "summary": "Updates a promo",
         "description": "With a promo id, updates on it the given properties\n",
         "tags": [
           "promos"
@@ -213,7 +213,7 @@
         }
       },
       "delete": {
-        "summary": "Deletes a Promo.",
+        "summary": "Deletes a promo",
         "description": "Deletes the specified promo, by id\n",
         "tags": [
           "promos"
@@ -254,7 +254,7 @@
     },
     "/stores": {
       "get": {
-        "summary": "Fetches Stores.",
+        "summary": "Fetches stores",
         "description": "Returns a list of available stores. The reponse includes the display\nname and other details about each store\n\n- The `expand` query parameter supports:\n  - `branches`: will append the branches that belong to the store\n",
         "tags": [
           "stores"
@@ -289,7 +289,7 @@
         }
       },
       "post": {
-        "summary": "Creates a new Store.",
+        "summary": "Creates a new store",
         "description": "Given a set of properties, creates and returns a store\n",
         "tags": [
           "stores"
@@ -335,7 +335,7 @@
     },
     "/stores/{id}": {
       "get": {
-        "summary": "Fetches a store.",
+        "summary": "Fetches a store",
         "description": "With a store id, fetches it and its related information.\n\n- The `expand` query parameter supports:\n  - `branches`: will append the branches that belong to the store\n",
         "tags": [
           "stores"
@@ -380,7 +380,7 @@
         }
       },
       "patch": {
-        "summary": "Updates a Store.",
+        "summary": "Updates a store",
         "description": "With a store id, updates on it the given properties\n",
         "tags": [
           "stores"
@@ -443,7 +443,7 @@
         }
       },
       "delete": {
-        "summary": "Deletes a Store.",
+        "summary": "Deletes a store",
         "description": "Deletes the specified store, by id\n",
         "tags": [
           "stores"
@@ -484,7 +484,7 @@
     },
     "/auths/index": {
       "get": {
-        "summary": "Fetches all application users (Development only).",
+        "summary": "Fetches all application users",
         "description": "Returns a list of all registered application users\n",
         "tags": [
           "auths"
@@ -510,7 +510,7 @@
     },
     "/auths/login": {
       "post": {
-        "summary": "Logs in an application user.",
+        "summary": "Logs in an application user",
         "description": "Given an user email and password, it authenticates the user with the given credentials,\nreturning an access token for subsequent requests\n",
         "tags": [
           "auths"
@@ -550,7 +550,7 @@
     },
     "/auths/register": {
       "post": {
-        "summary": "Registers in an application user.",
+        "summary": "Registers in an application user",
         "description": "Given a set of parameters, it creates an application user, returning the successfully\ncreated user\n",
         "tags": [
           "auths"
@@ -602,7 +602,7 @@
     },
     "/admins/index": {
       "get": {
-        "summary": "Fetches all web admins.",
+        "summary": "Fetches all web admins",
         "description": "Returns a list of all registered web admins\n",
         "tags": [
           "admins"
@@ -634,7 +634,7 @@
     },
     "/admins/login": {
       "post": {
-        "summary": "Logs in a web admin.",
+        "summary": "Logs in a web admin",
         "description": "Given an admin email and password, it authenticates the admin with the given credentials,\nreturning an access token for subsequent requests\n",
         "tags": [
           "admins"
@@ -674,7 +674,7 @@
     },
     "/admins/register": {
       "post": {
-        "summary": "Registers in a web admin.",
+        "summary": "Registers in a web admin",
         "description": "Given a set of parameters, it creates a web admin, returning the successfully\ncreated admin\n",
         "tags": [
           "admins"
@@ -726,7 +726,7 @@
     },
     "/branches": {
       "get": {
-        "summary": "Fetches all branches.",
+        "summary": "Fetches all branches",
         "description": "Returns a list of all created branches.\n\n- Including both `latitude` and `longitude` query parameters will fetch only\nbranches that are located at most 3 km far from the given location\n\n- Including the `store_id` query parameter will only return branches that belong to the given\nstore\n\n- The `expand` query parameter supports:\n  - `store`: will append the store the branch belongs to\n  - `promos`: will append promos that are being published in the branch\n",
         "tags": [
           "branches"
@@ -770,7 +770,7 @@
         }
       },
       "post": {
-        "summary": "Creates a new branch.",
+        "summary": "Creates a new branch",
         "description": "Given a set of properties, creates and returns a branch\n",
         "tags": [
           "branches"
@@ -816,7 +816,7 @@
     },
     "/branches/{id}": {
       "get": {
-        "summary": "Fetches a branch.",
+        "summary": "Fetches a branch",
         "description": "With a branch id, fetches it and its related information\n\n- The `expand` query parameter supports:\n  - `store`: will append the store the branch belongs to\n  - `promos`: will append promos that are being published in the branch\n",
         "tags": [
           "branches"
@@ -861,7 +861,7 @@
         }
       },
       "patch": {
-        "summary": "Updates a branch.",
+        "summary": "Updates a branch",
         "description": "With a branch id, updates on it the given properties\n",
         "tags": [
           "branches"
@@ -924,7 +924,7 @@
         }
       },
       "delete": {
-        "summary": "Deletes a branch.",
+        "summary": "Deletes a branch",
         "description": "Deletes the specified branch, by id\n",
         "tags": [
           "branches"

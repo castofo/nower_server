@@ -1,4 +1,4 @@
-summary: Creates a new branch.
+summary: Creates a new branch
 description: |
   Given a set of properties, creates and returns a branch
 tags:

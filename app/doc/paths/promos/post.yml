@@ -1,4 +1,4 @@
-summary: Creates a new Promo.
+summary: Creates a new promo
 description: |
   Given a set of properties, creates and returns a promo
 tags:

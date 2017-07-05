@@ -1,4 +1,4 @@
-summary: Fetches all web admins.
+summary: Fetches all web admins
 description: |
   Returns a list of all registered web admins
 tags:

@@ -1,4 +1,4 @@
-summary: Creates a new Store.
+summary: Creates a new store
 description: |
   Given a set of properties, creates and returns a store
 tags:

@@ -1,4 +1,4 @@
-summary: Fetches a promo.
+summary: Fetches a promo
 description: |
   With a promo id, fetches it and its related information.
 

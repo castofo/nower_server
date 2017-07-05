@@ -1,4 +1,4 @@
-summary: Registers in an application user.
+summary: Registers in an application user
 description: |
   Given a set of parameters, it creates an application user, returning the successfully
   created user
