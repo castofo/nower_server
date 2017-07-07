@@ -1,5 +1,7 @@
 # Nower Server
 
+[![CircleCI](https://circleci.com/gh/castofo/nower_server/tree/develop.svg?style=shield)](https://circleci.com/gh/castofo/nower_server/tree/develop)
+
 > Nower is a platform that allows mobile users to find promotions that several stores near to them
   may offer. Those promotions are presented according to the users interests and wishes and the
   particularity is that they would expire in a short period or even run out of stock really fast.
