@@ -1113,6 +1113,13 @@
         "end_date": {
           "type": "string",
           "description": "Date and time when the promo finishes"
+        },
+        "branch_ids": {
+          "type": "array",
+          "description": "Array of branch ids to associate the promo with",
+          "items": {
+            "type": "string"
+          }
         }
       }
     },

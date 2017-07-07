@@ -2,6 +2,7 @@ module Api::V1
   class PromosController < ApplicationController
     include Expandable
     expandable_attrs :branches
+    wrap_parameters include: Promo.attribute_names + [:branch_ids]
 
     before_action :set_promo, only: [:show, :update, :destroy]
 
@@ -65,7 +66,8 @@ module Api::V1
             :stock,
             :price,
             :start_date,
-            :end_date
+            :end_date,
+            branch_ids: []
         )
       end
   end
