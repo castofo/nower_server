@@ -270,6 +270,53 @@ RSpec.describe 'Promos', type: :request do
         expect(response).to have_http_status(422)
       end
     end
+
+    context 'when branch_ids is nil' do
+      it 'creates the promo without associated branches' do
+        body[:branch_ids] = nil
+        sub_post api_v1_promos_path, { params: { promo: body } }
+        expect(response).to have_http_status(201)
+        created_promo = JSON.parse(response.body)
+        sub_get api_v1_promo_path(created_promo['id']), { params: { expand: :branches } }
+        found_promo = JSON.parse(response.body)
+        expect(found_promo['branches'].length).to eq 0
+      end
+    end
+
+    context 'when branch_ids is empty array' do
+      it 'creates the promo without associated branches' do
+        body[:branch_ids] = []
+        sub_post api_v1_promos_path, { params: { promo: body } }
+        expect(response).to have_http_status(201)
+        created_promo = JSON.parse(response.body)
+        sub_get api_v1_promo_path(created_promo['id']), { params: { expand: :branches } }
+        found_promo = JSON.parse(response.body)
+        expect(found_promo['branches'].length).to eq 0
+      end
+    end
+
+    context 'when branch_ids is present with some ids' do
+      let(:branch_ids) do
+        ids = []
+        store = create :store
+        rand(5..10).times do
+          branch = create(:branch, store_id: store.id)
+          ids.push(branch.id)
+        end
+        ids
+      end
+
+      it 'creates the promo with specified branches associated' do
+        body[:branch_ids] = branch_ids
+        sub_post api_v1_promos_path, { params: { promo: body } }
+        expect(response).to have_http_status(201)
+        created_promo = JSON.parse(response.body)
+        sub_get api_v1_promo_path(created_promo['id']), { params: { expand: :branches } }
+        found_promo = JSON.parse(response.body)
+        expect(found_promo['branches'].length).to eq branch_ids.length
+        found_promo['branches'].each { |branch| expect(branch_ids).to include(branch['id']) }
+      end
+    end
   end
 
   describe 'PUT /v1/promos' do
@@ -474,6 +521,62 @@ RSpec.describe 'Promos', type: :request do
           body[:end_date] = Faker::Number.between(2, 15).days.from_now
           sub_put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
           expect(response).to have_http_status(422)
+        end
+      end
+
+      context 'when the promo already have some associated branches' do
+        let(:store) { create :store }
+        before do
+          rand(5..10).times do
+            branch = create(:branch, store_id: store.id)
+            existing_promo.branches.push(branch)
+          end
+        end
+        let(:existing_ids) { existing_promo.branch_ids }
+
+        context 'when branch_ids is nil' do
+          it 'does not modify the associated branches' do
+            body[:branch_ids] = nil
+            sub_put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
+            expect(response).to have_http_status(200)
+            sub_get api_v1_promo_path(existing_promo.id), { params: { expand: :branches } }
+            found_promo = JSON.parse(response.body)
+            expect(found_promo['branches'].length).to eq existing_ids.count
+            found_promo['branches'].each { |branch| expect(existing_ids).to include(branch['id']) }
+          end
+        end
+
+        context 'when branch_ids is empty array' do
+          it 'does not modify the associated branches' do
+            body[:branch_ids] = []
+            sub_put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
+            expect(response).to have_http_status(200)
+            sub_get api_v1_promo_path(existing_promo.id), { params: { expand: :branches } }
+            found_promo = JSON.parse(response.body)
+            expect(found_promo['branches'].length).to eq existing_ids.count
+            found_promo['branches'].each { |branch| expect(existing_ids).to include(branch['id']) }
+          end
+        end
+
+        context 'when branch_ids is present with some ids' do
+          let(:branch_ids) do
+            ids = []
+            rand(5..10).times do
+              branch = create(:branch, store_id: store.id)
+              ids.push(branch.id)
+            end
+            ids
+          end
+
+          it 'sets the associated branches to the given ones' do
+            body[:branch_ids] = branch_ids
+            sub_put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
+            expect(response).to have_http_status(200)
+            sub_get api_v1_promo_path(existing_promo.id), { params: { expand: :branches } }
+            found_promo = JSON.parse(response.body)
+            expect(found_promo['branches'].length).to eq branch_ids.length
+            found_promo['branches'].each { |branch| expect(branch_ids).to include(branch['id']) }
+          end
         end
       end
     end
