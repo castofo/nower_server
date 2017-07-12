@@ -214,6 +214,30 @@ RSpec.describe 'Branches', type: :request do
         expect(response).to have_http_status(422)
       end
     end
+
+    context 'when store_id is nil' do
+      it 'returns a 422' do
+        body[:store_id] = nil
+        sub_post api_v1_branches_path, { params: { branch: body } }
+        expect(response).to have_http_status(422)
+      end
+    end
+
+    context 'when store_id is empty' do
+      it 'returns a 422' do
+        body[:store_id] = ''
+        sub_post api_v1_branches_path, { params: { branch: body } }
+        expect(response).to have_http_status(422)
+      end
+    end
+
+    context 'when store_id is non-existing store id' do
+      it 'returns a 422' do
+        body[:store_id] = Faker::Lorem.word
+        sub_post api_v1_branches_path, { params: { branch: body } }
+        expect(response).to have_http_status(422)
+      end
+    end
   end
 
   describe 'PUT /v1/branches' do
