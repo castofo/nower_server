@@ -47,7 +47,7 @@ module Api::V1
       if @promo.destroy
         render json: { success: true }
       else
-        renser json: @promo.errors, status: :unprocessable_entity
+        render json: @promo.errors, status: :unprocessable_entity
       end
     end
 

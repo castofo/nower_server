@@ -47,7 +47,7 @@ module Api::V1
       if @branch.destroy
         render json: { success: true }
       else
-        renser json: @branch.errors, status: :unprocessable_entity
+        render json: @branch.errors, status: :unprocessable_entity
       end
     end
 

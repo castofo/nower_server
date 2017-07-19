@@ -4,12 +4,13 @@ Rails.application.routes.draw do
       resources :promos
       resources :branches
       resources :stores
+      resources :contact_informations
 
-      get 'auths/index' # TODO: Delete, development purposes.
+      get 'auths/index'
       post 'auths/login'
       post 'auths/register'
 
-      get 'admins/index' # TODO: Delete, development purposes.
+      get 'admins/index'
       post 'admins/login'
       post 'admins/register'
     end

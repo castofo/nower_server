@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170617203627) do
+ActiveRecord::Schema.define(version: 20170717181327) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,15 +36,31 @@ ActiveRecord::Schema.define(version: 20170617203627) do
     t.boolean  "default_contact_info",                          default: true
     t.datetime "created_at",                                                   null: false
     t.datetime "updated_at",                                                   null: false
-    t.string   "name"
+    t.string   "name",                                          default: "",   null: false
     t.uuid     "store_id"
     t.index ["store_id"], name: "index_branches_on_store_id", using: :btree
+  end
+
+  create_table "branches_contact_informations", id: false, force: :cascade do |t|
+    t.uuid "branch_id",              null: false
+    t.uuid "contact_information_id", null: false
+    t.index ["branch_id", "contact_information_id"], name: "index_branches_contact_informations", using: :btree
   end
 
   create_table "branches_promos", id: false, force: :cascade do |t|
     t.uuid "branch_id", null: false
     t.uuid "promo_id",  null: false
     t.index ["branch_id", "promo_id"], name: "index_branches_promos_on_branch_id_and_promo_id", using: :btree
+  end
+
+  create_table "contact_informations", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
+    t.string   "key",        null: false
+    t.string   "value",      null: false
+    t.uuid     "store_id",   null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["store_id", "key"], name: "index_contact_informations_on_store_id_and_key", unique: true, using: :btree
+    t.index ["store_id"], name: "index_contact_informations_on_store_id", using: :btree
   end
 
   create_table "promos", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
@@ -83,4 +99,5 @@ ActiveRecord::Schema.define(version: 20170617203627) do
   end
 
   add_foreign_key "branches", "stores"
+  add_foreign_key "contact_informations", "stores"
 end

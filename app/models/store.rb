@@ -1,5 +1,6 @@
 class Store < ApplicationRecord
   has_many :branches
+  has_many :contact_informations
 
   validates :name, presence: true, length: { maximum: 50 }
   validates :description, :nit, presence: true

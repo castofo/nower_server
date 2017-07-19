@@ -55,11 +55,11 @@ module Api::V1
       # Only allow a trusted parameter "white list" through.
       def store_params
         params.require(:store).permit(
-          :name,
-          :description,
-          :nit,
-          :website,
-          :address
+            :name,
+            :description,
+            :nit,
+            :website,
+            :address
         )
       end
   end
