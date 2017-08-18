@@ -1,7 +1,7 @@
 module Api::V1
   class StoresController < ApplicationController
     include Expandable
-    expandable_attrs :branches
+    expandable_attrs :branches, :contact_informations
 
     before_action :set_store, only: [:show, :update, :destroy]
 

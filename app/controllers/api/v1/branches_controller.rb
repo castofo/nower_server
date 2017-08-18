@@ -1,7 +1,7 @@
 module Api::V1
   class BranchesController < ApplicationController
     include Expandable
-    expandable_attrs :store, :promos
+    expandable_attrs :store, :promos, :contact_informations
 
     before_action :set_branch, only: [:show, :update, :destroy]
 

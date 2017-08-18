@@ -1,18 +1,21 @@
 module Api::V1
   class ContactInformationsController < ApplicationController
+    include Expandable
+    expandable_attrs :branches, :store
     wrap_parameters include: ContactInformation.attribute_names + [:branch_ids]
+
     before_action :set_contact_information, only: [:show, :update, :destroy]
 
     # GET /contact_informations
     def index
       @contact_informations = ContactInformation.all
 
-      render json: @contact_informations
+      render json: @contact_informations, include: expand_attrs
     end
 
     # GET /contact_informations/1
     def show
-      render json: @contact_information
+      render json: @contact_information, include: expand_attrs
     end
 
     # POST /contact_informations
