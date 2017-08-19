@@ -1,0 +1,29 @@
+summary: Creates a contact information
+description: |
+  Given a set of properties, creates and returns a contact information
+tags:
+  - contact_informations
+parameters:
+  - in: body
+    name: body
+    description: Contact information with properties to be created with
+    required: true
+    schema:
+      $ref: "#/definitions/ContactInformationParams"
+responses:
+  201:
+    description: Successfully created contact information
+    schema:
+      $ref: '#/definitions/ContactInformation'
+  401:
+    description: Unauthorized error
+    schema:
+      $ref: '#/definitions/Error'
+  422:
+    description: Contact information couldn't be created with the given properties
+    schema:
+      $ref: '#/definitions/Error'
+  default:
+    description: Unexpected error
+    schema:
+      $ref: '#/definitions/Error'

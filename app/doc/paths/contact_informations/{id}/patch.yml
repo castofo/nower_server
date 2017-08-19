@@ -1,0 +1,42 @@
+summary: Updates a contact information
+description: |
+  With a contact information id, updates on it the given properties
+tags:
+  - contact_informations
+parameters:
+  - name: id
+    in: path
+    description: The contact information identifier
+    type: string
+    required: true
+  - in: body
+    name: body
+    description: Contact information properties to be updated
+    required: true
+    schema:
+      $ref: "#/definitions/ContactInformationParams"
+responses:
+  200:
+    description: Successfully updated contact information
+    schema:
+      $ref: '#/definitions/ContactInformation'
+  400:
+    description: Bad request.
+    schema:
+      $ref: '#/definitions/Error'
+  401:
+    description: Unauthorized error
+    schema:
+      $ref: '#/definitions/Error'
+  404:
+    description: The given contact information was not found
+    schema:
+      $ref: '#/definitions/Error'
+  422:
+    description: contact information couldn't be updated with the given properties
+    schema:
+      $ref: '#/definitions/Error'
+  default:
+    description: Unexpected error
+    schema:
+      $ref: '#/definitions/Error'

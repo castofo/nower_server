@@ -37,5 +37,11 @@ Branch:
 BranchParams:
   $ref: ./branch/branch_params.yml
 
+ContactInformation:
+  $ref: ./contact_information/contact_information.yml
+
+ContactInformationParams:
+  $ref: ./contact_information/contact_information_params.yml
+
 Error:
   $ref: ./common/error.yml

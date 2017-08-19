@@ -21,6 +21,8 @@ tags:
     description: Admins management
   - name: branches
     description: Branches management
+  - name: contact_informations
+    description: Contact informations management
 
 parameters:
   $ref: ./parameters/index.yml

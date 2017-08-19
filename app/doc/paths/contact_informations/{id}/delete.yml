@@ -1,0 +1,26 @@
+summary: Deletes a contact information
+description: |
+  Deletes the specified contact information, by id
+tags:
+  - contact_informations
+parameters:
+  - name: id
+    in: path
+    description: Identifier of the contact information to be deleted
+    type: string
+    required: true
+responses:
+  200:
+    description: Successfully deleted contact information
+  401:
+    description: Unauthorized error
+    schema:
+      $ref: '#/definitions/Error'
+  404:
+    description: The given contact information was not found
+    schema:
+      $ref: '#/definitions/Error'
+  default:
+    description: Unexpected error
+    schema:
+      $ref: '#/definitions/Error'

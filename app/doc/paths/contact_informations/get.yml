@@ -1,0 +1,38 @@
+summary: Fetches contact informations
+description: |
+  Returns a list of available contact informations. The reponse includes the display
+  name and value about each contact information.
+
+  - Including the `branch_id` query parameter will only return contact informations that belong to
+  the given branch
+  - Including the `store_id` query parameter will only return contact informations that belong to
+  the given store
+
+  - The `expand` query parameter supports:
+    - `branches`: will append the branches that are associated to each contact information
+    - `store`: will append the store that is associated to each contact information
+tags:
+  - contact_informations
+parameters:
+  - $ref: "#/parameters/BranchId"
+  - $ref: "#/parameters/StoreId"
+  - $ref: "#/parameters/Expand"
+responses:
+  200:
+    description: An array of contact informations matching given parameters
+    schema:
+      type: array
+      items:
+        $ref: '#/definitions/ContactInformation'
+  401:
+    description: Unexpected error
+    schema:
+      $ref: '#/definitions/Error'
+  404:
+    description: Some given entity was not found
+    schema:
+      $ref: '#/definitions/Error'
+  default:
+    description: Unexpected error
+    schema:
+      $ref: '#/definitions/Error'

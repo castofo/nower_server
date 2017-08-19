@@ -1,0 +1,20 @@
+type: object
+required:
+  - key
+  - value
+  - store_id
+properties:
+  key:
+    type: string
+    description: Display key or name for the contact information
+  value:
+    type: string
+    description: Value representing the contact information
+  store_id:
+    type: string
+    description: Unique identifier representing the store that will own this contact information
+  branch_ids:
+    type: array
+    description: Array of branch ids to associate the contact information with
+    items:
+      type: string

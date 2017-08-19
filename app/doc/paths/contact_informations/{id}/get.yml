@@ -1,0 +1,33 @@
+summary: Fetches a contact information
+description: |
+  With a contact information id, fetches it and its related information.
+
+  - The `expand` query parameter supports:
+    - `branches`: will append the branches that are associated to the contact information
+    - `store`: will append the store that is associated to the contact information
+tags:
+  - contact_informations
+parameters:
+  - name: id
+    in: path
+    description: The contact information identifier
+    type: string
+    required: true
+  - $ref: "#/parameters/Expand"
+responses:
+  200:
+    description: Found contact information information
+    schema:
+      $ref: '#/definitions/ContactInformation'
+  401:
+    description: Unauthorized error
+    schema:
+      $ref: '#/definitions/Error'
+  404:
+    description: The given contact information was not found
+    schema:
+      $ref: '#/definitions/Error'
+  default:
+    description: Unexpected error
+    schema:
+      $ref: '#/definitions/Error'
