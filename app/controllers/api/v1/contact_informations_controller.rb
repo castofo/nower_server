@@ -10,6 +10,9 @@ module Api::V1
     def index
       @contact_informations = ContactInformation.all
 
+      @contact_informations = @contact_informations.store_id(params[:store_id]) unless params[:store_id].blank?
+      @contact_informations = @contact_informations.branch_id(params[:branch_id]) unless params[:branch_id].blank?
+
       render json: @contact_informations, include: expand_attrs
     end
 

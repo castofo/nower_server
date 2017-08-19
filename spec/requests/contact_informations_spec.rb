@@ -50,6 +50,32 @@ RSpec.describe "ContactInformations", type: :request do
       end
     end
 
+    context "when 'branch_id' query param is included" do
+      let(:existing_branch) { create :branch }
+      let(:associated_count) { rand(5..10) }
+
+      # Create contact informations associated to existing branch
+      before do
+        associated_count.times do
+          contact_info = build(:contact_information, store_id: existing_branch.store_id)
+          contact_info.branches.push(existing_branch)
+          contact_info.save
+        end
+      end
+
+      # Create some other contact infos that are not associated to existing branch
+      before do
+        rand(5..10).times { create(:contact_information) }
+      end
+
+      it 'returns only contact informations that belong to the given branch' do
+        sub_get api_v1_contact_informations_path, { params: { branch_id: existing_branch.id } }
+        expect(response).to have_http_status(200)
+        contact_informations = JSON.parse(response.body)
+        expect(contact_informations.length).to eq associated_count
+      end
+    end
+
     context "when 'expand' query param contains 'store'" do
       before do
         rand(5..10).times { create :contact_information }
