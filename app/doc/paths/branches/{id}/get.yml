@@ -5,6 +5,8 @@ description: |
   - The `expand` query parameter supports:
     - `store`: will append the store the branch belongs to
     - `promos`: will append promos that are being published in the branch
+    - `contact_informations`: will append contact informations that are being published in the
+    branch
 tags:
   - branches
 parameters:

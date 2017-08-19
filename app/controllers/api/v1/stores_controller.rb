@@ -1,7 +1,7 @@
 module Api::V1
   class StoresController < ApplicationController
     include Expandable
-    expandable_attrs :branches
+    expandable_attrs :branches, :contact_informations
 
     before_action :set_store, only: [:show, :update, :destroy]
 
@@ -55,11 +55,11 @@ module Api::V1
       # Only allow a trusted parameter "white list" through.
       def store_params
         params.require(:store).permit(
-          :name,
-          :description,
-          :nit,
-          :website,
-          :address
+            :name,
+            :description,
+            :nit,
+            :website,
+            :address
         )
       end
   end

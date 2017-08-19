@@ -1,0 +1,27 @@
+type: object
+required:
+  - id
+  - key
+  - value
+  - store_id
+  - created_at
+  - updated_at
+properties:
+  id:
+    type: string
+    description: Unique identifier representing an specific contact information
+  key:
+    type: string
+    description: Associated key or name of the contact information
+  value:
+    type: string
+    description: Value of the corresponding contact information
+  store_id:
+    type: string
+    description: Unique identifier representing the store this contact information belongs to
+  created_at:
+    type: string
+    description: Date and time when the contact information was created
+  updated_at:
+    type: string
+    description: Date and time when the contact information was lastly modified

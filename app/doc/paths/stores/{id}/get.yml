@@ -4,6 +4,7 @@ description: |
 
   - The `expand` query parameter supports:
     - `branches`: will append the branches that belong to the store
+    - `contact_informations`: will append contact informations that are associated with the store
 tags:
   - stores
 parameters:

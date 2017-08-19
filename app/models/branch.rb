@@ -1,6 +1,7 @@
 class Branch < ApplicationRecord
   belongs_to :store
   has_and_belongs_to_many :promos
+  has_and_belongs_to_many :contact_informations
   reverse_geocoded_by :latitude, :longitude
 
   validates :name, presence: true, length: { maximum: 35 }

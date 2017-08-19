@@ -80,6 +80,29 @@ RSpec.describe 'Branches', type: :request do
         end
       end
     end
+
+    context "when 'expand' query param contains 'contact_informations'" do
+      # Create some branches with contact_informations
+      before do
+        rand(5..10).times do
+          branch = create :branch
+          rand(5..10).times do
+            branch.contact_informations.push(create(:contact_information,
+                                                    store_id: branch.store.id))
+          end
+        end
+      end
+
+      it 'returns branches with embedded contact_information entities' do
+        sub_get api_v1_branches_path, { params: { expand: :contact_informations } }
+        expect(response).to have_http_status(200)
+        branches = JSON.parse(response.body)
+        branches.each do |branch|
+          expect(branch['contact_informations']).not_to be_nil
+          expect(branch['contact_informations']).to be_a_kind_of(Array)
+        end
+      end
+    end
   end
 
   describe 'GET /v1/branches/:id' do
@@ -119,6 +142,26 @@ RSpec.describe 'Branches', type: :request do
         expect(found_branch['promos']).not_to be_nil
         expect(found_branch['promos']).to be_a_kind_of(Array)
         expect(found_branch['promos'].length).to eq promos_count
+      end
+    end
+
+    context "when 'expand' query param contains 'contact_informations'" do
+      let(:contact_informations_count) { rand(5..10) }
+      before do
+        contact_informations_count.times do
+          existing_branch.contact_informations.push(create(:contact_information,
+                                                           store_id: existing_branch.store.id))
+        end
+      end
+      it 'returns the branch with embedded contact_informations entities' do
+        sub_get api_v1_branch_path(existing_branch.id), {
+          params: { expand: :contact_informations }
+        }
+        expect(response).to have_http_status(200)
+        found_branch = JSON.parse(response.body)
+        expect(found_branch['contact_informations']).not_to be_nil
+        expect(found_branch['contact_informations']).to be_a_kind_of(Array)
+        expect(found_branch['contact_informations'].length).to eq contact_informations_count
       end
     end
 

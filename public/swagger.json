@@ -255,7 +255,7 @@
     "/stores": {
       "get": {
         "summary": "Fetches stores",
-        "description": "Returns a list of available stores. The reponse includes the display\nname and other details about each store\n\n- The `expand` query parameter supports:\n  - `branches`: will append the branches that belong to the store\n",
+        "description": "Returns a list of available stores. The reponse includes the display\nname and other details about each store\n\n- The `expand` query parameter supports:\n  - `branches`: will append the branches that belong to the store\n  - `contact_informations`: will append contact informations that are associated with the store\n",
         "tags": [
           "stores"
         ],
@@ -336,7 +336,7 @@
     "/stores/{id}": {
       "get": {
         "summary": "Fetches a store",
-        "description": "With a store id, fetches it and its related information.\n\n- The `expand` query parameter supports:\n  - `branches`: will append the branches that belong to the store\n",
+        "description": "With a store id, fetches it and its related information.\n\n- The `expand` query parameter supports:\n  - `branches`: will append the branches that belong to the store\n  - `contact_informations`: will append contact informations that are associated with the store\n",
         "tags": [
           "stores"
         ],
@@ -727,7 +727,7 @@
     "/branches": {
       "get": {
         "summary": "Fetches all branches",
-        "description": "Returns a list of all created branches.\n\n- Including both `latitude` and `longitude` query parameters will fetch only\nbranches that are located at most 3 km far from the given location\n\n- Including the `store_id` query parameter will only return branches that belong to the given\nstore\n\n- The `expand` query parameter supports:\n  - `store`: will append the store the branch belongs to\n  - `promos`: will append promos that are being published in the branch\n",
+        "description": "Returns a list of all created branches.\n\n- Including both `latitude` and `longitude` query parameters will fetch only\nbranches that are located at most 3 km far from the given location\n\n- Including the `store_id` query parameter will only return branches that belong to the given\nstore\n\n- The `expand` query parameter supports:\n  - `store`: will append the store the branch belongs to\n  - `promos`: will append promos that are being published in the branch\n  - `contact_informations`: will append contact informations that are being published in the\n  branch\n",
         "tags": [
           "branches"
         ],
@@ -817,7 +817,7 @@
     "/branches/{id}": {
       "get": {
         "summary": "Fetches a branch",
-        "description": "With a branch id, fetches it and its related information\n\n- The `expand` query parameter supports:\n  - `store`: will append the store the branch belongs to\n  - `promos`: will append promos that are being published in the branch\n",
+        "description": "With a branch id, fetches it and its related information\n\n- The `expand` query parameter supports:\n  - `store`: will append the store the branch belongs to\n  - `promos`: will append promos that are being published in the branch\n  - `contact_informations`: will append contact informations that are being published in the\n  branch\n",
         "tags": [
           "branches"
         ],
@@ -962,6 +962,248 @@
           }
         }
       }
+    },
+    "/contact_informations": {
+      "get": {
+        "summary": "Fetches contact informations",
+        "description": "Returns a list of available contact informations. The reponse includes the display\nname and value about each contact information.\n\n- Including the `branch_id` query parameter will only return contact informations that belong to\nthe given branch\n- Including the `store_id` query parameter will only return contact informations that belong to\nthe given store\n\n- The `expand` query parameter supports:\n  - `branches`: will append the branches that are associated to each contact information\n  - `store`: will append the store that is associated to each contact information\n",
+        "tags": [
+          "contact_informations"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/BranchId"
+          },
+          {
+            "$ref": "#/parameters/StoreId"
+          },
+          {
+            "$ref": "#/parameters/Expand"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of contact informations matching given parameters",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ContactInformation"
+              }
+            }
+          },
+          "401": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Some given entity was not found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Creates a contact information",
+        "description": "Given a set of properties, creates and returns a contact information\n",
+        "tags": [
+          "contact_informations"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Contact information with properties to be created with",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ContactInformationParams"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successfully created contact information",
+            "schema": {
+              "$ref": "#/definitions/ContactInformation"
+            }
+          },
+          "401": {
+            "description": "Unauthorized error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "422": {
+            "description": "Contact information couldn't be created with the given properties",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/contact_informations/{id}": {
+      "get": {
+        "summary": "Fetches a contact information",
+        "description": "With a contact information id, fetches it and its related information.\n\n- The `expand` query parameter supports:\n  - `branches`: will append the branches that are associated to the contact information\n  - `store`: will append the store that is associated to the contact information\n",
+        "tags": [
+          "contact_informations"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The contact information identifier",
+            "type": "string",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/Expand"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Found contact information information",
+            "schema": {
+              "$ref": "#/definitions/ContactInformation"
+            }
+          },
+          "401": {
+            "description": "Unauthorized error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "The given contact information was not found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Updates a contact information",
+        "description": "With a contact information id, updates on it the given properties\n",
+        "tags": [
+          "contact_informations"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The contact information identifier",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Contact information properties to be updated",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ContactInformationParams"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully updated contact information",
+            "schema": {
+              "$ref": "#/definitions/ContactInformation"
+            }
+          },
+          "400": {
+            "description": "Bad request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "401": {
+            "description": "Unauthorized error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "The given contact information was not found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "422": {
+            "description": "contact information couldn't be updated with the given properties",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletes a contact information",
+        "description": "Deletes the specified contact information, by id\n",
+        "tags": [
+          "contact_informations"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of the contact information to be deleted",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully deleted contact information"
+          },
+          "401": {
+            "description": "Unauthorized error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "The given contact information was not found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
     }
   },
   "tags": [
@@ -984,6 +1226,10 @@
     {
       "name": "branches",
       "description": "Branches management"
+    },
+    {
+      "name": "contact_informations",
+      "description": "Contact informations management"
     }
   ],
   "parameters": {
@@ -1549,6 +1795,72 @@
         "store_id": {
           "type": "string",
           "description": "Unique identifier representing the store that will own this branch"
+        }
+      }
+    },
+    "ContactInformation": {
+      "type": "object",
+      "required": [
+        "id",
+        "key",
+        "value",
+        "store_id",
+        "created_at",
+        "updated_at"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier representing an specific contact information"
+        },
+        "key": {
+          "type": "string",
+          "description": "Associated key or name of the contact information"
+        },
+        "value": {
+          "type": "string",
+          "description": "Value of the corresponding contact information"
+        },
+        "store_id": {
+          "type": "string",
+          "description": "Unique identifier representing the store this contact information belongs to"
+        },
+        "created_at": {
+          "type": "string",
+          "description": "Date and time when the contact information was created"
+        },
+        "updated_at": {
+          "type": "string",
+          "description": "Date and time when the contact information was lastly modified"
+        }
+      }
+    },
+    "ContactInformationParams": {
+      "type": "object",
+      "required": [
+        "key",
+        "value",
+        "store_id"
+      ],
+      "properties": {
+        "key": {
+          "type": "string",
+          "description": "Display key or name for the contact information"
+        },
+        "value": {
+          "type": "string",
+          "description": "Value representing the contact information"
+        },
+        "store_id": {
+          "type": "string",
+          "description": "Unique identifier representing the store that will own this contact information"
+        },
+        "branch_ids": {
+          "type": "array",
+          "description": "Array of branch ids to associate the contact information with",
+          "items": {
+            "type": "string"
+          }
         }
       }
     },

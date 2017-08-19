@@ -45,6 +45,28 @@ RSpec.describe 'Stores', type: :request do
         end
       end
     end
+
+    context "when 'expand' query param contains 'contact_informations'" do
+      # Create some stores with contact_informations
+      before do
+        rand(5..10).times do
+          store = create :store
+          rand(5..10).times do
+            store.contact_informations.push(create(:contact_information, store_id: store.id))
+          end
+        end
+      end
+
+      it 'returns stores with embedded contact_informations entities' do
+        sub_get api_v1_stores_path, { params: { expand: :contact_informations } }
+        expect(response).to have_http_status(200)
+        stores = JSON.parse(response.body)
+        stores.each do |store|
+          expect(store['contact_informations']).not_to be_nil
+          expect(store['contact_informations']).to be_a_kind_of(Array)
+        end
+      end
+    end
   end
 
   describe 'GET /v1/stores/:id' do
@@ -73,6 +95,26 @@ RSpec.describe 'Stores', type: :request do
         expect(found_store['branches']).not_to be_nil
         expect(found_store['branches']).to be_a_kind_of(Array)
         expect(found_store['branches'].length).to eq branches_count
+      end
+    end
+
+    context "when 'expand' query param contains 'contact_informations'" do
+      let(:contact_informations_count) { rand(5..10) }
+      before do
+        contact_informations_count.times do
+          existing_store.contact_informations.push(create(:contact_information,
+                                                           store_id: existing_store.id))
+        end
+      end
+      it 'returns the store with embedded contact_informations entities' do
+        sub_get api_v1_store_path(existing_store.id), {
+          params: { expand: :contact_informations }
+        }
+        expect(response).to have_http_status(200)
+        found_store = JSON.parse(response.body)
+        expect(found_store['contact_informations']).not_to be_nil
+        expect(found_store['contact_informations']).to be_a_kind_of(Array)
+        expect(found_store['contact_informations'].length).to eq contact_informations_count
       end
     end
 

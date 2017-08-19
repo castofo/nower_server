@@ -33,3 +33,9 @@
 
 /branches/{id}:
   $ref: ./branches/{id}/index.yml
+
+/contact_informations:
+  $ref: ./contact_informations/index.yml
+
+/contact_informations/{id}:
+  $ref: ./contact_informations/{id}/index.yml
