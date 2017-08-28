@@ -10,7 +10,7 @@ module Constants
   end
 
   module Branch
-    DEFAULT_BRANCH_NEARNESS_KM = 3
+    DEFAULT_BRANCH_NEARNESS_KM = 2.5
   end
 
   module Store
