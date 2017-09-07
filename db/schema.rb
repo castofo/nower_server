@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170717181327) do
+ActiveRecord::Schema.define(version: 20170907021639) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -63,6 +63,15 @@ ActiveRecord::Schema.define(version: 20170717181327) do
     t.index ["store_id"], name: "index_contact_informations_on_store_id", using: :btree
   end
 
+  create_table "opening_times", force: :cascade do |t|
+    t.integer "open_day",   null: false
+    t.integer "open_time",  null: false
+    t.integer "close_day",  null: false
+    t.integer "close_time", null: false
+    t.uuid    "branch_id",  null: false
+    t.index ["branch_id"], name: "index_opening_times_on_branch_id", using: :btree
+  end
+
   create_table "promos", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
     t.string   "name",        null: false
     t.text     "description", null: false
@@ -100,4 +109,5 @@ ActiveRecord::Schema.define(version: 20170717181327) do
 
   add_foreign_key "branches", "stores"
   add_foreign_key "contact_informations", "stores"
+  add_foreign_key "opening_times", "branches"
 end
