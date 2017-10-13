@@ -6,5 +6,13 @@ FactoryGirl.define do
     address { Faker::Address.street_address }
     default_contact_info { false }
     store_id { FactoryGirl.create(:store).id }
+
+    factory :branch_with_promos do
+      promos do
+        result = []
+        rand(1..10).times { result.push(create :promo) }
+        result
+      end
+    end
   end
 end

@@ -7,7 +7,11 @@ module Api::V1
 
     # GET /branches
     def index
-      @branches = Branch.all
+      if !params[:empty_promos].nil? && params[:empty_promos].to_sym == :true
+        @branches = Branch.all
+      else
+        @branches = Branch.without_empty_promos
+      end
 
       @branches = @branches.store_id(params[:store_id]) unless params[:store_id].blank?
       unless params[:latitude].blank? || params[:longitude].blank?

@@ -727,7 +727,7 @@
     "/branches": {
       "get": {
         "summary": "Fetches all branches",
-        "description": "Returns a list of all created branches.\n\n- Including both `latitude` and `longitude` query parameters will fetch only\nbranches that are located at most 3 km far from the given location\n\n- Including the `store_id` query parameter will only return branches that belong to the given\nstore\n\n- The `expand` query parameter supports:\n  - `store`: will append the store the branch belongs to\n  - `promos`: will append promos that are being published in the branch\n  - `contact_informations`: will append contact informations that are being published in the\n  branch\n",
+        "description": "Returns a list of all branches, following the filtering options.\nBy default, it **WILL NOT** return branches that don't have any promo associated.\n\n- Including both `latitude` and `longitude` query parameters will fetch only\nbranches that are located at most 3 km far from the given location\n\n- Including the `store_id` query parameter will only return branches that belong to the given\nstore\n\n- Including the `empty_promos` query parameter as `true` will also return branches that don't have\nany promo associated.\n\n- The `expand` query parameter supports:\n  - `store`: will append the store the branch belongs to\n  - `promos`: will append promos that are being published in the branch\n  - `contact_informations`: will append contact informations that are being published in the\n  branch\n",
         "tags": [
           "branches"
         ],
@@ -740,6 +740,9 @@
           },
           {
             "$ref": "#/parameters/StoreId"
+          },
+          {
+            "$ref": "#/parameters/EmptyPromos"
           },
           {
             "$ref": "#/parameters/Expand"
@@ -1258,6 +1261,13 @@
       "description": "User's location longitude",
       "type": "number",
       "format": "double"
+    },
+    "EmptyPromos": {
+      "name": "empty_promos",
+      "in": "query",
+      "description": "Set to `true` in order to get results that don't have any promo associated.",
+      "type": "boolean",
+      "default": false
     },
     "Expand": {
       "name": "expand",

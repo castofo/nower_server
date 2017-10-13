@@ -10,5 +10,8 @@ Latitude:
 Longitude:
   $ref: ./longitude.yml
 
+EmptyPromos:
+  $ref: ./empty_promos.yml
+
 Expand:
   $ref: ./expand.yml

@@ -1,12 +1,16 @@
 summary: Fetches all branches
 description: |
-  Returns a list of all created branches.
+  Returns a list of all branches, following the filtering options.
+  By default, it **WILL NOT** return branches that don't have any promo associated.
 
   - Including both `latitude` and `longitude` query parameters will fetch only
   branches that are located at most 3 km far from the given location
 
   - Including the `store_id` query parameter will only return branches that belong to the given
   store
+
+  - Including the `empty_promos` query parameter as `true` will also return branches that don't have
+  any promo associated.
 
   - The `expand` query parameter supports:
     - `store`: will append the store the branch belongs to
@@ -19,6 +23,7 @@ parameters:
   - $ref: "#/parameters/Latitude"
   - $ref: "#/parameters/Longitude"
   - $ref: "#/parameters/StoreId"
+  - $ref: "#/parameters/EmptyPromos"
   - $ref: "#/parameters/Expand"
 responses:
   200:
