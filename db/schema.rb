@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170907021639) do
+ActiveRecord::Schema.define(version: 20171010030825) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -64,11 +64,12 @@ ActiveRecord::Schema.define(version: 20170907021639) do
   end
 
   create_table "opening_times", force: :cascade do |t|
-    t.integer "open_day",   null: false
-    t.integer "open_time",  null: false
-    t.integer "close_day",  null: false
-    t.integer "close_time", null: false
-    t.uuid    "branch_id",  null: false
+    t.integer "day",           null: false
+    t.uuid    "branch_id",     null: false
+    t.time    "opens_at",      null: false
+    t.time    "closes_at",     null: false
+    t.date    "valid_from",    null: false
+    t.date    "valid_through"
     t.index ["branch_id"], name: "index_opening_times_on_branch_id", using: :btree
   end
 
