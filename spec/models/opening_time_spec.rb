@@ -98,4 +98,24 @@ RSpec.describe OpeningTime, type: :model do
       end
     end
   end
+
+  describe 'branch' do
+    context 'when nil' do
+      it 'is invalid' do
+        expect(build(:opening_time, branch_id: nil)).not_to be_valid
+      end
+    end
+
+    context 'when empty' do
+      it 'is invalid' do
+        expect(build(:opening_time, branch_id: '')).not_to be_valid
+      end
+    end
+
+    context 'when does not exist' do
+      it 'is invalid' do
+        expect(build(:opening_time, branch_id: 'non-existing-id')).not_to be_valid
+      end
+    end
+  end
 end
