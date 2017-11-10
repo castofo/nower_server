@@ -16,13 +16,16 @@
     "/promos": {
       "get": {
         "summary": "Fetches promos",
-        "description": "Returns a list of available promos. The reponse includes the display\nname and other details about each promo.\n\n- Including the `branch_id` query parameter will only return promos that belong to the given\nbranch\n\n- The `expand` query parameter supports:\n  - `branches`: will append the branches where the promo is being published\n",
+        "description": "Returns a list of available promos. The reponse includes the display\nname and other details about each promo.\nBy default, it **WILL NOT** return promos that are expired.\n\n- Including the `branch_id` query parameter will only return promos that belong to the given\nbranch\n\n- Including the `expired` query parameter as `true` will also return promos that are expired.\n\n- The `expand` query parameter supports:\n  - `branches`: will append the branches where the promo is being published\n",
         "tags": [
           "promos"
         ],
         "parameters": [
           {
             "$ref": "#/parameters/BranchId"
+          },
+          {
+            "$ref": "#/parameters/Expired"
           },
           {
             "$ref": "#/parameters/Expand"
@@ -1266,6 +1269,13 @@
       "name": "empty_promos",
       "in": "query",
       "description": "Set to `true` in order to get results that don't have any promo associated.",
+      "type": "boolean",
+      "default": false
+    },
+    "Expired": {
+      "name": "expired",
+      "in": "query",
+      "description": "Set to `true` in order to get results that are expired.",
       "type": "boolean",
       "default": false
     },
