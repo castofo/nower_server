@@ -51,6 +51,57 @@ RSpec.describe 'Promos', type: :request do
       end
     end
 
+    context "when 'expired' query param is 'true'" do
+      # Create some expired and non-expired promos
+      expired_promos = rand(5..10)
+      non_expired_promos = rand(5..10)
+      before do
+        expired_promos.times { create :promo_expired }
+        non_expired_promos.times { create :promo }
+      end
+
+      it 'returns promos regardless of they are expired or not' do
+        sub_get api_v1_promos_path, { params: { expired: :true } }
+        expect(response).to have_http_status(200)
+        promos = JSON.parse(response.body)
+        expect(promos.count).to eq expired_promos + non_expired_promos
+      end
+    end
+
+    context "when 'expired' query param is 'false'" do
+      # Create some expired and non-expired promos
+      expired_promos = rand(5..10)
+      non_expired_promos = rand(5..10)
+      before do
+        expired_promos.times { create :promo_expired }
+        non_expired_promos.times { create :promo }
+      end
+
+      it 'returns only promos that are not expired' do
+        sub_get api_v1_promos_path, { params: { expired: :false } }
+        expect(response).to have_http_status(200)
+        promos = JSON.parse(response.body)
+        expect(promos.count).to eq non_expired_promos
+      end
+    end
+
+    context "when 'expired' query param is not specified" do
+      # Create some expired and non-expired promos
+      expired_promos = rand(5..10)
+      non_expired_promos = rand(5..10)
+      before do
+        expired_promos.times { create :promo_expired }
+        non_expired_promos.times { create :promo }
+      end
+
+      it 'returns only promos that are not expired' do
+        sub_get api_v1_promos_path
+        expect(response).to have_http_status(200)
+        promos = JSON.parse(response.body)
+        expect(promos.count).to eq non_expired_promos
+      end
+    end
+
     context "when 'expand' query param contains 'branches'" do
       # Create some promos and associate them to branches
       before do

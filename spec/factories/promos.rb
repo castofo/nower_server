@@ -20,5 +20,12 @@ FactoryGirl.define do
       end_date { Faker::Date.between(5.days.from_now, 10.days.from_now) }
       to_create { |instance| instance.save(validate: false) }
     end
+
+    factory :promo_expired do
+      stock { 0 }
+      start_date { Faker::Date.between(20.days.ago, 15.days.ago) }
+      end_date { Faker::Date.between(14.days.ago, 1.day.ago) }
+      to_create { |instance| instance.save(validate: false) }
+    end
   end
 end
