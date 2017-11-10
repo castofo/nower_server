@@ -14,6 +14,10 @@ module Api::V1
         @promos = Branch.find(params[:branch_id]).promos
       end
 
+      if params[:expired].nil? || params[:expired].to_sym != :true
+          @promos = @promos.available
+      end
+
       render json: @promos, include: expand_attrs
     end
 

@@ -1,0 +1,5 @@
+name: expired
+in: query
+description: Set to `true` in order to get results that are expired.
+type: boolean
+default: false

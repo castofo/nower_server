@@ -74,13 +74,21 @@ RSpec.describe Promo, type: :model do
 
   describe 'stock' do
     context 'when nil' do
-      it 'is valid' do
-        expect(build(:promo, stock: nil)).to be_valid
+      context 'and end_date is not nil' do
+        it 'is valid' do
+          expect(build(:promo_with_dates, stock: nil)).to be_valid
+        end
+      end
+
+      context 'and end_date is nil' do
+        it 'is invalid' do
+          expect(build(:promo, stock: nil, end_date: nil)).not_to be_valid
+        end
       end
     end
 
     context 'with negative units' do
-      let(:existing_promo) { create(:promo, stock: nil) }
+      let(:existing_promo) { create(:promo_with_dates, stock: nil) }
       it 'is invalid' do
         expect(build(:promo, stock: Faker::Number.between(-99999, -1))).not_to be_valid
         existing_promo.stock = Faker::Number.between(-99999, -1)
@@ -97,7 +105,7 @@ RSpec.describe Promo, type: :model do
 
       context 'when not new record' do
         context 'and stock was nil' do
-          let!(:existing_promo) { create(:promo, stock: nil) }
+          let!(:existing_promo) { create(:promo_with_dates, stock: nil) }
           it 'is invalid' do
             existing_promo.stock = 0
             expect(existing_promo).not_to be_valid
@@ -256,8 +264,16 @@ RSpec.describe Promo, type: :model do
 
   describe 'end_date' do
     context 'when nil' do
-      it 'is valid' do
-        expect(build(:promo, end_date: nil)).to be_valid
+      context 'and stock is not nil' do
+        it 'is valid' do
+          expect(build(:promo, end_date: nil, stock: Faker::Number.between(1, 10))).to be_valid
+        end
+      end
+
+      context 'and stock is nil' do
+        it 'is invalid' do
+          expect(build(:promo, end_date: nil, stock: nil)).not_to be_valid
+        end
       end
     end
 

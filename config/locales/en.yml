@@ -7,6 +7,8 @@ en:
     errors:
       models:
         promo:
+          base:
+            missing_expiring_condition: 'either stock or end_date must be defined'
           attributes:
             start_date:
               already_started: 'cannot be changed once started'

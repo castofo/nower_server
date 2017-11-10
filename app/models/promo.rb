@@ -3,12 +3,21 @@ class Promo < ApplicationRecord
 
   validates :name, presence: true, length: { maximum: 140 }
   validates :description, :terms, presence: true
+  validate :stock_or_end_date_present
   validate :stock_must_be_greater_than_zero_if_it_was_nil
   validates :price, allow_nil: true, numericality: { greater_than_or_equal_to: 0.0 }
   validate :start_date_cannot_be_modified_if_promo_already_started
   validates_datetime :start_date, :end_date, allow_nil: true, on_or_after: lambda { DateTime.now },
                      if: :dates_changed?
   validates_datetime :start_date, on_or_before: :end_date, if: :should_validate_dates?
+
+  # Scopes promos to be only those which already have stock and haven't expired
+  scope :available, -> { where('(stock IS ? OR stock > 0) AND (end_date IS ? OR end_date > ?)',
+    nil, nil, DateTime.now) }
+
+  def stock_or_end_date_present
+    self.errors.add(:base, :missing_expiring_condition) if self.stock.nil? && self.end_date.nil?
+  end
 
   def start_date_cannot_be_modified_if_promo_already_started
     if self.start_date_changed? && !self.start_date_was.nil? && self.start_date_was < DateTime.now

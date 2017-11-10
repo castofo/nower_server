@@ -1,0 +1,5 @@
+name: empty_promos
+in: query
+description: Set to `true` in order to get results that don't have any promo associated.
+type: boolean
+default: false
