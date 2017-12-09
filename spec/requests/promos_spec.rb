@@ -51,6 +51,57 @@ RSpec.describe 'Promos', type: :request do
       end
     end
 
+    context "when 'expired' query param is 'true'" do
+      # Create some expired and non-expired promos
+      expired_promos = rand(5..10)
+      non_expired_promos = rand(5..10)
+      before do
+        expired_promos.times { create :promo_expired }
+        non_expired_promos.times { create :promo }
+      end
+
+      it 'returns promos regardless of they are expired or not' do
+        sub_get api_v1_promos_path, { params: { expired: :true } }
+        expect(response).to have_http_status(200)
+        promos = JSON.parse(response.body)
+        expect(promos.count).to eq expired_promos + non_expired_promos
+      end
+    end
+
+    context "when 'expired' query param is 'false'" do
+      # Create some expired and non-expired promos
+      expired_promos = rand(5..10)
+      non_expired_promos = rand(5..10)
+      before do
+        expired_promos.times { create :promo_expired }
+        non_expired_promos.times { create :promo }
+      end
+
+      it 'returns only promos that are not expired' do
+        sub_get api_v1_promos_path, { params: { expired: :false } }
+        expect(response).to have_http_status(200)
+        promos = JSON.parse(response.body)
+        expect(promos.count).to eq non_expired_promos
+      end
+    end
+
+    context "when 'expired' query param is not specified" do
+      # Create some expired and non-expired promos
+      expired_promos = rand(5..10)
+      non_expired_promos = rand(5..10)
+      before do
+        expired_promos.times { create :promo_expired }
+        non_expired_promos.times { create :promo }
+      end
+
+      it 'returns only promos that are not expired' do
+        sub_get api_v1_promos_path
+        expect(response).to have_http_status(200)
+        promos = JSON.parse(response.body)
+        expect(promos.count).to eq non_expired_promos
+      end
+    end
+
     context "when 'expand' query param contains 'branches'" do
       # Create some promos and associate them to branches
       before do
@@ -180,6 +231,25 @@ RSpec.describe 'Promos', type: :request do
       end
     end
 
+    context 'when both stock and end_date are nil' do
+      it 'returns a 422' do
+        body[:stock] = nil
+        body[:end_date] = nil
+        sub_post api_v1_promos_path, { params: { promo: body } }
+        expect(response).to have_http_status(422)
+      end
+    end
+
+    context 'when stock is nil but end_date is not nil' do
+      it 'returns a 201' do
+        body[:stock] = nil
+        body[:start_date] = Faker::Number.between(2, 15).days.from_now
+        body[:end_date] = Faker::Number.between(17, 30).days.from_now
+        sub_post api_v1_promos_path, { params: { promo: body } }
+        expect(response).to have_http_status(201)
+      end
+    end
+
     context 'when stock is zero' do
       it 'returns a 422' do
         body[:stock] = 0
@@ -215,6 +285,15 @@ RSpec.describe 'Promos', type: :request do
     context 'when start_date is after current date' do
       it 'returns a 201' do
         body[:start_date] = Faker::Number.between(2, 15).days.from_now
+        sub_post api_v1_promos_path, { params: { promo: body } }
+        expect(response).to have_http_status(201)
+      end
+    end
+
+    context 'when end_date is nil but stock is not' do
+      it 'returns a 201' do
+        body[:stock] = Faker::Number.positive.to_i
+        body[:end_date] = nil
         sub_post api_v1_promos_path, { params: { promo: body } }
         expect(response).to have_http_status(201)
       end
@@ -392,7 +471,7 @@ RSpec.describe 'Promos', type: :request do
       end
 
       context 'when stock was nil' do
-        let!(:nil_stock_promo) { create(:promo, stock: nil) }
+        let!(:nil_stock_promo) { create(:promo_with_dates, stock: nil) }
         context 'and stock is zero' do
           it 'returns a 422' do
             body[:stock] = 0
@@ -403,6 +482,25 @@ RSpec.describe 'Promos', type: :request do
       end
 
       context 'when stock was not nil' do
+        context 'and stock is nil' do
+          context 'and end_date is nil' do
+            it 'returns a 422' do
+              body[:stock] = nil
+              sub_put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
+              expect(response).to have_http_status(422)
+            end
+          end
+
+          context 'and end_date is not nil' do
+            it 'returns a 200' do
+              existing_promo = create :promo_with_dates
+              body[:stock] = nil
+              sub_put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
+              expect(response).to have_http_status(200)
+            end
+          end
+        end
+
         context 'and stock is zero' do
           it 'returns a 200' do
             body[:stock] = 0
@@ -521,6 +619,26 @@ RSpec.describe 'Promos', type: :request do
           body[:end_date] = Faker::Number.between(2, 15).days.from_now
           sub_put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
           expect(response).to have_http_status(422)
+        end
+      end
+
+      context 'when end_date is nil' do
+        context 'and stock was nil' do
+          it 'returns a 422' do
+            existing_promo = create :promo_with_dates, stock: nil
+            body[:end_date] = nil
+            sub_put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
+            expect(response).to have_http_status(422)
+          end
+        end
+
+        context 'and stock was not nil' do
+          it 'returns a 200' do
+            existing_promo = create :promo_with_dates
+            body[:end_date] = nil
+            sub_put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
+            expect(response).to have_http_status(200)
+          end
         end
       end
 

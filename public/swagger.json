@@ -16,13 +16,16 @@
     "/promos": {
       "get": {
         "summary": "Fetches promos",
-        "description": "Returns a list of available promos. The reponse includes the display\nname and other details about each promo.\n\n- Including the `branch_id` query parameter will only return promos that belong to the given\nbranch\n\n- The `expand` query parameter supports:\n  - `branches`: will append the branches where the promo is being published\n",
+        "description": "Returns a list of available promos. The reponse includes the display\nname and other details about each promo.\nBy default, it **WILL NOT** return promos that are expired.\n\n- Including the `branch_id` query parameter will only return promos that belong to the given\nbranch\n\n- Including the `expired` query parameter as `true` will also return promos that are expired.\n\n- The `expand` query parameter supports:\n  - `branches`: will append the branches where the promo is being published\n",
         "tags": [
           "promos"
         ],
         "parameters": [
           {
             "$ref": "#/parameters/BranchId"
+          },
+          {
+            "$ref": "#/parameters/Expired"
           },
           {
             "$ref": "#/parameters/Expand"
@@ -727,7 +730,7 @@
     "/branches": {
       "get": {
         "summary": "Fetches all branches",
-        "description": "Returns a list of all created branches.\n\n- Including both `latitude` and `longitude` query parameters will fetch only\nbranches that are located at most 3 km far from the given location\n\n- Including the `store_id` query parameter will only return branches that belong to the given\nstore\n\n- The `expand` query parameter supports:\n  - `store`: will append the store the branch belongs to\n  - `promos`: will append promos that are being published in the branch\n  - `contact_informations`: will append contact informations that are being published in the\n  branch\n",
+        "description": "Returns a list of all branches, following the filtering options.\nBy default, it **WILL NOT** return branches that don't have any promo associated.\n\n- Including both `latitude` and `longitude` query parameters will fetch only\nbranches that are located at most 2,5 km far from the given location\n\n- Including the `store_id` query parameter will only return branches that belong to the given\nstore\n\n- Including the `empty_promos` query parameter as `true` will also return branches that don't have\nany promo associated.\n\n- The `expand` query parameter supports:\n  - `store`: will append the store the branch belongs to\n  - `promos`: will append promos that are being published in the branch\n  - `contact_informations`: will append contact informations that are being published in the\n  branch\n",
         "tags": [
           "branches"
         ],
@@ -740,6 +743,9 @@
           },
           {
             "$ref": "#/parameters/StoreId"
+          },
+          {
+            "$ref": "#/parameters/EmptyPromos"
           },
           {
             "$ref": "#/parameters/Expand"
@@ -1258,6 +1264,20 @@
       "description": "User's location longitude",
       "type": "number",
       "format": "double"
+    },
+    "EmptyPromos": {
+      "name": "empty_promos",
+      "in": "query",
+      "description": "Set to `true` in order to get results that don't have any promo associated.",
+      "type": "boolean",
+      "default": false
+    },
+    "Expired": {
+      "name": "expired",
+      "in": "query",
+      "description": "Set to `true` in order to get results that are expired.",
+      "type": "boolean",
+      "default": false
     },
     "Expand": {
       "name": "expand",

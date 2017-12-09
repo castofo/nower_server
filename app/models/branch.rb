@@ -13,4 +13,5 @@ class Branch < ApplicationRecord
     near([latitude, longitude], Constants::Branch::DEFAULT_BRANCH_NEARNESS_KM, units: :km)
   end
   scope :store_id, -> (store_id) { where store_id: store_id }
+  scope :without_empty_promos, -> { (joins :promos).distinct }
 end

@@ -13,7 +13,7 @@ RSpec.describe 'Branches', type: :request do
     end
 
     context 'when there is a branch' do
-      let!(:existing_branch) { create :branch }
+      let!(:existing_branch) { create :branch_with_promos }
       it 'returns an array with the branch' do
         sub_get api_v1_branches_path
         expect(response).to have_http_status(200)
@@ -31,12 +31,12 @@ RSpec.describe 'Branches', type: :request do
 
       # Create branches associated to existing store
       before do
-        associated_count.times { create(:branch, store_id: existing_store.id) }
+        associated_count.times { create(:branch_with_promos, store_id: existing_store.id) }
       end
 
       # Create some other branches that are not associated to existing store
       before do
-        rand(5..10).times { create(:branch) }
+        rand(5..10).times { create(:branch_with_promos) }
       end
 
       it 'returns only branches that belong to the given store' do
@@ -48,9 +48,60 @@ RSpec.describe 'Branches', type: :request do
       end
     end
 
+    context "when 'empty_promos' query param is 'true'" do
+      # Create some branches with promos and without promos
+      with_promos = rand(5..10)
+      without_promos = rand(5..10)
+      before do
+        with_promos.times { branch = create :branch_with_promos }
+        without_promos.times { branch = create :branch }
+      end
+
+      it 'returns branches regardless of they have promos or not' do
+        sub_get api_v1_branches_path, { params: { empty_promos: :true } }
+        expect(response).to have_http_status(200)
+        branches = JSON.parse(response.body)
+        expect(branches.count).to eq with_promos + without_promos
+      end
+    end
+
+    context "when 'empty_promos' query param is 'false'" do
+      # Create some branches with promos and without promos
+      with_promos = rand(5..10)
+      without_promos = rand(5..10)
+      before do
+        with_promos.times { branch = create :branch_with_promos }
+        without_promos.times { branch = create :branch }
+      end
+
+      it 'returns only branches that have promos' do
+        sub_get api_v1_branches_path, { params: { empty_promos: :false } }
+        expect(response).to have_http_status(200)
+        branches = JSON.parse(response.body)
+        expect(branches.count).to eq with_promos
+      end
+    end
+
+    context "when 'empty_promos' query param is not specified" do
+      # Create some branches with promos and without promos
+      with_promos = rand(5..10)
+      without_promos = rand(5..10)
+      before do
+        with_promos.times { branch = create :branch_with_promos }
+        without_promos.times { branch = create :branch }
+      end
+
+      it 'returns only branches that have promos' do
+        sub_get api_v1_branches_path
+        expect(response).to have_http_status(200)
+        branches = JSON.parse(response.body)
+        expect(branches.count).to eq with_promos
+      end
+    end
+
     context "when 'expand' query param contains 'store'" do
       before do
-        rand(5..10).times { create :branch }
+        rand(5..10).times { create :branch_with_promos }
       end
 
       it 'returns branches with embedded store entity' do
@@ -64,10 +115,7 @@ RSpec.describe 'Branches', type: :request do
     context "when 'expand' query param contains 'promos'" do
       # Create some branches with promos
       before do
-        rand(5..10).times do
-          branch = create :branch
-          rand(5..10).times { branch.promos.push(create :promo) }
-        end
+        rand(5..10).times { branch = create :branch_with_promos }
       end
 
       it 'returns branches with embedded promos entities' do
@@ -85,7 +133,7 @@ RSpec.describe 'Branches', type: :request do
       # Create some branches with contact_informations
       before do
         rand(5..10).times do
-          branch = create :branch
+          branch = create :branch_with_promos
           rand(5..10).times do
             branch.contact_informations.push(create(:contact_information,
                                                     store_id: branch.store.id))

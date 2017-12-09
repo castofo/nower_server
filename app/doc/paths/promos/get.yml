@@ -2,9 +2,12 @@ summary: Fetches promos
 description: |
   Returns a list of available promos. The reponse includes the display
   name and other details about each promo.
+  By default, it **WILL NOT** return promos that are expired.
 
   - Including the `branch_id` query parameter will only return promos that belong to the given
   branch
+
+  - Including the `expired` query parameter as `true` will also return promos that are expired.
 
   - The `expand` query parameter supports:
     - `branches`: will append the branches where the promo is being published
@@ -12,6 +15,7 @@ tags:
   - promos
 parameters:
   - $ref: "#/parameters/BranchId"
+  - $ref: "#/parameters/Expired"
   - $ref: "#/parameters/Expand"
 responses:
   200:
