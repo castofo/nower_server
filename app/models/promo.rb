@@ -12,8 +12,17 @@ class Promo < ApplicationRecord
   validates_datetime :start_date, on_or_before: :end_date, if: :should_validate_dates?
 
   # Scopes promos to be only those which already have stock and haven't expired
-  scope :available, -> { where('(stock IS ? OR stock > 0) AND (end_date IS ? OR end_date > ?)',
-    nil, nil, DateTime.now) }
+  scope :available, -> {
+      where('CASE WHEN stock IS NOT ? AND end_date IS NOT ? THEN
+                 CASE WHEN stock > 0 AND end_date > ? THEN true
+                 ELSE false
+                 END
+             WHEN stock IS NOT ? AND stock > 0 THEN true
+             WHEN end_date IS NOT ? AND end_date > ? THEN true
+             ELSE false
+             END',
+           nil, nil, DateTime.now, nil, nil, DateTime.now)
+  }
 
   def stock_or_end_date_present
     self.errors.add(:base, :missing_expiring_condition) if self.stock.nil? && self.end_date.nil?
