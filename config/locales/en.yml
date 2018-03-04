@@ -12,6 +12,9 @@ en:
           attributes:
             start_date:
               already_started: 'cannot be changed once started'
+              on_or_after: 'cannot be in the past'
+            end_date:
+              without_start_date: 'cannot be defined without start date'
         user:
           attributes:
             email:
