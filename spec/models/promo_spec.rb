@@ -286,13 +286,15 @@ RSpec.describe Promo, type: :model do
 
       context 'and is equals current date' do
         it 'is valid' do
-          expect(build(:promo, end_date: DateTime.now + 2.minutes)).to be_valid
+          expect(build(:promo, start_date: DateTime.now + 1.minute,
+            end_date: DateTime.now + 2.minutes)).to be_valid
         end
       end
 
       context 'and is after current date' do
         it 'is valid' do
-          expect(build(:promo, end_date: Faker::Number.between(1, 10).days.from_now)).to be_valid
+          expect(build(:promo, start_date: DateTime.now + 1.minute,
+            end_date: Faker::Number.between(1, 10).days.from_now)).to be_valid
         end
       end
     end
@@ -329,6 +331,14 @@ RSpec.describe Promo, type: :model do
         existing_promo.name = "Not affecting name"
         existing_promo.description = "Changing this won't affect anything"
         expect(existing_promo).to be_valid
+      end
+    end
+
+    context 'when start_date is nil' do
+      let!(:promo) { build(:promo, start_date: nil) }
+      it 'is invalid' do
+        promo.end_date = Faker::Number.between(2, 28).days.from_now
+        expect(promo).not_to be_valid
       end
     end
 
