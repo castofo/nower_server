@@ -14,6 +14,10 @@ module Api::V1
         @promos = Branch.find(params[:branch_id]).promos
       end
 
+      if params[:started].nil? || params[:started].to_sym != :false
+        @promos = @promos.started
+      end
+
       if params[:expired].nil? || params[:expired].to_sym != :true
           @promos = @promos.available
       end

@@ -1,0 +1,5 @@
+name: started
+in: query
+description: Set to `false` in order to get non-started results.
+type: boolean
+default: true

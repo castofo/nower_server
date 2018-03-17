@@ -366,4 +366,72 @@ RSpec.describe Promo, type: :model do
       end
     end
   end
+
+  describe 'available' do
+    context 'when promo already started but hasn\'t ended' do
+      let(:promo) { create(:promo_already_started) }
+      it 'is included in the scope' do
+        promos = Promo.available
+        expect(promos).to include(promo)
+      end
+    end
+
+    context 'when promo has valid stock' do
+      let(:promo) { create(:promo) }
+      it 'is included in the scope' do
+        promos = Promo.available
+        expect(promos).to include(promo)
+      end
+    end
+
+    context 'when promo hasn\'t started nor ended yet' do
+      let(:promo) { create(:promo_with_dates) }
+      it 'is included in scope' do
+        promos = Promo.available
+        expect(promos).to include(promo)
+      end
+    end
+
+    context 'when promo already ended' do
+      let(:promo) { create(:promo_expired, stock: Faker::Number.between(1, 1000)) }
+      it 'is not included in the scope' do
+        promos = Promo.available
+        expect(promos).not_to include(promo)
+      end
+    end
+
+    context 'when promo has 0 stock' do
+      let(:promo) { create(:promo_already_started, stock: 0) }
+      it 'is not included in the scope' do
+        promos = Promo.available
+        expect(promos).not_to include(promo)
+      end
+    end
+  end
+
+  describe 'started' do
+    context 'when promo hasn\'t started yet' do
+      let(:promo) { create(:promo_with_dates) }
+      it 'is not included in the scope' do
+        promos = Promo.started
+        expect(promos).not_to include(promo)
+      end
+    end
+
+    context 'when promo already started' do
+      let(:promo) { create(:promo_already_started) }
+      it 'is included in the scope' do
+        promos = Promo.started
+        expect(promos).to include(promo)
+      end
+    end
+
+    context 'when promo has nil start_date' do
+      let(:promo) { create(:promo, start_date: nil) }
+      it 'is included in the scope' do
+        promos = Promo.started
+        expect(promos).to include(promo)
+      end
+    end
+  end
 end

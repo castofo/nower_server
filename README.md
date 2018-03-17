@@ -103,7 +103,7 @@ Nower's ``config`` folder, in ``puma.rb``, where you can edit it.
 > decent* version of [Node]** and the [multi-file-swagger] module globally installed.
 >
 > \* The task is working with node v7.10.0, some previous versions would work properly.\
-> \** Recommended to install with [NVM](https://rvm.io/).
+> \** Recommended to install with [NVM](https://github.com/creationix/nvm).
 >
 > ```
 > $ npm install -g multi-file-swagger

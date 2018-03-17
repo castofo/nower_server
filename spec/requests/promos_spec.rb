@@ -102,6 +102,57 @@ RSpec.describe 'Promos', type: :request do
       end
     end
 
+    context "when 'started' query param is 'true'" do
+      # Create some started and non-started promos
+      started_promos = rand(5..10)
+      non_started_promos = rand(5..10)
+      before do
+        started_promos.times { create :promo_already_started }
+        non_started_promos.times { create :promo_with_dates }
+      end
+
+      it 'returns only promos that have already started' do
+        sub_get api_v1_promos_path, { params: { started: :true } }
+        expect(response).to have_http_status(200)
+        promos = JSON.parse(response.body)
+        expect(promos.count).to eq started_promos
+      end
+    end
+
+    context "when 'started' query param is 'false'" do
+      # Create some started and non-started promos
+      started_promos = rand(5..10)
+      non_started_promos = rand(5..10)
+      before do
+        started_promos.times { create :promo_already_started }
+        non_started_promos.times { create :promo_with_dates }
+      end
+
+      it 'returns promos regardless of they are started or not' do
+        sub_get api_v1_promos_path, { params: { started: :false } }
+        expect(response).to have_http_status(200)
+        promos = JSON.parse(response.body)
+        expect(promos.count).to eq started_promos + non_started_promos
+      end
+    end
+
+    context "when 'started' query param is not specified" do
+      # Create some started and non-started promos
+      started_promos = rand(5..10)
+      non_started_promos = rand(5..10)
+      before do
+        started_promos.times { create :promo_already_started }
+        non_started_promos.times { create :promo_with_dates }
+      end
+
+      it 'returns only promos that have already started' do
+        sub_get api_v1_promos_path
+        expect(response).to have_http_status(200)
+        promos = JSON.parse(response.body)
+        expect(promos.count).to eq started_promos
+      end
+    end
+
     context "when 'expand' query param contains 'branches'" do
       # Create some promos and associate them to branches
       before do
