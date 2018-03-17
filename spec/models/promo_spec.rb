@@ -286,13 +286,15 @@ RSpec.describe Promo, type: :model do
 
       context 'and is equals current date' do
         it 'is valid' do
-          expect(build(:promo, end_date: DateTime.now + 2.minutes)).to be_valid
+          expect(build(:promo, start_date: DateTime.now + 1.minute,
+            end_date: DateTime.now + 2.minutes)).to be_valid
         end
       end
 
       context 'and is after current date' do
         it 'is valid' do
-          expect(build(:promo, end_date: Faker::Number.between(1, 10).days.from_now)).to be_valid
+          expect(build(:promo, start_date: DateTime.now + 1.minute,
+            end_date: Faker::Number.between(1, 10).days.from_now)).to be_valid
         end
       end
     end
@@ -332,6 +334,14 @@ RSpec.describe Promo, type: :model do
       end
     end
 
+    context 'when start_date is nil' do
+      let!(:promo) { build(:promo, start_date: nil) }
+      it 'is invalid' do
+        promo.end_date = Faker::Number.between(2, 28).days.from_now
+        expect(promo).not_to be_valid
+      end
+    end
+
     context 'when start_date is not nil' do
       let!(:promo) { build(:promo, start_date: 30.days.from_now) }
       context 'and is before start_date' do
@@ -353,6 +363,74 @@ RSpec.describe Promo, type: :model do
           promo.end_date = Faker::Date.between(31.days.from_now, 60.days.from_now)
           expect(promo).to be_valid
         end
+      end
+    end
+  end
+
+  describe 'available' do
+    context 'when promo already started but hasn\'t ended' do
+      let(:promo) { create(:promo_already_started) }
+      it 'is included in the scope' do
+        promos = Promo.available
+        expect(promos).to include(promo)
+      end
+    end
+
+    context 'when promo has valid stock' do
+      let(:promo) { create(:promo) }
+      it 'is included in the scope' do
+        promos = Promo.available
+        expect(promos).to include(promo)
+      end
+    end
+
+    context 'when promo hasn\'t started nor ended yet' do
+      let(:promo) { create(:promo_with_dates) }
+      it 'is included in scope' do
+        promos = Promo.available
+        expect(promos).to include(promo)
+      end
+    end
+
+    context 'when promo already ended' do
+      let(:promo) { create(:promo_expired, stock: Faker::Number.between(1, 1000)) }
+      it 'is not included in the scope' do
+        promos = Promo.available
+        expect(promos).not_to include(promo)
+      end
+    end
+
+    context 'when promo has 0 stock' do
+      let(:promo) { create(:promo_already_started, stock: 0) }
+      it 'is not included in the scope' do
+        promos = Promo.available
+        expect(promos).not_to include(promo)
+      end
+    end
+  end
+
+  describe 'started' do
+    context 'when promo hasn\'t started yet' do
+      let(:promo) { create(:promo_with_dates) }
+      it 'is not included in the scope' do
+        promos = Promo.started
+        expect(promos).not_to include(promo)
+      end
+    end
+
+    context 'when promo already started' do
+      let(:promo) { create(:promo_already_started) }
+      it 'is included in the scope' do
+        promos = Promo.started
+        expect(promos).to include(promo)
+      end
+    end
+
+    context 'when promo has nil start_date' do
+      let(:promo) { create(:promo, start_date: nil) }
+      it 'is included in the scope' do
+        promos = Promo.started
+        expect(promos).to include(promo)
       end
     end
   end

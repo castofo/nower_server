@@ -16,7 +16,7 @@
     "/promos": {
       "get": {
         "summary": "Fetches promos",
-        "description": "Returns a list of available promos. The reponse includes the display\nname and other details about each promo.\nBy default, it **WILL NOT** return promos that are expired.\n\n- Including the `branch_id` query parameter will only return promos that belong to the given\nbranch\n\n- Including the `expired` query parameter as `true` will also return promos that are expired.\n\n- The `expand` query parameter supports:\n  - `branches`: will append the branches where the promo is being published\n",
+        "description": "Returns a list of available promos. The reponse includes the display\nname and other details about each promo.\nBy default, it **WILL NOT** return promos that are expired.\n\n- Including the `branch_id` query parameter will only return promos that belong to the given\nbranch\n\n- Including the `expired` query parameter as `true` will also return promos that are expired.\n- Including the `started` query parameter as `false` won't return non-started promos.\n\n- The `expand` query parameter supports:\n  - `branches`: will append the branches where the promo is being published\n",
         "tags": [
           "promos"
         ],
@@ -26,6 +26,9 @@
           },
           {
             "$ref": "#/parameters/Expired"
+          },
+          {
+            "$ref": "#/parameters/Started"
           },
           {
             "$ref": "#/parameters/Expand"
@@ -1271,6 +1274,13 @@
       "description": "Set to `true` in order to get results that don't have any promo associated.",
       "type": "boolean",
       "default": false
+    },
+    "Started": {
+      "name": "started",
+      "in": "query",
+      "description": "Set to `false` in order to get non-started results.",
+      "type": "boolean",
+      "default": true
     },
     "Expired": {
       "name": "expired",

@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Api::V1::PromosController, type: :controller do
 
   let(:valid_attributes) {
-    attributes_for(:promo_with_dates)
+    attributes_for(:promo)
   }
 
   let(:invalid_attributes) {

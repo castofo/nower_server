@@ -102,6 +102,57 @@ RSpec.describe 'Promos', type: :request do
       end
     end
 
+    context "when 'started' query param is 'true'" do
+      # Create some started and non-started promos
+      started_promos = rand(5..10)
+      non_started_promos = rand(5..10)
+      before do
+        started_promos.times { create :promo_already_started }
+        non_started_promos.times { create :promo_with_dates }
+      end
+
+      it 'returns only promos that have already started' do
+        sub_get api_v1_promos_path, { params: { started: :true } }
+        expect(response).to have_http_status(200)
+        promos = JSON.parse(response.body)
+        expect(promos.count).to eq started_promos
+      end
+    end
+
+    context "when 'started' query param is 'false'" do
+      # Create some started and non-started promos
+      started_promos = rand(5..10)
+      non_started_promos = rand(5..10)
+      before do
+        started_promos.times { create :promo_already_started }
+        non_started_promos.times { create :promo_with_dates }
+      end
+
+      it 'returns promos regardless of they are started or not' do
+        sub_get api_v1_promos_path, { params: { started: :false } }
+        expect(response).to have_http_status(200)
+        promos = JSON.parse(response.body)
+        expect(promos.count).to eq started_promos + non_started_promos
+      end
+    end
+
+    context "when 'started' query param is not specified" do
+      # Create some started and non-started promos
+      started_promos = rand(5..10)
+      non_started_promos = rand(5..10)
+      before do
+        started_promos.times { create :promo_already_started }
+        non_started_promos.times { create :promo_with_dates }
+      end
+
+      it 'returns only promos that have already started' do
+        sub_get api_v1_promos_path
+        expect(response).to have_http_status(200)
+        promos = JSON.parse(response.body)
+        expect(promos.count).to eq started_promos
+      end
+    end
+
     context "when 'expand' query param contains 'branches'" do
       # Create some promos and associate them to branches
       before do
@@ -299,6 +350,15 @@ RSpec.describe 'Promos', type: :request do
       end
     end
 
+    context 'when end_date is not nil but start_date is' do
+      it 'returns a 422' do
+        body[:end_date] = Faker::Number.between(2, 15).days.from_now
+        body[:start_date] = nil
+        sub_post api_v1_promos_path, { params: { promo: body } }
+        expect(response).to have_http_status(422)
+      end
+    end
+
     context 'when end_date is before current date' do
       it 'returns a 422' do
         body[:end_date] = Faker::Number.between(2, 15).days.ago
@@ -309,6 +369,7 @@ RSpec.describe 'Promos', type: :request do
 
     context 'when end_date is equal to current date' do
       it 'returns a 201' do
+        body[:start_date] = DateTime.now + 2.minutes
         body[:end_date] = DateTime.now + 5.minutes
         sub_post api_v1_promos_path, { params: { promo: body } }
         expect(response).to have_http_status(201)
@@ -317,6 +378,7 @@ RSpec.describe 'Promos', type: :request do
 
     context 'when end_date is after current date' do
       it 'returns a 201' do
+        body[:start_date] = DateTime.now + 2.minutes
         body[:end_date] = Faker::Number.between(2, 15).days.from_now
         sub_post api_v1_promos_path, { params: { promo: body } }
         expect(response).to have_http_status(201)
@@ -571,6 +633,16 @@ RSpec.describe 'Promos', type: :request do
         end
       end
 
+      context 'when end_date is not nil but start_date is' do
+        let(:existing_promo_with_dates) { create(:promo_with_dates) }
+        it 'returns a 422' do
+          body[:end_date] = Faker::Number.between(2, 15).days.from_now
+          body[:start_date] = nil
+          sub_put api_v1_promo_path(existing_promo_with_dates.id), { params: { promo: body } }
+          expect(response).to have_http_status(422)
+        end
+      end
+
       context 'when end_date is before current date' do
         it 'returns a 422' do
           body[:end_date] = Faker::Number.between(2, 15).days.ago
@@ -581,6 +653,7 @@ RSpec.describe 'Promos', type: :request do
 
       context 'when end_date is equal to current date' do
         it 'returns a 200' do
+          body[:start_date] = DateTime.now + 2.minutes
           body[:end_date] = DateTime.now + 5.minutes
           sub_put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
           expect(response).to have_http_status(200)
@@ -589,6 +662,7 @@ RSpec.describe 'Promos', type: :request do
 
       context 'when end_date is after current date' do
         it 'returns a 200' do
+          body[:start_date] = DateTime.now + 2.minutes
           body[:end_date] = Faker::Number.between(2, 15).days.from_now
           sub_put api_v1_promo_path(existing_promo.id), { params: { promo: body } }
           expect(response).to have_http_status(200)

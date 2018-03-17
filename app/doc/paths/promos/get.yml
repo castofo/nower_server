@@ -8,6 +8,7 @@ description: |
   branch
 
   - Including the `expired` query parameter as `true` will also return promos that are expired.
+  - Including the `started` query parameter as `false` won't return non-started promos.
 
   - The `expand` query parameter supports:
     - `branches`: will append the branches where the promo is being published
@@ -16,6 +17,7 @@ tags:
 parameters:
   - $ref: "#/parameters/BranchId"
   - $ref: "#/parameters/Expired"
+  - $ref: "#/parameters/Started"
   - $ref: "#/parameters/Expand"
 responses:
   200:

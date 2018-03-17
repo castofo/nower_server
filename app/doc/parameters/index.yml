@@ -13,6 +13,9 @@ Longitude:
 EmptyPromos:
   $ref: ./empty_promos.yml
 
+Started:
+  $ref: ./started.yml
+
 Expired:
   $ref: ./expired.yml
 
